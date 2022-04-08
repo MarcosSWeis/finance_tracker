@@ -1,0 +1,27 @@
+###
+POST http://localhost:3001/users/register 
+content-type: application/json
+
+{
+    "firstName" : "marcos",
+    "lastName" : "weis",
+    "email" : "marcos@dh.com"
+}
+
+###
+GET  http://localhost:3001/users/list
+content-type: application/json
+
+###
+POST http://localhost:3001/users/login
+content-type: application/json
+
+{   
+    "email" : "marcos@dh.com",
+    "password": "Marcos97w"
+}
+###
+//le tenemos que indicar cual es el esquema de autorizacion que utilizamos
+GET http://localhost:3001/animes
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmlja05hbWUiOiJtYXJjb3MiLCJpYXQiOjE2NDg4NTY1MDYsImV4cCI6MTY0ODg1NjUyNn0.rYe-rZOKBPedYfLSPjucWtEg61LIrvZVfxse-g9aGBM
+
