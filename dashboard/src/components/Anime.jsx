@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { controllerAnime } from "../services/request/animes";
 export default function Anime() {
   const [anime, setAnime] = useState(null);
   const token = JSON.parse(localStorage.getItem("accessToken"));
@@ -16,17 +17,9 @@ export default function Anime() {
   const noLoggedRedirect = (path) =>
     navigate(`/${path}`, { state: { from: { pathname: "/anime" } } });
   async function getAnime() {
-    try {
-      const config = {
-        headers: {
-          Authorization: `bearer ${token}`,
-        },
-      };
-      const response = await axios.get(`http://localhost:3001/animes`, config);
-      setAnime(response.data);
-    } catch (err) {
-      noLoggedRedirect("login");
-    }
+    const response = await controllerAnime.getAnime();
+    console.log(response);
+    setAnime(response.data);
   }
   useEffect(() => {
     getAnime();
@@ -35,7 +28,12 @@ export default function Anime() {
   return (
     <>
       {!anime ? (
-        <div className="loader"></div>
+        <div style={{ alignItems: "center", display: "flex" }}>
+          <span
+            class="loader"
+            style={{ display: "block", margin: "auto" }}
+          ></span>
+        </div>
       ) : (
         <>
           <h2 className="w-100">Estas en ANIME {anime.title}</h2>,

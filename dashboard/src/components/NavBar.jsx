@@ -3,7 +3,7 @@ export default function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div className="container">
-        <NavLink to={"/"} className="navbar-brand">
+        <NavLink to={"/home"} className="navbar-brand">
           Start Bootstrap
         </NavLink>
         <button

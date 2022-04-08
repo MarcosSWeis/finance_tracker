@@ -63,120 +63,122 @@ export default function Register() {
     validationRegister(values, user, file, formRegisters);
   }
   return (
-    <div className="col-4 mx-auto pt-5 ">
-      <form onSubmit={handlerSubmit} id="formRegisters">
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Nombre
-          </label>
-          <input
-            name="firstName"
-            type="text"
-            onChange={handlerChange}
-            className="form-control"
-            id="firstName"
-            placeholder="Nombre"
-            value={user.firstName}
-          />
-        </div>
+    <main className="mx-auto  text-center px-4  ">
+      <div className="mx-auto pt-5 ">
+        <form onSubmit={handlerSubmit} id="formRegisters">
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">
+              Nombre
+            </label>
+            <input
+              name="firstName"
+              type="text"
+              onChange={handlerChange}
+              className="form-control"
+              id="firstName"
+              placeholder="Nombre"
+              value={user.firstName}
+            />
+          </div>
 
-        <p className="text-danger" id="errorFirstName"></p>
+          <p className="text-danger" id="errorFirstName"></p>
 
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Apellido
-          </label>
-          <input
-            name="lastName"
-            type="text"
-            onChange={handlerChange}
-            className="form-control"
-            id="lastName"
-            placeholder="Apellido"
-            value={user.lastName}
-          />
-        </div>
-        <p className="text-danger" id="errorLastName"></p>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email
-          </label>
-          <input
-            name="email"
-            type="text"
-            onChange={handlerChange}
-            className="form-control"
-            id="email"
-            placeholder="Email"
-            value={user.email}
-          />
-        </div>
-        <p className="text-danger" id="errorEmail"></p>
-        <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
-            Contraseña
-          </label>
-          <input
-            name="password"
-            type="password"
-            onChange={handlerChange}
-            className="form-control"
-            id="password"
-            placeholder="Contraseña"
-            value={user.password}
-          />
-        </div>
-        <p className="text-danger" id="errorPassword"></p>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Confirmar Contraseña
-          </label>
-          <input
-            name="confirmPassword"
-            type="password"
-            onChange={handlerChange}
-            className="form-control"
-            id="confirmPassword"
-            placeholder="Confirmar Contraseña"
-            value={user.confirmPassword}
-          />
-        </div>
-        <p className="text-danger" id="errorConfirmPassword"></p>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Apodo
-          </label>
-          <input
-            name="nickName"
-            type="text"
-            onChange={handlerChange}
-            className="form-control"
-            id="nickName"
-            placeholder="Apodo"
-            value={user.nickName}
-          />
-        </div>
-        <p className="text-danger" id="errorNickName"></p>
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">
+              Apellido
+            </label>
+            <input
+              name="lastName"
+              type="text"
+              onChange={handlerChange}
+              className="form-control"
+              id="lastName"
+              placeholder="Apellido"
+              value={user.lastName}
+            />
+          </div>
+          <p className="text-danger" id="errorLastName"></p>
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">
+              Email
+            </label>
+            <input
+              name="email"
+              type="text"
+              onChange={handlerChange}
+              className="form-control"
+              id="email"
+              placeholder="Email"
+              value={user.email}
+            />
+          </div>
+          <p className="text-danger" id="errorEmail"></p>
+          <div className="mb-3">
+            <label htmlFor="exampleInputPassword1" className="form-label">
+              Contraseña
+            </label>
+            <input
+              name="password"
+              type="password"
+              onChange={handlerChange}
+              className="form-control"
+              id="password"
+              placeholder="Contraseña"
+              value={user.password}
+            />
+          </div>
+          <p className="text-danger" id="errorPassword"></p>
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">
+              Confirmar Contraseña
+            </label>
+            <input
+              name="confirmPassword"
+              type="password"
+              onChange={handlerChange}
+              className="form-control"
+              id="confirmPassword"
+              placeholder="Confirmar Contraseña"
+              value={user.confirmPassword}
+            />
+          </div>
+          <p className="text-danger" id="errorConfirmPassword"></p>
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">
+              Apodo
+            </label>
+            <input
+              name="nickName"
+              type="text"
+              onChange={handlerChange}
+              className="form-control"
+              id="nickName"
+              placeholder="Apodo"
+              value={user.nickName}
+            />
+          </div>
+          <p className="text-danger" id="errorNickName"></p>
 
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label ">
-            Avatar
-          </label>
-          <input
-            name="avatar"
-            type="file"
-            onChange={(e) => setFile(e.target.files)}
-            className="form-control"
-            id="avatar"
-            value={user.avatar}
-            multiple
-          />
-        </div>
-        <p className="text-danger" id="errorAvatar"></p>
-        <button type="submit" id="btnRegister" className="btn btn-primary">
-          Registrarme
-        </button>
-      </form>
-    </div>
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label ">
+              Avatar
+            </label>
+            <input
+              name="avatar"
+              type="file"
+              onChange={(e) => setFile(e.target.files)}
+              className="form-control"
+              id="avatar"
+              value={user.avatar}
+              multiple
+            />
+          </div>
+          <p className="text-danger" id="errorAvatar"></p>
+          <button type="submit" id="btnRegister" className="btn btn-primary">
+            Registrarme
+          </button>
+        </form>
+      </div>
+    </main>
   );
 }

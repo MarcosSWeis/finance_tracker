@@ -10,21 +10,15 @@ const loginStateInitial = {
 };
 export default function Login() {
   const [login, setDataLogin] = useState(loginStateInitial);
-  const [userLogged, setUserLogged] = useState(() =>
-    window.localStorage.getItem("accessToken")
-  );
+  const [userLogged, setUserLogged] = useState(null);
   const navigate = useNavigate();
   const previousPage = (nextPage) => navigate(`${nextPage}`);
-  useEffect(() => {
-    if (userLogged) navigate("/home");
-  }, []);
 
-  console.log(userLogged, "userloaged");
   const location = useLocation();
-  console.log(location, "location");
+  // console.log(location, "location");
 
   let { from } = location.state || { from: { pathname: "/" } };
-  console.log(from, "from");
+  // console.log(from, "from");
 
   function handlerChange(event) {
     setDataLogin({
@@ -84,7 +78,9 @@ export default function Login() {
             "accessToken",
             JSON.stringify(response.data.accessToken)
           );
+
           navigate("/home");
+
           // previousPage(from.pathname);
         }
       });
@@ -100,7 +96,7 @@ export default function Login() {
     }
   }
   return (
-    <main className="mx-auto w-25 text-center ">
+    <main className="mx-auto  text-center px-4 ">
       <form onSubmit={handlerSubmit} id="formLogin" className="w-80 mx-auto">
         <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
         <div className="form-floating">
@@ -135,7 +131,7 @@ export default function Login() {
               type="checkbox"
               value=""
               onChange={function (e) {
-                console.log(e.target.checked);
+                //  console.log(e.target.checked);
                 setDataLogin({
                   ...login,
                   remember_me: e.target.checked,

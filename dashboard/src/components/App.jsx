@@ -6,12 +6,12 @@ import { Route, Routes } from "react-router-dom";
 import Users from "./User";
 import Anime from "./Anime";
 import Login from "./Login";
+import Register from "./Register";
+import NavBar from "./NavBar";
+import PrivateRoute from "./PrivateRoute";
 import "../css/signin.css";
 import "../css/carruselHome.css";
 
-import Register from "./Register";
-
-import NavBar from "./NavBar";
 export default function App() {
   function hideSidebar() {
     document.getElementById("sidebar").classList.toggle("desactive");
@@ -22,22 +22,29 @@ export default function App() {
   return (
     <>
       <NavBar />
-      {/* <div className="wrapper">
-        <Sidebar />
-        
-        <div id="content">
-    <Navbar hideSidebar={hideSidebar} hideMenu={hideMenu} /> */}
 
       <Routes>
         <Route path="/" exact={true} element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/anime" element={<Anime />} />
-
+        {/*  <Route path="/home" element={<Home />} /> */}
+        <Route
+          path="/anime"
+          element={
+            <PrivateRoute>
+              <Anime />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/home"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
         <Route path="/users" element={<Users />} />
       </Routes>
-      {/*    </div>
-    </div> */}
     </>
   );
 }
