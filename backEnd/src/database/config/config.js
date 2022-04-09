@@ -2,7 +2,7 @@ module.exports = {
   development: {
     username: "root",
     password: null,
-    database: "anime",
+    database: "challenge_full_stack",
     host: "127.0.0.1",
     dialect: "mysql",
   },

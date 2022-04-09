@@ -1,22 +1,15 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("profiles", {
+    await queryInterface.createTable("expense_types", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "users",
-          key: "id",
-        },
-      },
-      comment: {
-        type: Sequelize.STRING,
+      type: {
+        type: Sequelize.STRING(50),
       },
       createdAt: {
         allowNull: false,
@@ -29,6 +22,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("profiles");
+    await queryInterface.dropTable("expense_types");
   },
 };

@@ -10,6 +10,7 @@ import Register from "./Register";
 import NavBar from "./NavBar";
 import PrivateRoute from "./PrivateRoute";
 import "../css/signin.css";
+import "../css/loader.css";
 import "../css/carruselHome.css";
 
 export default function App() {

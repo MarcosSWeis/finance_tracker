@@ -35,20 +35,24 @@ module.exports = {
         email: body.email,
       },
     });
+    let ok;
     let status;
-    let statusCode;
+    let statusText;
     if (user) {
+      ok = true;
       status = 200;
-      statusCode = true;
+      statusText = "OK";
     } else {
+      ok = false;
       status = 401;
-      statusCode = false;
+      statusText = "Unauthorized";
     }
 
     const response = {
       meta: {
+        ok: ok,
         status: status,
-        statusCode: statusCode,
+        statusText: statusText,
         url: "http://localhost:3001/users/login",
       },
       data: {
@@ -72,6 +76,6 @@ module.exports = {
     }
   },
   post: (req, res) => {
-    res.json({ msg: "Post fue creado" });
+    res.status(401).json({ msg: "Post fue creado" });
   },
 };

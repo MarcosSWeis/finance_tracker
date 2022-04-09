@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { controllerUser } from "../services/request/users";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { HandlerErrors } from "../helpers/lib";
 let errors = {};
 const loginStateInitial = {
   email: "",
@@ -11,14 +12,9 @@ const loginStateInitial = {
 export default function Login() {
   const [login, setDataLogin] = useState(loginStateInitial);
   const [userLogged, setUserLogged] = useState(null);
+  const [error, setError] = useState(null);
+  console.log(error);
   const navigate = useNavigate();
-  const previousPage = (nextPage) => navigate(`${nextPage}`);
-
-  const location = useLocation();
-  // console.log(location, "location");
-
-  let { from } = location.state || { from: { pathname: "/" } };
-  // console.log(from, "from");
 
   function handlerChange(event) {
     setDataLogin({
@@ -71,19 +67,25 @@ export default function Login() {
 
     if (Object.keys(errors) == 0) {
       // const formData = new FormData(formLogin);
-      controllerUser.login(login).then((response) => {
-        if (response.data.accessToken) {
-          setUserLogged(true);
-          localStorage.setItem(
-            "accessToken",
-            JSON.stringify(response.data.accessToken)
-          );
 
-          navigate("/home");
-
-          // previousPage(from.pathname);
-        }
-      });
+      controllerUser
+        .login(login)
+        .then((response) => {
+          if (response.data.accessToken) {
+            setUserLogged(true);
+            localStorage.setItem(
+              "accessToken",
+              JSON.stringify(response.data.accessToken)
+            );
+            navigate("/home");
+          }
+        })
+        .catch((error) => {
+          console.log(!error.ok);
+          if (!error.ok) {
+            setError("Credenciales no validas o no esta autorizado");
+          }
+        });
     } else {
       if (errors.email) {
         email.classList.add("is-invalid");
@@ -96,64 +98,68 @@ export default function Login() {
     }
   }
   return (
-    <main className="mx-auto  text-center px-4 ">
-      <form onSubmit={handlerSubmit} id="formLogin" className="w-80 mx-auto">
-        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
-        <div className="form-floating">
-          <input
-            name="email"
-            type="email"
-            className="form-control"
-            id="email"
-            placeholder="name@example.com"
-            onChange={handlerChange}
-          />
-          <label htmlFor="email">Email address</label>
-        </div>
-        <p id="errorEmail"></p>
-        <div className="form-floating">
-          <input
-            name="password"
-            type="password"
-            className="form-control"
-            id="password"
-            placeholder="Contraseña"
-            onChange={handlerChange}
-          />
-          <label htmlFor="password">Password</label>
-        </div>
-        <p id="errorPassword"></p>
+    <>
+      <main className="mx-auto  text-center px-4 ">
+        <form onSubmit={handlerSubmit} id="formLogin" className="mw-75 mx-auto">
+          <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+          {error && <p className="text-danger"> {error} </p>}
 
-        <div className="checkbox mb-3">
-          <label>
+          <div className="form-floating">
             <input
-              name="remember_me"
-              type="checkbox"
-              value=""
-              onChange={function (e) {
-                //  console.log(e.target.checked);
-                setDataLogin({
-                  ...login,
-                  remember_me: e.target.checked,
-                });
-              }}
+              name="email"
+              type="email"
+              className="form-control"
+              id="email"
+              placeholder="name@example.com"
+              onChange={handlerChange}
             />
-            Remember me
-          </label>
-        </div>
-        <button
-          className="w-100 btn btn-lg btn-primary mb-3 p-1 btnSubmit"
-          type="submit"
-          name="btnSubmit"
-        >
-          Login
-        </button>
-        <Link to={"/register"}>
-          <button className="w-100 btn btn-lg btn-primary col-2 p-1">
-            Registrarse
+            <label htmlFor="email">Email address</label>
+          </div>
+          <p id="errorEmail"></p>
+          <div className="form-floating">
+            <input
+              name="password"
+              type="password"
+              className="form-control"
+              id="password"
+              placeholder="Contraseña"
+              onChange={handlerChange}
+            />
+            <label htmlFor="password">Password</label>
+          </div>
+          <p id="errorPassword"></p>
+
+          <div className="checkbox mb-3">
+            <label>
+              <input
+                name="remember_me"
+                type="checkbox"
+                value=""
+                onChange={function (e) {
+                  //  console.log(e.target.checked);
+                  setDataLogin({
+                    ...login,
+                    remember_me: e.target.checked,
+                  });
+                }}
+              />
+              Remember me
+            </label>
+          </div>
+          <button
+            className="w-100 btn btn-lg btn-primary mb-3 p-1 btnSubmit"
+            type="submit"
+            name="btnSubmit"
+          >
+            Login
           </button>
-        </Link>
-      </form>
-    </main>
+          <Link to={"/register"}>
+            <button className="w-100 btn btn-lg btn-primary col-2 p-1">
+              Registrarse
+            </button>
+          </Link>
+        </form>
+      </main>
+    </>
   );
 }

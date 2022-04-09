@@ -7,9 +7,11 @@ main {
   align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  background-image: linear-gradient(to bottom right, #6d597a, #a8740c);
+  /*   background-image: linear-gradient(to bottom right, #6d597a, #a8740c);*/
 }
-
+#formLogin {
+  max-width: 226px;
+}
 .form-signin {
   width: 100%;
   max-width: 330px;

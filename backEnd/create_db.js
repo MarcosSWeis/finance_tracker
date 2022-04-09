@@ -10,7 +10,10 @@ const config = {
 
 const connection = mySql.createConnection(config);
 
-connection.query(`CREATE DATABASE IF NOT EXISTS anime`, function (err, result) {
-  console.log(err);
-  console.log(result);
-});
+connection.query(
+  `CREATE DATABASE IF NOT EXISTS challenge_full_stack`,
+  function (err, result) {
+    console.log(err);
+    console.log(result);
+  }
+);
