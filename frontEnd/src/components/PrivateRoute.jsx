@@ -1,12 +1,18 @@
-import { Navigate } from "react-router-dom";
-function handlerLogged() {
-  const islogged = window.localStorage.getItem("accessToken");
-  return islogged;
-}
+import { useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import { getAuthToken } from "../helpers/getAuthToken";
 
-const PrivateRoute = ({ children }) => {
-  const islogged = handlerLogged();
-  return islogged ? children : <Navigate to={"/"} />;
+const PrivateRoute = ({
+  children,
+  setErrorToken,
+  setVerifyToken,
+  verifyToken,
+}) => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    getAuthToken(setErrorToken, navigate, setVerifyToken, verifyToken);
+  }, []);
+  return verifyToken ? children : <Navigate to={"/"} />;
 };
 
 export default PrivateRoute;

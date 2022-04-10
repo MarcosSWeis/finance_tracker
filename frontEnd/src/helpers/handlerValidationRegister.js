@@ -21,7 +21,8 @@ export default function validationRegister(
   },
   user,
   file,
-  formRegisters
+  formRegisters,
+  navigate
 ) {
   //NOMBRE
   if (user.firstName === "") {
@@ -137,8 +138,12 @@ export default function validationRegister(
   }
   if (Object.keys(errors) == 0) {
     const formData = new FormData(formRegisters);
-    const response = controllerUser.register(formData);
-    console.log(response);
+    controllerUser.register(formData).then(({ data }) => {
+      console.log(data);
+      if (data.status) {
+        navigate("/");
+      }
+    });
   } else {
     if (errors.firstName) {
       firstName.classList.add("is-invalid");

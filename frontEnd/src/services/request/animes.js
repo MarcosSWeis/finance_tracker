@@ -10,7 +10,7 @@ export const controllerAnime = {
       console.log(token, "token ");
       const config = {
         headers: {
-          Authorization: `bearer ${JSON.parse(token)}`,
+          Authorization: `Bearer ${JSON.parse(token)}`,
         },
       };
       const response = await axios.get(`http://localhost:3001/animes`, config);

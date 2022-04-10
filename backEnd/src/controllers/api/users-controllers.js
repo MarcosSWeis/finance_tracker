@@ -14,14 +14,26 @@ module.exports = {
       console.log(file, 555555555555);
       //const password = req.body.password;
       console.log(body, 121121212);
+      let avatar;
+
+      if (!file) {
+        avatar = "default.png";
+      }
+      avatar = file.filename;
 
       const user = await db.User.create({
         ...body,
+        avatar: avatar,
+        active: 1,
+        admin: 0,
       });
+
       res.json({
         status: true,
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   },
   login: async (req, res) => {
     const body = req.body;
@@ -66,7 +78,7 @@ module.exports = {
         nickName: user.nickName,
       };
       //cuando el usuario ingrese a su cuenta y todo ande bien validaciones etc
-      const token = jwt.sign(userForToken, "princesa_babe", {
+      const token = jwt.sign(userForToken, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_TIME_EXPIRY,
       });
       response.data.accessToken = token;

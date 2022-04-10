@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import validationRegister from "../helpers/handlerValidationRegister";
 import { controllerUser } from "../services/request/users";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 let errors = {};
 const userStateInitial = {
   firstName: "",
@@ -15,6 +15,7 @@ const userStateInitial = {
 export default function Register() {
   const [user, setUser] = useState(userStateInitial);
   const [file, setFile] = useState();
+  const navigate = useNavigate();
   function handlerChange(event) {
     //...inputsRegister, le figo que me ponga el valor de lso inputs que tiene en ese momento
     //porque sino , escribo en el fistName y lo que escribí en el lastName se me borra
@@ -60,7 +61,7 @@ export default function Register() {
       avatar,
       errorAvatar,
     };
-    validationRegister(values, user, file, formRegisters);
+    validationRegister(values, user, file, formRegisters, navigate);
   }
   return (
     <main className="mx-auto  text-center px-4  ">

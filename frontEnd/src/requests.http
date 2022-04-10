@@ -23,5 +23,7 @@ content-type: application/json
 ###
 //le tenemos que indicar cual es el esquema de autorizacion que utilizamos
 GET http://localhost:3001/animes
-Authorization : Bearer JhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmlja05hbWUiOiJtYXJjb3MiLCJpYXQiOjE2NDkzOTQ2NjgsImV4cCI6MTY0OTk5OTQ2OH0.ZSd0sJ05Ei4d6a55EpNIzQmwhTcQEc08tm1OeievGP0
-
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmlja05hbWUiOiJNYXJjb3MiLCJpYXQiOjE2NDk1MzA2NjAsImV4cCI6MTY0OTUzMDY2Mn0.cWBfllWDNDUKLcolGtjZn-HyO4ba6kuYA7dow2gHyXI
+###
+POST http://localhost:3001/users/checkingToken
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmlja05hbWUiOiJNYXJjb3MiLCJpYXQiOjE2NDk1NTM2NTIsImV4cCI6MTY0OTU1MzY1M30.yUMaT7yJkU_SDvRzNVm5lHzVYaQne0fMaOiEaZTHto8
