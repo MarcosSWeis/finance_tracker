@@ -4,7 +4,6 @@ export default function validationFormLogin(
   { email, errorEmail, password, errorPassword },
   login,
   setError,
-  setUserLogged,
   navigate,
   setErrorToken
 ) {
@@ -43,26 +42,21 @@ export default function validationFormLogin(
     }
   }
 
-  if (Object.keys(errors) == 0) {
-    // const formData = new FormData(formLogin);
-
+  if (Object.keys(errors).length === 0) {
     controllerUser
       .login(login)
-      .then((response) => {
-        if (response.data.accessToken) {
-          setUserLogged(true);
-          localStorage.setItem(
-            "accessToken",
-            JSON.stringify(response.data.accessToken)
-          );
-          navigate("/home");
+      .then(({ data }) => {
+        console.log(data);
+        if (data.accessToken) {
+          localStorage.setItem("accessToken", JSON.stringify(data.accessToken));
           setErrorToken(null);
         }
+        navigate("/home");
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
         if (!error.ok) {
-          setError("Credenciales no validas o no esta autorizado");
+          setError("Credenciales no validas o no esta autorizado, registrese");
         }
       });
   } else {

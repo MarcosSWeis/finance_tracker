@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import Home from "./Home";
 import { Route, Routes } from "react-router-dom";
@@ -7,36 +8,24 @@ import Login from "./Login";
 import Register from "./Register";
 import NavBar from "./NavBar";
 import PrivateRoute from "./PrivateRoute";
+import { DataProvider } from "../context/DataContext";
 import "../css/signin.css";
 import "../css/loader.css";
 import "../css/carruselHome.css";
 
 export default function App() {
-  const [errorToken, setErrorToken] = useState(null);
-  const [verifyToken, setVerifyToken] = useState(null);
-
   return (
-    <>
+    <DataProvider>
       <NavBar />
 
       <Routes>
-        <Route
-          path="/"
-          exact={true}
-          element={
-            <Login errorToken={errorToken} setErrorToken={setErrorToken} />
-          }
-        />
+        <Route path="/" exact={true} element={<Login />} />
         <Route path="/register" element={<Register />} />
 
         <Route
           path="/anime"
           element={
-            <PrivateRoute
-              setErrorToken={setErrorToken}
-              setVerifyToken
-              verifyToken
-            >
+            <PrivateRoute>
               <Anime />
             </PrivateRoute>
           }
@@ -44,17 +33,13 @@ export default function App() {
         <Route
           path="/home"
           element={
-            <PrivateRoute
-              setErrorToken={setErrorToken}
-              setVerifyToken
-              verifyToken
-            >
+            <PrivateRoute>
               <Home />
             </PrivateRoute>
           }
         />
         <Route path="/users" element={<Users />} />
       </Routes>
-    </>
+    </DataProvider>
   );
 }

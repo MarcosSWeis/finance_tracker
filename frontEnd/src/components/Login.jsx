@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-
+import React from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { HandlerErrors } from "../helpers/lib";
 import validationFormLogin from "../helpers/handlerValidationLogin";
+import { DataContext } from "../context/DataContext";
 let errors = {};
 const loginStateInitial = {
   email: "",
   password: "",
   remember_me: false,
 };
-export default function Login({ errorToken, setErrorToken }) {
+export default function Login() {
+  const { errorToken } = useContext(DataContext);
+  const { setErrorToken } = useContext(DataContext);
   const [login, setDataLogin] = useState(loginStateInitial);
-  const [userLogged, setUserLogged] = useState(null);
+  //const [userLogged, setUserLogged] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -35,14 +36,7 @@ export default function Login({ errorToken, setErrorToken }) {
       password,
       errorPassword,
     };
-    validationFormLogin(
-      elements,
-      login,
-      setError,
-      setUserLogged,
-      navigate,
-      setErrorToken
-    );
+    validationFormLogin(elements, login, setError, navigate, setErrorToken);
   }
   return (
     <>

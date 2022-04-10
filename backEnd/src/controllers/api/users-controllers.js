@@ -18,8 +18,9 @@ module.exports = {
 
       if (!file) {
         avatar = "default.png";
+      } else {
+        avatar = file.filename;
       }
-      avatar = file.filename;
 
       const user = await db.User.create({
         ...body,
@@ -82,6 +83,7 @@ module.exports = {
         expiresIn: process.env.JWT_TIME_EXPIRY,
       });
       response.data.accessToken = token;
+      console.log(response);
       res.status(200).json(response);
     } else {
       res.status(401).json(response);

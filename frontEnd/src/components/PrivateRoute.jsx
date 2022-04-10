@@ -1,17 +1,21 @@
-import { useEffect } from "react";
+import React from "react";
+import { useContext, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { DataContext } from "../context/DataContext";
 import { getAuthToken } from "../helpers/getAuthToken";
 
-const PrivateRoute = ({
-  children,
-  setErrorToken,
-  setVerifyToken,
-  verifyToken,
-}) => {
+const PrivateRoute = ({ children }) => {
+  const { setErrorToken } = useContext(DataContext);
+  const { setVerifyToken } = useContext(DataContext);
+  const { verifyToken } = useContext(DataContext);
   const navigate = useNavigate();
+  console.log("ejecuto getAuthToken");
+  console.log(verifyToken, "verifyToken getAuthToken");
+  console.log("ejecuto getAuthToken");
   useEffect(() => {
     getAuthToken(setErrorToken, navigate, setVerifyToken, verifyToken);
   }, []);
+
   return verifyToken ? children : <Navigate to={"/"} />;
 };
 

@@ -30,7 +30,7 @@ export default function Anime() {
       {!anime ? (
         <div style={{ alignItems: "center", display: "flex" }}>
           <span
-            class="loader"
+            className="loader"
             style={{ display: "block", margin: "auto" }}
           ></span>
         </div>
