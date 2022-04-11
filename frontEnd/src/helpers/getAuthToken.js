@@ -2,10 +2,16 @@ import axios from "axios";
 
 export async function getAuthToken(setErrorToken, navigate, setVerifyToken) {
   const token = window.localStorage.getItem("accessToken");
-  console.log(token, "token home");
+  console.log(!token, "localStorage");
+  if (!token) {
+    setErrorToken("Inicie sesión para poder acceder");
+    return navigate("/");
+  }
+
   const ERROR_HANDLER = {
     JsonWebTokenError: (err) => {
       setErrorToken(err.response.data.JsonWebTokenError);
+      window.localStorage.removeItem("accessToken");
       navigate("/");
     },
     TokenExpiredError: (err) => {

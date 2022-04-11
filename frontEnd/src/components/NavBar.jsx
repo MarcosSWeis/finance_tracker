@@ -1,5 +1,11 @@
-import { Link, NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { Link, Navigate, NavLink } from "react-router-dom";
+import { DataContext } from "../context/DataContext";
+import LogOut from "./Logout";
+
 export default function NavBar() {
+  const { verifyToken } = useContext(DataContext);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div className="container">
@@ -29,11 +35,15 @@ export default function NavBar() {
                 Anime
               </NavLink>
             </li>
-            <li className="nav-item px-2">
-              <NavLink to={"/"} className="nav-link ">
-                Login
-              </NavLink>
-            </li>
+            {!verifyToken ? (
+              <li className="nav-item px-2">
+                <NavLink to={"/"} className="nav-link ">
+                  Login
+                </NavLink>
+              </li>
+            ) : (
+              <LogOut />
+            )}
             <li className="nav-item px-1">
               <NavLink to={"/algo2"} className="nav-link">
                 #

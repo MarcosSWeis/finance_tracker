@@ -3,7 +3,6 @@ let errors = {};
 export default function validationFormLogin(
   { email, errorEmail, password, errorPassword },
   login,
-  setError,
   navigate,
   setErrorToken
 ) {
@@ -56,7 +55,9 @@ export default function validationFormLogin(
       .catch((error) => {
         console.log(error.response);
         if (!error.ok) {
-          setError("Credenciales no validas o no esta autorizado, registrese");
+          setErrorToken(
+            "Credenciales no validas o no esta autorizado, registrese"
+          );
         }
       });
   } else {

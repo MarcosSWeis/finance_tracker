@@ -36,25 +36,27 @@ export default function Anime() {
         </div>
       ) : (
         <>
-          <h2 className="w-100">Estas en ANIME {anime.title}</h2>,
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis,
-            impedit ipsum? Numquam doloribus aspernatur, fugit ipsa sapiente
-            esse commodi error natus voluptatum? Labore aspernatur veniam illum
-            quisquam, non possimus molestias?
-          </h2>
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis,
-            impedit ipsum? Numquam doloribus aspernatur, fugit ipsa sapiente
-            esse commodi error natus voluptatum? Labore aspernatur veniam illum
-            quisquam, non possimus molestias?
-          </h2>
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis,
-            impedit ipsum? Numquam doloribus aspernatur, fugit ipsa sapiente
-            esse commodi error natus voluptatum? Labore aspernatur veniam illum
-            quisquam, non possimus molestias?
-          </h2>
+          <div className="w-75 mx-auto">
+            <h2 className="w-100">Estas en ANIME {anime.title}</h2>,
+            <h2>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis,
+              impedit ipsum? Numquam doloribus aspernatur, fugit ipsa sapiente
+              esse commodi error natus voluptatum? Labore aspernatur veniam
+              illum quisquam, non possimus molestias?
+            </h2>
+            <h2>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis,
+              impedit ipsum? Numquam doloribus aspernatur, fugit ipsa sapiente
+              esse commodi error natus voluptatum? Labore aspernatur veniam
+              illum quisquam, non possimus molestias?
+            </h2>
+            <h2>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis,
+              impedit ipsum? Numquam doloribus aspernatur, fugit ipsa sapiente
+              esse commodi error natus voluptatum? Labore aspernatur veniam
+              illum quisquam, non possimus molestias?
+            </h2>
+          </div>
         </>
       )}
     </>
