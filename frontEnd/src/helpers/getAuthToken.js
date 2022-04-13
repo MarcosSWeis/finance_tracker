@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function getAuthToken(setErrorToken, navigate, setVerifyToken) {
   const token = window.localStorage.getItem("accessToken");
-  console.log(!token, "localStorage");
+
   if (!token) {
     setErrorToken("Inicie sesión para poder acceder");
     return navigate("/");
@@ -33,11 +33,9 @@ export async function getAuthToken(setErrorToken, navigate, setVerifyToken) {
   await axios
     .post("http://localhost:3001/users/checkingToken", {}, { ...config })
     .then(({ data }) => {
-      console.log(data.meta);
       setVerifyToken(data.meta.ok);
     })
     .catch((err) => {
-      console.log(err.response);
       if (err.response) {
         const handler =
           ERROR_HANDLER[Object.keys(err.response.data)[0]] ||

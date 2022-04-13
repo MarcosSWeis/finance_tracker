@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getConfigTokenLocalStorage } from "../../helpers/get-config-token-localStorage";
 
 export const controllerAnime = {
   metodo: () => {
@@ -6,14 +7,8 @@ export const controllerAnime = {
   },
   getAnime: async () => {
     try {
-      const token = window.localStorage.getItem("accessToken");
-      console.log(token, "token ");
-      const config = {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(token)}`,
-        },
-      };
-      const response = await axios.get(`http://localhost:3001/animes`, config);
+      const config = getConfigTokenLocalStorage();
+      const response = await axios.get(`http://localhost:3001/budget`, config);
       console.log(response, "response service");
       return response;
     } catch (err) {

@@ -18,7 +18,7 @@ module.exports = {
       fixed_income: {
         type: Sequelize.DOUBLE,
       },
-      income: {
+      varied_income: {
         type: Sequelize.DOUBLE,
       },
       category_inc_id: {
@@ -28,7 +28,7 @@ module.exports = {
           key: "id",
         },
       },
-      title: {
+      description: {
         type: Sequelize.STRING(25),
       },
       createdAt: {

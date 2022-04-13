@@ -22,7 +22,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   //verificar si el token de localstorage funciona redirigo al home , de lo contrario me quedo aca para que se  loggee y refresque el token
-  console.log(verifyToken, "verifyToken login");
+
   useEffect(() => {
     getAuthToken(setErrorToken, navigate, setVerifyToken);
   }, []);
@@ -116,7 +116,7 @@ export default function Login() {
               Login
             </button>
             <Link to={"/register"}>
-              <button className="w-100 btn btn-lg btn-primary col-2 p-1">
+              <button className="w-100 btn btn-lg btn-primary  p-1">
                 Registrarse
               </button>
             </Link>

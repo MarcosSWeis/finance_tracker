@@ -11,9 +11,9 @@ export default function LogOut() {
     setVerifyToken(null);
   }
   return (
-    <li className="nav-item px-2">
+    <li className="nav-item px-2 cta">
       <NavLink to={"/log"} className="nav-link " onClick={handlerClick}>
-        Logout
+        <span className="hover-underline-animation">Logout</span>
       </NavLink>
     </li>
   );

@@ -1,42 +1,49 @@
-.loader,
-.loader:before,
-.loader:after {
-  border-radius: 50%;
-  width: 2.5em;
-  height: 2.5em;
-  animation-fill-mode: both;
-  animation: bblFadInOut 1.8s infinite ease-in-out;
-}
-.loader {
-  color: #000000;
-  font-size: 7px;
-  position: relative;
-  text-indent: -9999em;
-  transform: translateZ(0);
-  animation-delay: -0.16s;
-  bottom: -200px;
-}
-.loader:before,
-.loader:after {
-  content: "";
-  position: absolute;
-  top: 0;
-}
-.loader:before {
-  left: -3.5em;
-  animation-delay: -0.32s;
-}
-.loader:after {
-  left: 3.5em;
+.spinner {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  margin: auto;
+  margin-top: 50vh;
 }
 
-@keyframes bblFadInOut {
+.dot1,
+.dot2,
+.dot3 {
+  width: 15px;
+  height: 15px;
+  border: double;
+  border-color: white;
+  border-radius: 50%;
+  margin: 10px;
+}
+
+.dot1 {
+  animation: jump765 1.6s -0.32s linear infinite;
+  background: #202932;
+}
+
+.dot2 {
+  animation: jump765 1.6s -0.16s linear infinite;
+  background: #202932;
+}
+
+.dot3 {
+  animation: jump765 1.6s linear infinite;
+  background: #202932;
+}
+
+@keyframes jump765 {
   0%,
   80%,
   100% {
-    box-shadow: 0 2.5em 0 -1.3em;
+    -webkit-transform: scale(0);
+    transform: scale(0);
   }
+
   40% {
-    box-shadow: 0 2.5em 0 0;
+    -webkit-transform: scale(2);
+    transform: scale(2);
   }
 }

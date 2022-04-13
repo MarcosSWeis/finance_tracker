@@ -38,8 +38,6 @@ module.exports = {
   },
   login: async (req, res) => {
     const body = req.body;
-    // console.log(body.email);
-    // console.log(body.password);
     console.log(body);
 
     //validacion con express-validator

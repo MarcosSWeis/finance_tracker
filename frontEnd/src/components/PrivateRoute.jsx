@@ -9,9 +9,7 @@ const PrivateRoute = ({ children }) => {
   const { setVerifyToken } = useContext(DataContext);
   const { verifyToken } = useContext(DataContext);
   const navigate = useNavigate();
-  console.log("ejecuto getAuthToken");
-  console.log(verifyToken, "verifyToken getAuthToken");
-  console.log("ejecuto getAuthToken");
+
   useEffect(() => {
     getAuthToken(setErrorToken, navigate, setVerifyToken, verifyToken);
   }, []);

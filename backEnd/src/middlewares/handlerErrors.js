@@ -3,6 +3,7 @@ const ERROR_HANDLER = {
     res.status(401).json({ JsonWebTokenError: "Token invalido" }),
   TokenExpiredError: (res) =>
     res.status(401).json({ TokenExpiredError: "Token expirado" }),
+  ReferenceError: (res) => res.status(500).json({ fail: "upps algo fallo" }),
   defaultError: (res) => res.status(500).end(),
 };
 module.exports = (err, req, res, next) => {

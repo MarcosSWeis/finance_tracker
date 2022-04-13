@@ -24,9 +24,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       user_id: DataTypes.INTEGER,
       fixed_income: DataTypes.DOUBLE,
-      income: DataTypes.DOUBLE,
+      varied_income: DataTypes.DOUBLE,
       category_inc_id: DataTypes.INTEGER,
-      title: DataTypes.STRING,
+      description: DataTypes.STRING,
     },
     {
       sequelize,

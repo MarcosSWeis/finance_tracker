@@ -1,64 +1,26 @@
+import { useContext, useState } from "react";
+import Skeleton from "react-loading-skeleton";
+import { DataContext } from "../context/DataContext";
+import CardsMetricsHome from "./CardsMetricsHome";
+import FormIncomes from "./FromIncomes";
+import HandlerButtonExpenses from "./HandlerButonExpenses";
+
+import HandlerButtonsIncomes from "./HandlerButtonsIncomes";
+
 export default function Home() {
+  const { showForm } = useContext(DataContext);
+
+  console.log(showForm, "showForm");
   return (
-    <div className="w-75 mx-auto">
-      <h2>Renderizando el Home</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </p>
+    <div className="w-100 mx-2 ">
+      <h2 className="text-center">Renderizando el Home</h2>
+      <div className="d-flex justify-content-center widthMetrics">
+        <CardsMetricsHome />
+      </div>
 
-      <div className="line"></div>
-
-      <h2>Lorem Ipsum Dolor</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </p>
-
-      <div className="line"></div>
-
-      <h2>Lorem Ipsum Dolor</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </p>
-
-      <div className="line"></div>
-
-      <h3>Lorem Ipsum Dolor</h3>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </p>
+      <HandlerButtonsIncomes />
+      {showForm && <FormIncomes />}
+      <HandlerButtonExpenses />
     </div>
   );
 }

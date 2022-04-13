@@ -6,6 +6,7 @@ export const DataProvider = ({ children }) => {
   const [errorToken, setErrorToken] = useState(null);
   const [verifyToken, setVerifyToken] = useState(null);
   const [errorFirstLogged, setErrorFirstLogged] = useState(null);
+  const [showForm, setShowForm] = useState(null);
 
   return (
     <DataContext.Provider
@@ -16,6 +17,8 @@ export const DataProvider = ({ children }) => {
         setVerifyToken,
         errorFirstLogged,
         setErrorFirstLogged,
+        showForm,
+        setShowForm,
       }}
     >
       {children}

@@ -22,8 +22,12 @@ content-type: application/json
 }
 ###
 //le tenemos que indicar cual es el esquema de autorizacion que utilizamos
-GET http://localhost:3001/animes
-Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmlja05hbWUiOiJNYXJjb3MiLCJpYXQiOjE2NDk1MzA2NjAsImV4cCI6MTY0OTUzMDY2Mn0.cWBfllWDNDUKLcolGtjZn-HyO4ba6kuYA7dow2gHyXI
+GET http://localhost:3001/budget
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmlja05hbWUiOiJNYXJjb3MiLCJpYXQiOjE2NDk3MDk3NDIsImV4cCI6MTY1MDMxNDU0Mn0.5TO3Tql-dTc2xcfvouOxJcUTfwqbdcAlTudkMG252P0
 ###
 POST http://localhost:3001/users/checkingToken
-Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmlja05hbWUiOiJNYXJjb3MiLCJpYXQiOjE2NDk1NTM2NTIsImV4cCI6MTY0OTU1MzY1M30.yUMaT7yJkU_SDvRzNVm5lHzVYaQne0fMaOiEaZTHto8
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmlja05hbWUiOiJtYXJjb3MiLCJpYXQiOjE2NDk3MTMyMDksImV4cCI6MTY1MDMxODAwOX0.I4sX7p1Fep9U-YP8VxD7SpObOeadX6ummgZujIVKksI
+
+###
+GET http://localhost:3001/budget/categories_income
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmlja05hbWUiOiJtYXJjb3MiLCJpYXQiOjE2NDk3MTMyMDksImV4cCI6MTY1MDMxODAwOX0.I4sX7p1Fep9U-YP8VxD7SpObOeadX6ummgZujIVKksI

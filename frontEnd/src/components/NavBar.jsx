@@ -7,9 +7,9 @@ export default function NavBar() {
   const { verifyToken } = useContext(DataContext);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-      <div className="container">
-        <NavLink to={"/home"} className="navbar-brand">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
+      <div className="container width-100vh">
+        <NavLink to={"/home"} className="navbar-brand ">
           Start Bootstrap
         </NavLink>
         <button
@@ -26,26 +26,26 @@ export default function NavBar() {
         <div className="collapse navbar-collapse" id="navbarResponsive">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item active px-1">
-              <NavLink to={"/home"} className="nav-link ">
-                Home
+              <NavLink to={"/home"} className="nav-link  cta">
+                <span className="hover-underline-animation">Home</span>
               </NavLink>
             </li>
             <li className="nav-item px-1">
-              <NavLink to={"/anime"} className="nav-link ">
-                Anime
+              <NavLink to={"/anime"} className="nav-link cta ">
+                <span className="hover-underline-animation">Presupuesto</span>
               </NavLink>
             </li>
             {!verifyToken ? (
               <li className="nav-item px-2">
-                <NavLink to={"/"} className="nav-link ">
-                  Login
+                <NavLink to={"/"} className="nav-link cta ">
+                  <span className="hover-underline-animation">Login</span>
                 </NavLink>
               </li>
             ) : (
               <LogOut />
             )}
             <li className="nav-item px-1">
-              <NavLink to={"/algo2"} className="nav-link">
+              <NavLink to={"/algo2"} className="nav-link cta">
                 #
               </NavLink>
             </li>

@@ -105,7 +105,7 @@ export default function Register() {
             </label>
             <input
               name="email"
-              type="text"
+              type="email"
               onChange={handlerChange}
               className="form-control"
               id="email"
