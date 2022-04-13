@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function HandlerButtonExpenses() {
   return (
     <>
@@ -19,11 +21,13 @@ export default function HandlerButtonExpenses() {
         </div>
 
         <div id="floating-button">
-          <p class="plus">+</p>
-          <img
-            class="edit"
-            src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png"
-          />
+          <Link to={"/expenses"}>
+            <p class="plus">+</p>
+            <img
+              class="edit"
+              src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png"
+            />
+          </Link>
         </div>
       </div>
     </>

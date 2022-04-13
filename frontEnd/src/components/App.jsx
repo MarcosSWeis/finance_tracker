@@ -28,7 +28,7 @@ export default function App() {
         <Route path="/register" element={<Register />} />
 
         <Route
-          path="/anime"
+          path="/budget"
           element={
             <PrivateRoute>
               <Anime />
@@ -44,6 +44,7 @@ export default function App() {
           }
         />
         <Route path="/users" element={<Users />} />
+        <Route path="*" element={<h2>error 404</h2>} />
       </Routes>
     </DataProvider>
   );

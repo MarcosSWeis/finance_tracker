@@ -80,9 +80,7 @@
     0 9px #fff, -9px 0 #fff, 9px 0 #fff, 0 -12px #fff, 0 12px #fff, -12px 0 #fff,
     12px 0 #fff;
 }
-/* .fab-button:hover .plus {
-  transform: rotate(45deg);
-} */
+
 .fab-button .menu {
   width: 4px;
   height: 4px;
@@ -106,4 +104,12 @@
 
 .rotate {
   transform: rotate(45deg);
+}
+.ml-16px {
+  margin-left: 16px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.cancel {
+  color: #dc3545;
 }

@@ -1,10 +1,56 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { getCategories } from "../helpers/get-categories-income";
+import { handlerValidationFormIncome } from "../helpers/handler-validation-form-income";
+import { DataContext } from "../context/DataContext";
+const initialFixedIncome = {
+  fixed_income: "",
+  varied_income: "",
+  category_inc_id: "",
+  description: "",
+};
 export default function FormIncomes() {
   const [categories, setCategories] = useState(null);
-  function handlerSubmit() {}
-  function handlerChange() {}
+  const [createIncome, setCreateIncome] = useState(initialFixedIncome);
+  const { setShowForm, setNewIncome } = useContext(DataContext);
+  //con newIncome al insertar un ingreso fijo, esta se pone true y avida a una funcion/companente que
+  //tiene que hacer un pedido a la db porque hay data nueva asi la mantego actualizada en tiempo real
+
+  function handlerChange(event) {
+    setCreateIncome({
+      ...createIncome,
+      [event.target.name]: event.target.value,
+    });
+    console.log(event.target.name, event.target.value);
+  }
+  function handlerSubmit(event) {
+    event.preventDefault();
+    const fixed_income = document.getElementById("fixed_income");
+    const errorFixed_income = document.getElementById("errorFixed_income");
+    const varied_income = document.getElementById("varied_income");
+    const errorVaried_income = document.getElementById("errorVaried_income");
+    const categories = document.getElementById("categories");
+    const errorCategories = document.getElementById("errorCategories");
+    const description = document.getElementById("description");
+    const errorDescription = document.getElementById("errorDescription");
+
+    let fieldsToValidate = {
+      fixed_income,
+      varied_income,
+      categories,
+      description,
+      errorFixed_income,
+      errorVaried_income,
+      errorCategories,
+      errorDescription,
+    };
+    handlerValidationFormIncome(
+      fieldsToValidate,
+      createIncome,
+      setShowForm,
+      setNewIncome
+    );
+  }
 
   useEffect(() => {
     getCategories().then((response) => {
@@ -14,7 +60,7 @@ export default function FormIncomes() {
 
   return (
     <div className="mx-auto pt-1 col-12 pl-0 mw-500px justify-content-around">
-      <form onSubmit={handlerSubmit} id="formRegisters">
+      <form onSubmit={handlerSubmit} id="formIncomes">
         <div className="mb-3">
           <label htmlFor="fixed_income" className="form-label">
             Ingreso fijo
@@ -26,12 +72,11 @@ export default function FormIncomes() {
             className="form-control"
             id="fixed_income"
             placeholder="Ingreso Fijo"
-            /* value={user.firstName}
-             */
+            value={createIncome.fixed_income}
           />
         </div>
 
-        <p className="text-danger" id="errorFirstName"></p>
+        <p className="text-danger" id="errorFixed_income"></p>
 
         <div className="mb-3">
           <label htmlFor="varied_income" className="form-label">
@@ -44,16 +89,22 @@ export default function FormIncomes() {
             className="form-control"
             id="varied_income"
             placeholder="Ingreso variable"
-            /* value={user.lastName}
-             */
+            value={createIncome.varied_income}
           />
         </div>
+        <p className="text-danger" id="errorVaried_income"></p>
+
         <label htmlFor="categories" className="d-block">
           Categorías
         </label>
         {categories ? (
-          <select name="category_inc_id" id="categories">
-            <option value=""></option>
+          <select
+            className="form-select"
+            name="category_inc_id"
+            id="categories"
+            onChange={handlerChange}
+          >
+            <option value={0}>Categorías</option>
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.category}
@@ -63,7 +114,7 @@ export default function FormIncomes() {
         ) : (
           <Skeleton />
         )}
-        <p className="text-danger" id="errorLastName"></p>
+        <p className="text-danger" id="errorCategories"></p>
         <div className="mb-3">
           <label htmlFor="description" className="form-label">
             Descripción
@@ -75,8 +126,7 @@ export default function FormIncomes() {
             className="form-control"
             id="description"
             placeholder="Descripción"
-            /* value={user.email}
-             */
+            value={createIncome.description}
           />
         </div>
         <p className="text-danger" id="errorDescription"></p>

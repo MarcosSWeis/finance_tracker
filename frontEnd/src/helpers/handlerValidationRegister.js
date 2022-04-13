@@ -138,6 +138,7 @@ export default function validationRegister(
   }
   if (Object.keys(errors) == 0) {
     const formData = new FormData(formRegisters);
+    console.log(formData, " form fata regiter");
     controllerUser.register(formData).then(({ data }) => {
       console.log(data);
       if (data.status) {

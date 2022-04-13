@@ -22,18 +22,21 @@ module.exports = {
   },
   fixedIncome: async (req, res, next) => {
     const { userId: id, body } = req;
-    console.log(body);
+    console.log(id, "id");
+    console.log(body, "body");
     try {
       const checkOneFixedIncome = await db.Incomes.findAll({
         where: {
-          user_id: id,
+          user_id: 2,
         },
         attributes: ["fixed_income"],
       });
-
+      console.log(checkOneFixedIncome, "checkOneFixedIncome");
+      // lo dejo asi por seguridad del backEnd , si bien en el front no dejo mostrar la opccion , un pedido a la api con un token valido
+      // funcionaria para que un usuario tenga dos ingresos fijos , en cambio asi no
       if (checkOneFixedIncome.length === 0) {
         const newIncome = await db.Incomes.create({
-          user_id: id,
+          user_id: 2,
           fixed_income: body.fixed_income,
           varied_income: body.varied_income,
           category_inc_id: body.category_inc_id,
@@ -64,7 +67,13 @@ module.exports = {
         res.status(201).json(response);
       } else {
         res.status(405).json({
-          msg: "Solo se admite un ingreso fijo, si desea modificarlo vaya a editarlo",
+          meta: {
+            ok: false,
+            status: 405,
+            statusText: "Method no allowed",
+            url: "",
+          },
+          msg: "No puede ingresar otro monto fijo, ya posee uno. Para modificarlo vaya a editar ingreso fijo ",
         });
       }
     } catch (err) {

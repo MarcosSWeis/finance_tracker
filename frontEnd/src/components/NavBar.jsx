@@ -31,7 +31,7 @@ export default function NavBar() {
               </NavLink>
             </li>
             <li className="nav-item px-1">
-              <NavLink to={"/anime"} className="nav-link cta ">
+              <NavLink to={"/budget"} className="nav-link cta ">
                 <span className="hover-underline-animation">Presupuesto</span>
               </NavLink>
             </li>

@@ -4,6 +4,10 @@ const ERROR_HANDLER = {
   TokenExpiredError: (res) =>
     res.status(401).json({ TokenExpiredError: "Token expirado" }),
   ReferenceError: (res) => res.status(500).json({ fail: "upps algo fallo" }),
+  SequelizeForeignKeyConstraintError: (res) =>
+    res
+      .status(406)
+      .json({ msg: "No puede realizar esta operación, registrese" }),
   defaultError: (res) => res.status(500).end(),
 };
 module.exports = (err, req, res, next) => {
