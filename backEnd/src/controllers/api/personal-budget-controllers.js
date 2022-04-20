@@ -20,14 +20,14 @@ module.exports = {
 
     res.json(dbz);
   },
-  fixedIncome: async (req, res, next) => {
+  createFixedIncome: async (req, res, next) => {
     const { userId: id, body } = req;
     console.log(id, "id");
     console.log(body, "body");
     try {
       const checkOneFixedIncome = await db.Incomes.findAll({
         where: {
-          user_id: 2,
+          user_id: id,
         },
         attributes: ["fixed_income"],
       });
@@ -36,7 +36,7 @@ module.exports = {
       // funcionaria para que un usuario tenga dos ingresos fijos , en cambio asi no
       if (checkOneFixedIncome.length === 0) {
         const newIncome = await db.Incomes.create({
-          user_id: 2,
+          user_id: id,
           fixed_income: body.fixed_income,
           varied_income: body.varied_income,
           category_inc_id: body.category_inc_id,
@@ -81,7 +81,7 @@ module.exports = {
       handlerErrors(err, req, res, next);
     }
   },
-  totalIncomes: async (req, res, next) => {
+  getIncomes: async (req, res, next) => {
     try {
       const { userId: id } = req;
       console.log(id);
@@ -108,7 +108,7 @@ module.exports = {
           status: status,
           statusText: statusText,
           length: incomes.length,
-          url: "",
+          url: "http://localhost:3001/budget/income",
         },
         data: incomes,
       };
@@ -141,7 +141,7 @@ module.exports = {
           status: status,
           statusText: statusText,
           length: categories.length,
-          url: "",
+          url: "http://localhost:3001/budget/categories_income",
         },
         data: categories,
       };
@@ -153,5 +153,10 @@ module.exports = {
       console.log(err);
       handlerErrors(err, req, res, next);
     }
+  },
+  updateIncome: (req, res) => {
+    const { userId: id, body } = req;
+    console.log(id, "id");
+    console.log(body, "body");
   },
 };

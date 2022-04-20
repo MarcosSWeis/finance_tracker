@@ -23,6 +23,7 @@ export default function Login() {
 
   //verificar si el token de localstorage funciona redirigo al home , de lo contrario me quedo aca para que se  loggee y refresque el token
 
+  //si uso esto ,  y cambio de cuenta me aparece la data de la otra cuenta , arreeglar
   useEffect(() => {
     getAuthToken(setErrorToken, navigate, setVerifyToken);
   }, []);

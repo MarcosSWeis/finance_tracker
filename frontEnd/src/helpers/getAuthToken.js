@@ -1,9 +1,16 @@
 import axios from "axios";
 
 export async function getAuthToken(setErrorToken, navigate, setVerifyToken) {
-  const token = window.localStorage.getItem("accessToken");
-
-  if (!token) {
+  const JsonUser = window.localStorage.getItem("user");
+  console.log(JsonUser);
+  const user = JSON.parse(JsonUser);
+  console.log(user, "user getAuthtoken");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.accessToken}`,
+    },
+  };
+  if (!user) {
     setErrorToken("Inicie sesión para poder acceder");
     return navigate("/");
   }
@@ -11,7 +18,7 @@ export async function getAuthToken(setErrorToken, navigate, setVerifyToken) {
   const ERROR_HANDLER = {
     JsonWebTokenError: (err) => {
       setErrorToken(err.response.data.JsonWebTokenError);
-      window.localStorage.removeItem("accessToken");
+      window.localStorage.removeItem("user");
       navigate("/");
     },
     TokenExpiredError: (err) => {
@@ -21,12 +28,6 @@ export async function getAuthToken(setErrorToken, navigate, setVerifyToken) {
     defaultError: () => {
       setErrorToken("Error inesperado");
       navigate("/");
-    },
-  };
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${JSON.parse(token)}`,
     },
   };
 

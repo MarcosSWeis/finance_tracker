@@ -16,15 +16,15 @@ export const controllerUser = {
   login: async (login) => {
     return axios
       .post(`http://localhost:3001/users/login`, login)
-      .then((response) => {
-        console.log(response, "response login");
-        if (response.data.accessToken) {
-          localStorage.setItem(
-            "user",
-            JSON.stringify(response.data.accessToken)
-          );
-        }
-        return response.data;
+      .then(({ data }) => {
+        // console.log(data, "response login");
+        // if (data.meta.ok) {
+        //   localStorage.setItem("user", JSON.stringify(data.data));
+        // }
+        return data;
       });
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   },
 };

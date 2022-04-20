@@ -14,7 +14,7 @@ export function handlerValidationFormIncome(
   },
   createIncome,
   setShowForm,
-  setNewIncome
+  setIncomesDb
 ) {
   //isNaN devuelve true si el parametro NO es un numero
   // por ende si devuelve false ES un numero
@@ -81,7 +81,7 @@ export function handlerValidationFormIncome(
           });
         }
         //aviso al resto de componentes que se agrego un ingreso fijo
-        setNewIncome(true);
+        setIncomesDb(true);
         //escondo el formulario
         setShowForm(null);
       })
@@ -94,6 +94,7 @@ export function handlerValidationFormIncome(
             text: err.response.data.msg,
             footer: "Gracias y disculpe las molestias",
           });
+
           //escondo el formulario
           setShowForm(null);
         }

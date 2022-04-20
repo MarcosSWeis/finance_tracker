@@ -12,7 +12,7 @@ const initialFixedIncome = {
 export default function FormIncomes() {
   const [categories, setCategories] = useState(null);
   const [createIncome, setCreateIncome] = useState(initialFixedIncome);
-  const { setShowForm, setNewIncome } = useContext(DataContext);
+  const { setShowForm, setIncomesDb } = useContext(DataContext);
   //con newIncome al insertar un ingreso fijo, esta se pone true y avida a una funcion/companente que
   //tiene que hacer un pedido a la db porque hay data nueva asi la mantego actualizada en tiempo real
 
@@ -48,7 +48,7 @@ export default function FormIncomes() {
       fieldsToValidate,
       createIncome,
       setShowForm,
-      setNewIncome
+      setIncomesDb
     );
   }
 

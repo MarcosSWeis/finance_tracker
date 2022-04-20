@@ -4,12 +4,21 @@ const userExtractor = require("../middlewares/userExtractor");
 
 const router = express.Router();
 
-router.get("/", userExtractor, personalBudgetControllers.totalIncomes);
+router.get("/income", userExtractor, personalBudgetControllers.getIncomes);
 router.get(
   "/categories_income",
   userExtractor,
   personalBudgetControllers.getCategories
 );
-router.post("/create", userExtractor, personalBudgetControllers.fixedIncome);
+router.post(
+  "/create_income",
+  userExtractor,
+  personalBudgetControllers.createFixedIncome
+);
+router.post(
+  "/update_income",
+  userExtractor,
+  personalBudgetControllers.updateIncome
+);
 
 module.exports = router;
