@@ -1,7 +1,6 @@
 import { useNavigate, Link } from "react-router-dom";
 export default function CardsMetricsHome({ fixedIncome }) {
   const loQueGasto = 25620;
-
   const percentageIncome = ((loQueGasto * 100) / fixedIncome).toFixed(2);
   return (
     <div className="col-md-10 w-100 pl-0 ">

@@ -34,7 +34,6 @@ export default function Home() {
       ) : (
         <Skeleton />
       )}
-
       <HandlerButtonsIncomes />
 
       {showForm && <FormIncomes setDataIncome={setDataIncome} />}

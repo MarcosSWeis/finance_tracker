@@ -44,7 +44,6 @@ export default function NavBar() {
                   alt="image_user"
                   className="img-fluid img-thumbnail rounded-circle border-0 w-50px m-auto d-block"
                 />
-
                 <span className="hover-underline-animation p-0">
                   {user.username}
                 </span>
