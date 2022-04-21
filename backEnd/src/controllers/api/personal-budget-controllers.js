@@ -22,8 +22,7 @@ module.exports = {
   },
   createFixedIncome: async (req, res, next) => {
     const { userId: id, body } = req;
-    console.log(id, "id");
-    console.log(body, "body");
+
     try {
       const checkOneFixedIncome = await db.Incomes.findAll({
         where: {
@@ -31,7 +30,7 @@ module.exports = {
         },
         attributes: ["fixed_income"],
       });
-      console.log(checkOneFixedIncome, "checkOneFixedIncome");
+
       // lo dejo asi por seguridad del backEnd , si bien en el front no dejo mostrar la opccion , un pedido a la api con un token valido
       // funcionaria para que un usuario tenga dos ingresos fijos , en cambio asi no
       if (checkOneFixedIncome.length === 0) {
@@ -43,7 +42,7 @@ module.exports = {
         let ok;
         let status;
         let statusText;
-        console.log(newIncome, 1111111);
+
         if (newIncome) {
           ok = true;
           status = 201;
@@ -82,7 +81,7 @@ module.exports = {
   getIncomes: async (req, res, next) => {
     try {
       const { userId: id } = req;
-      console.log(id);
+
       const incomes = await db.Incomes.findAll({
         where: {
           user_id: id,
@@ -116,7 +115,7 @@ module.exports = {
       handlerErrors(err, req, res, next);
     }
   },
-  getCategories: async (req, res) => {
+  getCategoriesIncome: async (req, res) => {
     try {
       const categories = await db.Categories_income.findAll({
         raw: true,
@@ -147,6 +146,73 @@ module.exports = {
       categories
         ? res.status(200).json(response)
         : res.status(500).json(response);
+    } catch (err) {
+      console.log(err);
+      handlerErrors(err, req, res, next);
+    }
+  },
+
+  getCategoriesExpenses: async (req, res, next) => {
+    try {
+      const categoriesExpenses = await db.Categories_expenses.findAll({
+        raw: true,
+      });
+      let ok;
+      let status;
+      let statusText;
+
+      if (categoriesExpenses) {
+        ok = true;
+        status = 201;
+        statusText = "OK";
+      } else {
+        ok = false;
+        status = 500;
+        statusText = "Error interno del servidor";
+      }
+      const response = {
+        meta: {
+          ok: ok,
+          status: status,
+          statusText: statusText,
+          url: "http://localhost:3001/budget/categories_expenses",
+        },
+        data: categoriesExpenses,
+      };
+      res.status(200).json(response);
+    } catch (err) {
+      console.log(err);
+      handlerErrors(err, req, res, next);
+    }
+  },
+  getExpenseType: async (req, res, next) => {
+    try {
+      const expenseType = await db.Expense_type.findAll({
+        raw: true,
+      });
+      let ok;
+      let status;
+      let statusText;
+
+      if (expenseType) {
+        ok = true;
+        status = 201;
+        statusText = "OK";
+      } else {
+        ok = false;
+        status = 500;
+        statusText = "Error interno del servidor";
+      }
+      const response = {
+        meta: {
+          ok: ok,
+          status: status,
+          statusText: statusText,
+          url: "http://localhost:3001/budget/expense_type",
+        },
+        data: expenseType,
+      };
+      res.status(200).json(response);
     } catch (err) {
       console.log(err);
       handlerErrors(err, req, res, next);
