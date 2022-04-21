@@ -1,4 +1,3 @@
-import { createFixedIncomes } from "./create-fixed-incomes";
 import Swal from "sweetalert2";
 import { controllerBudget } from "../services/request/budget";
 
@@ -107,7 +106,8 @@ export function handlerValidationFormIncome(
           }
         });
     } else {
-      createFixedIncomes(createIncome)
+      controllerBudget
+        .createFixedIncomes(createIncome)
         .then(({ data }) => {
           console.log(data, "DATACUANDO SE CREA");
           if (data.meta.ok) {

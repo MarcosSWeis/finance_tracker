@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { getCategoriesIncome } from "../helpers/get-categories-income";
+import { controllerBudget } from "../services/request/budget";
 export default function CardsMetricsHome({ fixedIncome, category }) {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
-    getCategoriesIncome().then(({ data }) => {
+    controllerBudget.getCategoriesIncome().then(({ data }) => {
       setCategories(data.data);
     });
   }, []);
@@ -64,9 +64,7 @@ export default function CardsMetricsHome({ fixedIncome, category }) {
                 </div>
                 <div className=" d-flex ">
                   <h5 className="card-title ">Ingreso fijo</h5>
-                  <h5 className=" col-4 text-right  mb-3 ml-auto ">
-                    $ {fixedIncome}
-                  </h5>
+                  <h5 className="text-right  mb-3 ml-auto ">$ {fixedIncome}</h5>
                 </div>
                 <div className=" d-flex ">
                   <h5 className="card-title ">Categoría</h5>

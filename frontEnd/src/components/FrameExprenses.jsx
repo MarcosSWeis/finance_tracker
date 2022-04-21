@@ -27,7 +27,7 @@ export default function FrameExpenses() {
             <td className="align-middle p-0">tipo de gasto</td>
             <td className="align-middle p-0">desc</td>
             <td className="align-middle p-0">monto</td>
-            <td className="align-middle p-0">categoria</td>
+            <td className="align-middle p-0">categoría</td>
             <td className="p-1  mw-30px">
               <button type="button" className="btn btn-primary w-100 p-0 mb-1">
                 Editar

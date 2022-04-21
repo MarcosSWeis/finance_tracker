@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Route, Routes, Outlet } from "react-router-dom";
 import { DataContext } from "../context/DataContext";
-import { getIncomesDb } from "../helpers/getIncomesDb";
+import { controllerBudget } from "../services/request/budget";
 import CardsMetricsHome from "./CardsMetricsHome";
 import FormExpenses from "./FormExpenses";
 import FrameExpenses from "./FrameExprenses";
@@ -17,7 +17,7 @@ export default function Home() {
   const [dataIncome, setDataIncome] = useState({});
 
   useEffect(() => {
-    getIncomesDb().then(({ data }) => {
+    controllerBudget.getIncomesDb().then(({ data }) => {
       if (data.meta.length > 0) {
         setIncomesDb(data.meta.ok);
         setDataIncome(data.data[0]);

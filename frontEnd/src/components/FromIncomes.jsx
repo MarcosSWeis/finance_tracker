@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
-import { getCategoriesIncome } from "../helpers/get-categories-income";
+
 import { handlerValidationFormIncome } from "../helpers/handler-validation-form-income";
 import { DataContext } from "../context/DataContext";
-import { getIncomesDb } from "../helpers/getIncomesDb";
+import { controllerBudget } from "../services/request/budget";
 const initialFixedIncome = {
   fixed_income: "",
   varied_income: "",
@@ -59,44 +59,46 @@ export default function FormIncomes({ setDataIncome }) {
   }
 
   useEffect(() => {
-    getCategoriesIncome().then((response) => {
+    controllerBudget.getCategoriesIncome().then((response) => {
       setCategories(response.data.data);
     });
     //si existe incomesDb quiere decir que ya tiene un ingreso fijo , por lo tanto cuando cargo el formulario lo relleno
     //con esos datos
     if (incomesDb) {
-      getIncomesDb().then(({ data }) => {
+      controllerBudget.getIncomesDb().then(({ data }) => {
         setCreateIncome(data.data[0]);
       });
     }
   }, []);
 
   return (
-    <div className="mx-auto pt-1 col-12 pl-0 mw-500px justify-content-around">
-      {incomesDb ? (
-        <h2 className="mt-4 text-center colorCeleste">Editar Ingreso</h2>
-      ) : (
-        <h2 className="mt-4 text-center colorCeleste">Crear ingreso</h2>
-      )}
-      <form onSubmit={handlerSubmit} id="formIncomes">
-        <div className="mb-3">
-          <label htmlFor="fixed_income" className="form-label">
-            Ingreso fijo
-          </label>
-          <input
-            name="fixed_income"
-            type="number"
-            onChange={handlerChange}
-            className="form-control"
-            id="fixed_income"
-            placeholder="Ingreso Fijo"
-            value={createIncome.fixed_income}
-          />
-        </div>
+    <>
+      {incomesDb && categories ? (
+        <div className="mx-auto pt-1 col-12 pl-0 mw-500px justify-content-around">
+          {incomesDb ? (
+            <h2 className="mt-4 text-center colorCeleste">Editar Ingreso</h2>
+          ) : (
+            <h2 className="mt-4 text-center colorCeleste">Crear ingreso</h2>
+          )}
+          <form onSubmit={handlerSubmit} id="formIncomes">
+            <div className="mb-3">
+              <label htmlFor="fixed_income" className="form-label">
+                Ingreso fijo
+              </label>
+              <input
+                name="fixed_income"
+                type="number"
+                onChange={handlerChange}
+                className="form-control"
+                id="fixed_income"
+                placeholder="Ingreso Fijo"
+                value={createIncome.fixed_income}
+              />
+            </div>
 
-        <p className="text-danger" id="errorFixed_income"></p>
+            <p className="text-danger" id="errorFixed_income"></p>
 
-        {/* <div className="mb-3">
+            {/* <div className="mb-3">
           <label htmlFor="varied_income" className="form-label">
             Ingreso variable
           </label>
@@ -112,47 +114,88 @@ export default function FormIncomes({ setDataIncome }) {
         </div>
         <p className="text-danger" id="errorVaried_income"></p> */}
 
-        <label htmlFor="categories" className="d-block">
-          Categorías
-        </label>
-        {categories ? (
-          <select
-            className="form-select"
-            name="category_inc_id"
-            id="categories"
-            onChange={handlerChange}
-          >
-            <option value={0}>Categorías</option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.category}
-              </option>
-            ))}
-          </select>
-        ) : (
-          <Skeleton />
-        )}
-        <p className="text-danger" id="errorCategories"></p>
-        <div className="mb-3">
-          <label htmlFor="description" className="form-label">
-            Descripción
-          </label>
-          <input
-            name="description"
-            type="text"
-            onChange={handlerChange}
-            className="form-control"
-            id="description"
-            placeholder="Descripción"
-            value={createIncome.description}
-          />
-        </div>
-        <p className="text-danger" id="errorDescription"></p>
+            <label htmlFor="categories" className="d-block">
+              Categorías
+            </label>
 
-        <button type="submit" id="btnRegister" className="btn btn-primary">
-          Enviar
-        </button>
-      </form>
-    </div>
+            {categories ? (
+              <select
+                className="form-select"
+                name="category_inc_id"
+                id="categories"
+                onChange={handlerChange}
+              >
+                <option value={0}>Categorías</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.category}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <Skeleton />
+            )}
+            <p className="text-danger" id="errorCategories"></p>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">
+                Descripción
+              </label>
+              <input
+                name="description"
+                type="text"
+                onChange={handlerChange}
+                className="form-control"
+                id="description"
+                placeholder="Descripción"
+                value={createIncome.description}
+              />
+            </div>
+            <p className="text-danger" id="errorDescription"></p>
+
+            <button type="submit" id="btnRegister" className="btn btn-primary">
+              Enviar
+            </button>
+          </form>
+        </div>
+      ) : (
+        loader()
+      )}
+    </>
   );
+
+  function loader() {
+    return (
+      <div className="mx-auto pt-1 col-12 pl-0 mw-500px justify-content-around">
+        <h2 className="mt-4 text-center text-danger">
+          <Skeleton />
+        </h2>
+        <form id="formIncomes">
+          <div className="mb-3">
+            <label htmlFor="type_id" className="form-label">
+              <Skeleton />
+            </label>
+
+            <Skeleton />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="amount" className="form-label">
+              <Skeleton />
+            </label>
+            <Skeleton />
+          </div>
+          <label htmlFor="categories" className="d-block">
+            <Skeleton />
+          </label>
+          <Skeleton />
+          <div className="mb-3">
+            <label htmlFor="description" className="form-label">
+              <Skeleton />
+            </label>
+            <Skeleton />
+          </div>
+          <Skeleton width={50} />
+        </form>
+      </div>
+    );
+  }
 }
