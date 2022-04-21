@@ -29,4 +29,16 @@ export const controllerBudget = {
       console.log(err);
     }
   },
+  getCategoriesExpenses: async () => {
+    try {
+      const config = getConfigTokenLocalStorage();
+      const response = await axios.get(
+        `http://localhost:3001/budget/categories_expenses`,
+        config
+      );
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };

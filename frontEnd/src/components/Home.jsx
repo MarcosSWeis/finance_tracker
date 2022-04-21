@@ -4,13 +4,16 @@ import { Route, Routes, Outlet } from "react-router-dom";
 import { DataContext } from "../context/DataContext";
 import { getIncomesDb } from "../helpers/getIncomesDb";
 import CardsMetricsHome from "./CardsMetricsHome";
+import FormExpenses from "./FormExpenses";
+import FrameExpenses from "./FrameExprenses";
 import FormIncomes from "./FromIncomes";
 import HandlerButtonExpenses from "./HandlerButonExpenses";
 
 import HandlerButtonsIncomes from "./HandlerButtonsIncomes";
 
 export default function Home() {
-  const { showForm, incomesDb, setIncomesDb } = useContext(DataContext);
+  const { showForm, incomesDb, setIncomesDb, showFormExpense } =
+    useContext(DataContext);
   const [dataIncome, setDataIncome] = useState({});
 
   useEffect(() => {
@@ -29,15 +32,17 @@ export default function Home() {
       <h2 className="text-center">Renderizando el Home</h2>
       {incomesDb ? (
         <div className="d-flex justify-content-center widthMetrics">
-          <CardsMetricsHome fixedIncome={dataIncome.fixed_income} />
+          <CardsMetricsHome
+            fixedIncome={dataIncome.fixed_income}
+            category={dataIncome.category_inc_id}
+          />
         </div>
       ) : (
         <Skeleton />
       )}
       <HandlerButtonsIncomes />
-
       {showForm && <FormIncomes setDataIncome={setDataIncome} />}
-      <HandlerButtonExpenses />
+      {showFormExpense && <FormExpenses />}
     </div>
   );
 }

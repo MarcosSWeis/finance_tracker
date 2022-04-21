@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getConfigTokenLocalStorage } from "./get-config-token-localStorage";
 
-export async function getCategories() {
+export async function getCategoriesIncome() {
   try {
     const config = getConfigTokenLocalStorage();
     const response = await axios.get(

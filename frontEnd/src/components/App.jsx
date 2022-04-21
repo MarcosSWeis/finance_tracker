@@ -17,7 +17,6 @@ import "../css/custom-styles.css";
 import "../css/effectHoverNavbar.css";
 import "../css/handler-buttons-incomes.css";
 import "../css/handler-buttons-expenses.css";
-import FormIncomes from "./FromIncomes";
 
 export default function App() {
   return (

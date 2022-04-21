@@ -1,5 +1,16 @@
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-export default function CardsMetricsHome({ fixedIncome }) {
+import { getCategoriesIncome } from "../helpers/get-categories-income";
+export default function CardsMetricsHome({ fixedIncome, category }) {
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    getCategoriesIncome().then(({ data }) => {
+      setCategories(data.data);
+    });
+  }, []);
+  console.log(categories, "categorieas");
+  console.log(category, "category id");
+
   const loQueGasto = 25620;
   const percentageIncome = ((loQueGasto * 100) / fixedIncome).toFixed(2);
   return (
@@ -21,7 +32,7 @@ export default function CardsMetricsHome({ fixedIncome }) {
                   </div>
                   <div className="col-4 text-right">
                     <span>
-                      {percentageIncome}% <i className="fa fa-arrow-up"></i>
+                      {percentageIncome} % <i className="fa fa-arrow-up"></i>
                     </span>
                   </div>
                 </div>
@@ -52,9 +63,19 @@ export default function CardsMetricsHome({ fixedIncome }) {
                   <i className="fas fa-shopping-cart"></i>
                 </div>
                 <div className=" d-flex ">
-                  <h5 className="card-title mb-0 mt-4 ">Ingreso fijo</h5>
-                  <h5 className=" col-4 text-right mt-4 mb-4 ml-auto ">
+                  <h5 className="card-title ">Ingreso fijo</h5>
+                  <h5 className=" col-4 text-right  mb-3 ml-auto ">
                     $ {fixedIncome}
+                  </h5>
+                </div>
+                <div className=" d-flex ">
+                  <h5 className="card-title ">Categoría</h5>
+                  <h5 className="text-right  mb-2 ml-auto ">
+                    {categories
+                      ? categories.map((categ) =>
+                          categ.id == category ? categ.category : ""
+                        )
+                      : ""}
                   </h5>
                 </div>
                 <div className="row  mb-2 d-flex"></div>

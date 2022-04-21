@@ -10,6 +10,7 @@ export default function LogOut() {
     setErrorFirstLogged,
     setIncomesDb,
     setUser,
+    setShowFormExpense,
   } = useContext(DataContext);
   const navigate = useNavigate();
   function handlerClick(event) {
@@ -24,6 +25,7 @@ export default function LogOut() {
     setErrorFirstLogged(null);
     setIncomesDb(null);
     setUser(null);
+    setShowFormExpense(null);
     //2° forma y saco setVerifyToken
     //HAGO LA DOS ASI TODAS LAS VARIABLES SE REINICIAN
     window.location.reload(true);

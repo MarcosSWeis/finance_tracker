@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
-import { getCategories } from "../helpers/get-categories-income";
+import { getCategoriesIncome } from "../helpers/get-categories-income";
 import { handlerValidationFormIncome } from "../helpers/handler-validation-form-income";
 import { DataContext } from "../context/DataContext";
 import { getIncomesDb } from "../helpers/getIncomesDb";
@@ -14,7 +14,6 @@ export default function FormIncomes({ setDataIncome }) {
   const { setShowForm, setIncomesDb, incomesDb } = useContext(DataContext);
   const [categories, setCategories] = useState(null);
   const [createIncome, setCreateIncome] = useState(initialFixedIncome);
-  const [updateIncome, setUpdateIncome] = useState({});
 
   //con newIncome al insertar un ingreso fijo, esta se pone true y avida a una funcion/companente que
   //tiene que hacer un pedido a la db porque hay data nueva asi la mantego actualizada en tiempo real
@@ -54,13 +53,13 @@ export default function FormIncomes({ setDataIncome }) {
       setShowForm,
       setIncomesDb,
       incomesDb,
-      updateIncome,
+
       setDataIncome
     );
   }
 
   useEffect(() => {
-    getCategories().then((response) => {
+    getCategoriesIncome().then((response) => {
       setCategories(response.data.data);
     });
     //si existe incomesDb quiere decir que ya tiene un ingreso fijo , por lo tanto cuando cargo el formulario lo relleno
@@ -74,6 +73,11 @@ export default function FormIncomes({ setDataIncome }) {
 
   return (
     <div className="mx-auto pt-1 col-12 pl-0 mw-500px justify-content-around">
+      {incomesDb ? (
+        <h2 className="mt-4 text-center colorCeleste">Editar Ingreso</h2>
+      ) : (
+        <h2 className="mt-4 text-center colorCeleste">Crear ingreso</h2>
+      )}
       <form onSubmit={handlerSubmit} id="formIncomes">
         <div className="mb-3">
           <label htmlFor="fixed_income" className="form-label">

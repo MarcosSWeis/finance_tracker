@@ -1,7 +1,7 @@
 import { createFixedIncomes } from "./create-fixed-incomes";
 import Swal from "sweetalert2";
 import { controllerBudget } from "../services/request/budget";
-import { getIncomesDb } from "./getIncomesDb";
+
 let errors = {};
 export function handlerValidationFormIncome(
   {
@@ -18,7 +18,6 @@ export function handlerValidationFormIncome(
   setShowForm,
   setIncomesDb,
   incomesDb,
-  updateIncome,
   setDataIncome
 ) {
   //isNaN devuelve true si el parametro NO es un numero
@@ -92,6 +91,7 @@ export function handlerValidationFormIncome(
             });
             setIncomesDb(data.meta.ok);
             setDataIncome(data.data);
+            setShowForm(null);
           }
         })
         .catch((err) => {
@@ -121,6 +121,7 @@ export function handlerValidationFormIncome(
           }
           setIncomesDb(data.meta.ok);
           setDataIncome(data.data);
+          setShowForm(null);
         })
         .catch((err) => {
           console.log(err.response.data);
