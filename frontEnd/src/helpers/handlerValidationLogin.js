@@ -4,7 +4,8 @@ export default function validationFormLogin(
   { email, errorEmail, password, errorPassword },
   login,
   navigate,
-  setErrorToken
+  setErrorToken,
+  setUser
 ) {
   //email
   const validateEmail = /^([\da-z_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
@@ -44,12 +45,12 @@ export default function validationFormLogin(
   if (Object.keys(errors).length === 0) {
     controllerUser
       .login(login)
-      .then(({ data }) => {
-        console.log(data);
-        if (data.accessToken) {
-          localStorage.setItem("accessToken", JSON.stringify(data.accessToken));
-          setErrorToken(null);
+      .then((data) => {
+        console.log(data, "response login");
+        if (data.meta.ok) {
+          localStorage.setItem("user", JSON.stringify(data.data));
         }
+        setUser(data.data);
         navigate("/home");
       })
       .catch((error) => {

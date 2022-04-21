@@ -31,3 +31,7 @@ Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmlja05h
 ###
 GET http://localhost:3001/budget/categories_income
 Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmlja05hbWUiOiJtYXJjb3MiLCJpYXQiOjE2NDk3MTMyMDksImV4cCI6MTY1MDMxODAwOX0.I4sX7p1Fep9U-YP8VxD7SpObOeadX6ummgZujIVKksI
+
+### 
+GET http://localhost:3001/budget/income
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTEsIm5pY2tOYW1lIjoiTWFyY29zIiwiaWF0IjoxNjQ5ODgyMzY0LCJleHAiOjE2NTA0ODcxNjR9.a-w1SXWDOvqL9oVfHV1Klf6MNuUYa1XB5l0hkdJP3xs

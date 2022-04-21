@@ -17,6 +17,7 @@ import "../css/custom-styles.css";
 import "../css/effectHoverNavbar.css";
 import "../css/handler-buttons-incomes.css";
 import "../css/handler-buttons-expenses.css";
+import FormIncomes from "./FromIncomes";
 
 export default function App() {
   return (
@@ -36,13 +37,14 @@ export default function App() {
           }
         />
         <Route
-          path="/home"
+          path="home"
           element={
             <PrivateRoute>
               <Home />
             </PrivateRoute>
           }
         />
+
         <Route path="/users" element={<Users />} />
         <Route path="*" element={<h2>error 404</h2>} />
       </Routes>

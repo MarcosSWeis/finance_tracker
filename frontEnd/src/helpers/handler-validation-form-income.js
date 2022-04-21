@@ -1,5 +1,7 @@
 import { createFixedIncomes } from "./create-fixed-incomes";
 import Swal from "sweetalert2";
+import { controllerBudget } from "../services/request/budget";
+import { getIncomesDb } from "./getIncomesDb";
 let errors = {};
 export function handlerValidationFormIncome(
   {
@@ -14,11 +16,14 @@ export function handlerValidationFormIncome(
   },
   createIncome,
   setShowForm,
-  setNewIncome
+  setIncomesDb,
+  incomesDb,
+  updateIncome,
+  setDataIncome
 ) {
   //isNaN devuelve true si el parametro NO es un numero
   // por ende si devuelve false ES un numero
-  console.log(isNaN(createIncome.fixed_income));
+
   if (createIncome.fixed_income == "") {
     errors.fixed_income = "El campo ingreso fijo no puede estar vació";
   } else if (isNaN(createIncome.fixed_income)) {
@@ -31,17 +36,17 @@ export function handlerValidationFormIncome(
     }
   }
 
-  if (createIncome.varied_income == "") {
-    errors.varied_income = "El campo ingreso vario no puede estar vació";
-  } else if (isNaN(createIncome.varied_income)) {
-    errors.varied_income = "El valor debe ser un numero";
-  } else {
-    if (errors.varied_income) {
-      delete errors.varied_income;
-      varied_income.classList.remove("is-invalid");
-      errorVaried_income.innerText = "";
-    }
-  }
+  //   if (createIncome.varied_income == "") {
+  //     errors.varied_income = "El campo ingreso vario no puede estar vació";
+  //   } else if (isNaN(createIncome.varied_income)) {
+  //     errors.varied_income = "El valor debe ser un numero";
+  //   } else {
+  //     if (errors.varied_income) {
+  //       delete errors.varied_income;
+  //       varied_income.classList.remove("is-invalid");
+  //       errorVaried_income.innerText = "";
+  //     }
+  //   }
 
   if (createIncome.category_inc_id == "") {
     errors.categories = "Seleccione una categoría";
@@ -66,48 +71,81 @@ export function handlerValidationFormIncome(
       errorDescription.innerText = "";
     }
   }
-
+  console.log(errors);
+  console.log(incomesDb, "incomesDb en from ingreso fijo");
   if (Object.keys(errors) == 0) {
-    createFixedIncomes(createIncome)
-      .then(({ data }) => {
-        console.log(data);
-        if (data.meta.ok) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        }
-        //aviso al resto de componentes que se agrego un ingreso fijo
-        setNewIncome(true);
-        //escondo el formulario
-        setShowForm(null);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-        if (err.response.data) {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err.response.data.msg,
-            footer: "Gracias y disculpe las molestias",
-          });
-          //escondo el formulario
-          setShowForm(null);
-        }
-      });
+    //si viene de /home/create_income entra aca
+    //de lo contrario si viene con /home/update_inocme va al update
+    if (incomesDb) {
+      console.log("estoy en update");
+      controllerBudget
+        .updateIncome(createIncome)
+        .then(({ data }) => {
+          console.log(data, "data cuando se actualiza");
+          if (data.meta.ok) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Your work has been saved",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+            setIncomesDb(data.meta.ok);
+            setDataIncome(data.data);
+          }
+        })
+        .catch((err) => {
+          if (err.response.data) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: err.response.data.msg,
+              footer: "Gracias y disculpe las molestias",
+            });
+            //escondo el formulario
+            setShowForm(null);
+          }
+        });
+    } else {
+      createFixedIncomes(createIncome)
+        .then(({ data }) => {
+          console.log(data, "DATACUANDO SE CREA");
+          if (data.meta.ok) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Your work has been saved",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+          }
+          setIncomesDb(data.meta.ok);
+          setDataIncome(data.data);
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+          if (err.response.data) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: err.response.data.msg,
+              footer: "Gracias y disculpe las molestias",
+            });
+            //escondo el formulario
+            setShowForm(null);
+          }
+        });
+    }
   } else {
     console.log("entra al else porqeu hay errores");
     if (errors.fixed_income) {
       errorFixed_income.innerText = errors.fixed_income;
       fixed_income.classList.add("is-invalid");
     }
-    if (errors.varied_income) {
-      errorVaried_income.innerText = errors.varied_income;
-      varied_income.classList.add("is-invalid");
-    }
+    // if (errors.varied_income) {
+    //   errorVaried_income.innerText = errors.varied_income;
+    //   varied_income.classList.add("is-invalid");
+    // }
     if (errors.categories) {
       errorCategories.innerText = errors.categories;
       categories.classList.add("is-invalid");

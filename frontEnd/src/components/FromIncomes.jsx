@@ -3,16 +3,19 @@ import Skeleton from "react-loading-skeleton";
 import { getCategories } from "../helpers/get-categories-income";
 import { handlerValidationFormIncome } from "../helpers/handler-validation-form-income";
 import { DataContext } from "../context/DataContext";
+import { getIncomesDb } from "../helpers/getIncomesDb";
 const initialFixedIncome = {
   fixed_income: "",
   varied_income: "",
   category_inc_id: "",
   description: "",
 };
-export default function FormIncomes() {
+export default function FormIncomes({ setDataIncome }) {
+  const { setShowForm, setIncomesDb, incomesDb } = useContext(DataContext);
   const [categories, setCategories] = useState(null);
   const [createIncome, setCreateIncome] = useState(initialFixedIncome);
-  const { setShowForm, setNewIncome } = useContext(DataContext);
+  const [updateIncome, setUpdateIncome] = useState({});
+
   //con newIncome al insertar un ingreso fijo, esta se pone true y avida a una funcion/companente que
   //tiene que hacer un pedido a la db porque hay data nueva asi la mantego actualizada en tiempo real
 
@@ -21,14 +24,15 @@ export default function FormIncomes() {
       ...createIncome,
       [event.target.name]: event.target.value,
     });
+
     console.log(event.target.name, event.target.value);
   }
   function handlerSubmit(event) {
     event.preventDefault();
     const fixed_income = document.getElementById("fixed_income");
     const errorFixed_income = document.getElementById("errorFixed_income");
-    const varied_income = document.getElementById("varied_income");
-    const errorVaried_income = document.getElementById("errorVaried_income");
+    // const varied_income = document.getElementById("varied_income");
+    // const errorVaried_income = document.getElementById("errorVaried_income");
     const categories = document.getElementById("categories");
     const errorCategories = document.getElementById("errorCategories");
     const description = document.getElementById("description");
@@ -36,11 +40,11 @@ export default function FormIncomes() {
 
     let fieldsToValidate = {
       fixed_income,
-      varied_income,
+      // varied_income,
       categories,
       description,
       errorFixed_income,
-      errorVaried_income,
+      // errorVaried_income,
       errorCategories,
       errorDescription,
     };
@@ -48,7 +52,10 @@ export default function FormIncomes() {
       fieldsToValidate,
       createIncome,
       setShowForm,
-      setNewIncome
+      setIncomesDb,
+      incomesDb,
+      updateIncome,
+      setDataIncome
     );
   }
 
@@ -56,6 +63,13 @@ export default function FormIncomes() {
     getCategories().then((response) => {
       setCategories(response.data.data);
     });
+    //si existe incomesDb quiere decir que ya tiene un ingreso fijo , por lo tanto cuando cargo el formulario lo relleno
+    //con esos datos
+    if (incomesDb) {
+      getIncomesDb().then(({ data }) => {
+        setCreateIncome(data.data[0]);
+      });
+    }
   }, []);
 
   return (
@@ -78,7 +92,7 @@ export default function FormIncomes() {
 
         <p className="text-danger" id="errorFixed_income"></p>
 
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <label htmlFor="varied_income" className="form-label">
             Ingreso variable
           </label>
@@ -92,7 +106,7 @@ export default function FormIncomes() {
             value={createIncome.varied_income}
           />
         </div>
-        <p className="text-danger" id="errorVaried_income"></p>
+        <p className="text-danger" id="errorVaried_income"></p> */}
 
         <label htmlFor="categories" className="d-block">
           Categorías

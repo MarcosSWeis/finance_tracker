@@ -26,7 +26,7 @@ export default function Register() {
   }
   async function handlerSubmit(event) {
     event.preventDefault();
-    console.log("depues del prevnet");
+
     const formRegisters = document.getElementById("formRegisters");
     const firstName = document.getElementById("firstName");
     const errorFirstName = document.getElementById("errorFirstName");

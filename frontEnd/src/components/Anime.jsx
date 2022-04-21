@@ -1,15 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { controllerAnime } from "../services/request/animes";
+import { controllerBudget } from "../services/request/budget";
 export default function Anime() {
   const [data, setData] = useState(null);
   const token = JSON.parse(localStorage.getItem("accessToken"));
   const navigate = useNavigate();
 
   async function getAnime() {
-    const response = await controllerAnime.getAnime();
-    console.log(response);
+    const response = await controllerBudget.getAnime();
+
     setData(response.data);
   }
   useEffect(() => {

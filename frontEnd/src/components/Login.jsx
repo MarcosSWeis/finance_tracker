@@ -11,10 +11,8 @@ const loginStateInitial = {
   remember_me: false,
 };
 export default function Login() {
-  const { errorToken } = useContext(DataContext);
-  const { setErrorToken } = useContext(DataContext);
-  const { setVerifyToken } = useContext(DataContext);
-  const { verifyToken } = useContext(DataContext);
+  const { errorToken, setErrorToken, setVerifyToken, verifyToken, setUser } =
+    useContext(DataContext);
 
   const [login, setDataLogin] = useState(loginStateInitial);
   //const [userLogged, setUserLogged] = useState(null);
@@ -23,6 +21,7 @@ export default function Login() {
 
   //verificar si el token de localstorage funciona redirigo al home , de lo contrario me quedo aca para que se  loggee y refresque el token
 
+  //si uso esto ,  y cambio de cuenta me aparece la data de la otra cuenta , arreeglar
   useEffect(() => {
     getAuthToken(setErrorToken, navigate, setVerifyToken);
   }, []);
@@ -46,7 +45,7 @@ export default function Login() {
       password,
       errorPassword,
     };
-    validationFormLogin(elements, login, navigate, setErrorToken);
+    validationFormLogin(elements, login, navigate, setErrorToken, setUser);
   }
   return (
     <>

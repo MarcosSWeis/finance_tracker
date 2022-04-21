@@ -1,9 +1,21 @@
 import axios from "axios";
+//getAuthToken lo que hace es que va al backend a comprobar que el token es valido
+export async function getAuthToken(
+  setErrorToken,
+  navigate,
+  setVerifyToken,
+  setUser
+) {
+  const JsonUser = window.localStorage.getItem("user");
 
-export async function getAuthToken(setErrorToken, navigate, setVerifyToken) {
-  const token = window.localStorage.getItem("accessToken");
+  const user = JSON.parse(JsonUser);
 
-  if (!token) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.accessToken}`,
+    },
+  };
+  if (!user) {
     setErrorToken("Inicie sesión para poder acceder");
     return navigate("/");
   }
@@ -11,7 +23,7 @@ export async function getAuthToken(setErrorToken, navigate, setVerifyToken) {
   const ERROR_HANDLER = {
     JsonWebTokenError: (err) => {
       setErrorToken(err.response.data.JsonWebTokenError);
-      window.localStorage.removeItem("accessToken");
+      window.localStorage.removeItem("user");
       navigate("/");
     },
     TokenExpiredError: (err) => {
@@ -21,12 +33,6 @@ export async function getAuthToken(setErrorToken, navigate, setVerifyToken) {
     defaultError: () => {
       setErrorToken("Error inesperado");
       navigate("/");
-    },
-  };
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${JSON.parse(token)}`,
     },
   };
 

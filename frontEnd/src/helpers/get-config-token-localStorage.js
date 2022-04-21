@@ -1,9 +1,9 @@
 export function getConfigTokenLocalStorage() {
-  const token = window.localStorage.getItem("accessToken");
-
+  const JsonUser = window.localStorage.getItem("user");
+  const user = JSON.parse(JsonUser);
   const config = {
     headers: {
-      Authorization: `Bearer ${JSON.parse(token)}`,
+      Authorization: `Bearer ${user.accessToken}`,
     },
   };
   return config;

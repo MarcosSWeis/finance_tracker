@@ -68,6 +68,8 @@ module.exports = {
       },
       data: {
         accessToken: null,
+        username: null,
+        avatar: null,
       },
     };
 
@@ -81,6 +83,8 @@ module.exports = {
         expiresIn: process.env.JWT_TIME_EXPIRY,
       });
       response.data.accessToken = token;
+      response.data.username = user.nickName;
+      response.data.avatar = user.avatar;
       console.log(response);
       res.status(200).json(response);
     } else {

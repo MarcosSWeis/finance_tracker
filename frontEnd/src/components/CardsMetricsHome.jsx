@@ -1,10 +1,13 @@
 import { useNavigate, Link } from "react-router-dom";
-export default function CardsMetricsHome() {
+export default function CardsMetricsHome({ fixedIncome }) {
+  const loQueGasto = 25620;
+
+  const percentageIncome = ((loQueGasto * 100) / fixedIncome).toFixed(2);
   return (
     <div className="col-md-10 w-100 pl-0 ">
       <div className="row ">
         <div className=" col-lg-4 m-auto">
-          <Link to={"/"} style={{ textDecoration: "none" }}>
+          <Link to={"/home"} style={{ textDecoration: "none" }}>
             <div className="card l-bg-cherry" id="cardHome">
               <div className="card-statistic-3 p-2 ">
                 <div className="card-icon card-icon-large">
@@ -19,7 +22,7 @@ export default function CardsMetricsHome() {
                   </div>
                   <div className="col-4 text-right">
                     <span>
-                      {2}% <i className="fa fa-arrow-up"></i>
+                      {percentageIncome}% <i className="fa fa-arrow-up"></i>
                     </span>
                   </div>
                 </div>
@@ -35,7 +38,7 @@ export default function CardsMetricsHome() {
                     aria-valuenow="25"
                     aria-valuemin="0"
                     aria-valuemax="100"
-                    style={{ width: `2%` }}
+                    style={{ width: `${percentageIncome}%` }}
                   ></div>
                 </div>
               </div>
@@ -43,7 +46,7 @@ export default function CardsMetricsHome() {
           </Link>
         </div>
         <div className=" col-lg-4 m-auto">
-          <Link to={"/"} style={{ textDecoration: "none" }}>
+          <Link to={"/home"} style={{ textDecoration: "none" }}>
             <div className="card l-bg-green-dark" id="cardHome">
               <div className="card-statistic-3 p-2 ">
                 <div className="card-icon card-icon-large">
@@ -52,7 +55,7 @@ export default function CardsMetricsHome() {
                 <div className=" d-flex ">
                   <h5 className="card-title mb-0 mt-4 ">Ingreso fijo</h5>
                   <h5 className=" col-4 text-right mt-4 mb-4 ml-auto ">
-                    $ 80000
+                    $ {fixedIncome}
                   </h5>
                 </div>
                 <div className="row  mb-2 d-flex"></div>
@@ -75,7 +78,7 @@ export default function CardsMetricsHome() {
           </Link>
         </div>
         <div className=" col-lg-4 m-auto">
-          <Link to={"/"} style={{ textDecoration: "none" }}>
+          <Link to={"/home"} style={{ textDecoration: "none" }}>
             <div className="card" id="cardHome">
               <div className="card-statistic-3 p-2 ">
                 <div className="card-icon card-icon-large">

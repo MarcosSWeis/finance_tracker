@@ -20,14 +20,14 @@ module.exports = {
 
     res.json(dbz);
   },
-  fixedIncome: async (req, res, next) => {
+  createFixedIncome: async (req, res, next) => {
     const { userId: id, body } = req;
     console.log(id, "id");
     console.log(body, "body");
     try {
       const checkOneFixedIncome = await db.Incomes.findAll({
         where: {
-          user_id: 2,
+          user_id: id,
         },
         attributes: ["fixed_income"],
       });
@@ -36,16 +36,14 @@ module.exports = {
       // funcionaria para que un usuario tenga dos ingresos fijos , en cambio asi no
       if (checkOneFixedIncome.length === 0) {
         const newIncome = await db.Incomes.create({
-          user_id: 2,
-          fixed_income: body.fixed_income,
-          varied_income: body.varied_income,
-          category_inc_id: body.category_inc_id,
-          description: body.description,
+          ...body,
+          user_id: id,
+          varied_income: 0,
         });
         let ok;
         let status;
         let statusText;
-
+        console.log(newIncome, 1111111);
         if (newIncome) {
           ok = true;
           status = 201;
@@ -81,7 +79,7 @@ module.exports = {
       handlerErrors(err, req, res, next);
     }
   },
-  totalIncomes: async (req, res, next) => {
+  getIncomes: async (req, res, next) => {
     try {
       const { userId: id } = req;
       console.log(id);
@@ -108,7 +106,7 @@ module.exports = {
           status: status,
           statusText: statusText,
           length: incomes.length,
-          url: "",
+          url: "http://localhost:3001/budget/income",
         },
         data: incomes,
       };
@@ -141,12 +139,54 @@ module.exports = {
           status: status,
           statusText: statusText,
           length: categories.length,
-          url: "",
+          url: "http://localhost:3001/budget/categories_income",
         },
         data: categories,
       };
 
       categories
+        ? res.status(200).json(response)
+        : res.status(500).json(response);
+    } catch (err) {
+      console.log(err);
+      handlerErrors(err, req, res, next);
+    }
+  },
+  updateIncome: async (req, res, next) => {
+    try {
+      const { userId: id, body } = req;
+      const updateIncome = await db.Incomes.findOne({
+        where: {
+          user_id: id,
+        },
+      });
+      await updateIncome.set("fixed_income", body.fixed_income);
+      await updateIncome.set("varied_income", 0);
+      await updateIncome.set("category_inc_id", body.category_inc_id);
+      await updateIncome.set("description", body.description);
+      await updateIncome.save();
+      let ok;
+      let status;
+      let statusText;
+      if (updateIncome) {
+        ok = true;
+        status = 201;
+        statusText = "OK";
+      } else {
+        ok = false;
+        status = 500;
+        statusText = "Error interno del servidor";
+      }
+      const response = {
+        meta: {
+          ok: ok,
+          status: status,
+          statusText: statusText,
+          url: "http://localhost:3001/budget/update_income",
+        },
+        data: updateIncome,
+      };
+      updateIncome
         ? res.status(200).json(response)
         : res.status(500).json(response);
     } catch (err) {
