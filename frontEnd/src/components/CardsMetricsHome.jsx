@@ -1,18 +1,38 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { DataContext } from "../context/DataContext";
+import { ExpensesContext } from "../context/ExpensesContext";
 import { controllerBudget } from "../services/request/budget";
 export default function CardsMetricsHome({ fixedIncome, category }) {
+  //set setExpenses esta en fromexpense y le seata tru si le setearon una nueva expense
+  // entonces expenses pasa a true le dice que actualice a la funcincion getExpenses y renderiza con la data actualizada
+  const { expenses } = useContext(DataContext);
   const [categories, setCategories] = useState([]);
+  const [dataExpenses, setDataExpenses] = useState([]);
+
   useEffect(() => {
     controllerBudget.getCategoriesIncome().then(({ data }) => {
       setCategories(data.data);
     });
   }, []);
+  useEffect(() => {
+    controllerBudget.getAllExpenses().then(({ data }) => {
+      console.log(data, "data expenses metrixs");
+      setDataExpenses(data.data);
+    });
+  }, [expenses]);
   console.log(categories, "categorieas");
   console.log(category, "category id");
+  console.log(dataExpenses, "dataExpenses");
+  let totalExpenses = 0;
+  if (dataExpenses) {
+    dataExpenses.map((expense) => {
+      totalExpenses += expense.amount;
+    });
+  }
+  console.log(totalExpenses, "totalExpenses");
 
-  const loQueGasto = 25620;
-  const percentageIncome = ((loQueGasto * 100) / fixedIncome).toFixed(2);
+  const percentageIncome = ((totalExpenses * 100) / fixedIncome).toFixed(2);
   return (
     <div className="col-md-10 w-100 pl-0 ">
       <div className="row ">

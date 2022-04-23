@@ -16,6 +16,9 @@
 .w-35px {
   width: 35px;
 }
+.w-5 {
+  width: 5%;
+}
 .mt-13px {
   margin-top: 13px;
 }
@@ -27,4 +30,20 @@
 }
 .colorCeleste {
   color: #2196f3;
+}
+.w-12 {
+  width: 15%;
+}
+.mt-130px {
+  margin-top: 130px;
+}
+.positionBtnSwitch {
+  bottom: -115%;
+  left: 8%;
+}
+.widthBtnSwitch {
+  height: 70%;
+}
+.colorPrice {
+  color: #05ae2e;
 }

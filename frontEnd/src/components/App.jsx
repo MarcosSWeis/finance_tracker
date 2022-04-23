@@ -8,6 +8,7 @@ import Register from "./Register";
 import NavBar from "./NavBar";
 import PrivateRoute from "./PrivateRoute";
 import { DataProvider } from "../context/DataContext";
+import FrameExpenses from "./FrameExpenses";
 import "../css/signin.css";
 import "../css/loader.css";
 import "../css/carruselHome.css";
@@ -17,6 +18,9 @@ import "../css/custom-styles.css";
 import "../css/effectHoverNavbar.css";
 import "../css/handler-buttons-incomes.css";
 import "../css/handler-buttons-expenses.css";
+import "../css/btn-edit-rows-expenses.css";
+import "../css/btn-delete-rows-expenses.css";
+import "../css/btnSwitch.css";
 
 export default function App() {
   return (
@@ -43,7 +47,14 @@ export default function App() {
             </PrivateRoute>
           }
         />
-
+        <Route
+          path="/expenses"
+          element={
+            <PrivateRoute>
+              <FrameExpenses />
+            </PrivateRoute>
+          }
+        />
         <Route path="/users" element={<Users />} />
         <Route path="*" element={<h2>error 404</h2>} />
       </Routes>

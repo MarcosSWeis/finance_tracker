@@ -2,6 +2,8 @@ const db = require("../../database/models");
 const handlerErrors = require("../../middlewares/handlerErrors");
 const { transformDay } = require("../../../helpers/lib");
 const dayjs = require("dayjs");
+const { Sequelize } = require("../../database/models");
+const Op = Sequelize.Op;
 
 module.exports = {
   list: (req, res, next) => {
@@ -240,7 +242,7 @@ module.exports = {
         statusText = "OK";
       } else {
         ok = false;
-        status = 500;
+        status = 304;
         statusText = "Error interno del servidor";
       }
       const response = {
@@ -253,6 +255,143 @@ module.exports = {
         data: updateIncome,
       };
       updateIncome
+        ? res.status(200).json(response)
+        : res.status(304).json(response);
+    } catch (err) {
+      console.log(err);
+      handlerErrors(err, req, res, next);
+    }
+  },
+  createExpense: async (req, res, next) => {
+    try {
+      console.log("createExpense");
+      const { userId: id, body } = req;
+      console.log(id);
+      console.log(body);
+      const newExpense = await db.Expenses.create({
+        user_id: id,
+        ...body,
+      });
+      let ok;
+      let status;
+      let statusText;
+      if (newExpense) {
+        ok = true;
+        status = 201;
+        statusText = "OK";
+      } else {
+        ok = false;
+        status = 500;
+        statusText = "Error interno del servidor";
+      }
+      const response = {
+        meta: {
+          ok: ok,
+          status: status,
+          statusText: statusText,
+          url: "http://localhost:3001/budget/create_expense",
+        },
+        data: newExpense,
+      };
+      newExpense
+        ? res.status(200).json(response)
+        : res.status(500).json(response);
+    } catch (err) {
+      console.log(err);
+      handlerErrors(err, req, res, next);
+    }
+  },
+  getExpenses: async (req, res, next) => {
+    try {
+      const { userId: id, query } = req;
+      console.log(query);
+      console.log(id);
+      /// la fecha tendria que venir por la query asi el usuario puede ir pidiendo las fechas que quiera
+      //si no tendria que hacer un funcion por cada fecha, como la de abajo => getAllExpenses
+      const page = query.page - 1;
+      const limit = 10;
+      const dateNow = dayjs(new Date()).format("YYYY-MM-DD");
+      const firstDayMonthCurrent = dateNow.slice(0, 8) + "01";
+      const nextMonth = Number(dateNow.slice(6, 7)) + 1;
+      const finalDayMonthCurrent = dateNow.slice(0, 6) + nextMonth + "-01";
+
+      const { count, rows } = await db.Expenses.findAndCountAll({
+        where: {
+          user_id: id,
+          createdAt: {
+            [Op.between]: [firstDayMonthCurrent, finalDayMonthCurrent],
+          },
+        },
+        order: [["createdAt", "ASC"]],
+        raw: true,
+        offset: page * limit,
+        limit: limit,
+      });
+
+      let ok;
+      let status;
+      let statusText;
+      if (rows.length !== 0) {
+        ok = true;
+        status = 201;
+        statusText = "OK";
+      } else {
+        ok = false;
+        status = 500;
+        statusText = "Error interno del servidor";
+      }
+      const response = {
+        meta: {
+          ok: ok,
+          status: status,
+          statusText: statusText,
+          total: count,
+          url: "http://localhost:3001/budget/expenses",
+        },
+        data: rows,
+      };
+      rows.length !== 0
+        ? res.status(200).json(response)
+        : res.status(500).json(response);
+    } catch (err) {
+      console.log(err);
+      handlerErrors(err, req, res, next);
+    }
+  },
+  getAllExpenses: async (req, res, next) => {
+    try {
+      const { userId: id } = req;
+      console.log(id);
+
+      const expenses = await db.Expenses.findAll({
+        where: {
+          user_id: id,
+        },
+        raw: true,
+      });
+      let ok;
+      let status;
+      let statusText;
+      if (expenses.length !== 0) {
+        ok = true;
+        status = 201;
+        statusText = "OK";
+      } else {
+        ok = false;
+        status = 500;
+        statusText = "Error interno del servidor";
+      }
+      const response = {
+        meta: {
+          ok: ok,
+          status: status,
+          statusText: statusText,
+          length: expenses.length,
+          url: "http://localhost:3001/budget/expenses",
+        },
+        data: expenses,
+      };
+      expenses.length !== 0
         ? res.status(200).json(response)
         : res.status(500).json(response);
     } catch (err) {

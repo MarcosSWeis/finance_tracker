@@ -17,6 +17,14 @@ router.get(
   personalBudgetControllers.getCategoriesExpenses
 );
 
+router.get("/expenses", userExtractor, personalBudgetControllers.getExpenses);
+
+router.get(
+  "/all_expenses",
+  userExtractor,
+  personalBudgetControllers.getAllExpenses
+);
+
 router.get(
   "/expense_type",
   userExtractor,
@@ -27,6 +35,12 @@ router.post(
   "/create_income",
   userExtractor,
   personalBudgetControllers.createFixedIncome
+);
+
+router.post(
+  "/create_expense",
+  userExtractor,
+  personalBudgetControllers.createExpense
 );
 
 router.post(

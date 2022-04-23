@@ -59,8 +59,13 @@ export default function NavBar() {
               </NavLink>
             </li>
             <li className="nav-item px-1">
-              <NavLink to={"/budget"} className="nav-link cta ">
-                <span className="hover-underline-animation">Presupuesto</span>
+              <NavLink to={"/expenses"} className="nav-link cta ">
+                <span className="hover-underline-animation">Gastos</span>
+              </NavLink>
+            </li>
+            <li className="nav-item px-1">
+              <NavLink to={"/algo2"} className="nav-link cta">
+                <span className="hover-underline-animation">Gráficos</span>
               </NavLink>
             </li>
             {!verifyToken ? (
@@ -72,11 +77,6 @@ export default function NavBar() {
             ) : (
               <LogOut />
             )}
-            <li className="nav-item px-1">
-              <NavLink to={"/algo2"} className="nav-link cta">
-                #
-              </NavLink>
-            </li>
           </ul>
         </div>
       </div>

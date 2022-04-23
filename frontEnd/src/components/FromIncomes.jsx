@@ -53,7 +53,6 @@ export default function FormIncomes({ setDataIncome }) {
       setShowForm,
       setIncomesDb,
       incomesDb,
-
       setDataIncome
     );
   }
@@ -73,7 +72,7 @@ export default function FormIncomes({ setDataIncome }) {
 
   return (
     <>
-      {incomesDb && categories ? (
+      {categories ? (
         <div className="mx-auto pt-1 col-12 pl-0 mw-500px justify-content-around">
           {incomesDb ? (
             <h2 className="mt-4 text-center colorCeleste">Editar Ingreso</h2>
@@ -181,19 +180,18 @@ export default function FormIncomes({ setDataIncome }) {
             <label htmlFor="amount" className="form-label">
               <Skeleton />
             </label>
-            <Skeleton />
           </div>
           <label htmlFor="categories" className="d-block">
             <Skeleton />
           </label>
-          <Skeleton />
+
           <div className="mb-3">
             <label htmlFor="description" className="form-label">
               <Skeleton />
             </label>
             <Skeleton />
           </div>
-          <Skeleton width={50} />
+          <Skeleton width={80} />
         </form>
       </div>
     );

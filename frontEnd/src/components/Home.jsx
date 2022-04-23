@@ -2,10 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Route, Routes, Outlet } from "react-router-dom";
 import { DataContext } from "../context/DataContext";
+import { ExpensesContext } from "../context/ExpensesContext";
 import { controllerBudget } from "../services/request/budget";
 import CardsMetricsHome from "./CardsMetricsHome";
 import FormExpenses from "./FormExpenses";
-import FrameExpenses from "./FrameExprenses";
+import FrameExpenses from "./FrameExpenses";
 import FormIncomes from "./FromIncomes";
 import HandlerButtonExpenses from "./HandlerButonExpenses";
 
@@ -38,7 +39,7 @@ export default function Home() {
           />
         </div>
       ) : (
-        <Skeleton />
+        ""
       )}
       <HandlerButtonsIncomes />
       {showForm && <FormIncomes setDataIncome={setDataIncome} />}

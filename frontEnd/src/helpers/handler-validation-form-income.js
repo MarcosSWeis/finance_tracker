@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import { controllerBudget } from "../services/request/budget";
+import { Toast } from "./sweetAlertSuccessAndErro";
 
 let errors = {};
 export function handlerValidationFormIncome(
@@ -81,12 +82,9 @@ export function handlerValidationFormIncome(
         .then(({ data }) => {
           console.log(data, "data cuando se actualiza");
           if (data.meta.ok) {
-            Swal.fire({
-              position: "center",
+            Toast.fire({
               icon: "success",
-              title: "Your work has been saved",
-              showConfirmButton: false,
-              timer: 2000,
+              title: "Operación Exitosa",
             });
             setIncomesDb(data.meta.ok);
             setDataIncome(data.data);
@@ -95,11 +93,9 @@ export function handlerValidationFormIncome(
         })
         .catch((err) => {
           if (err.response.data) {
-            Swal.fire({
+            Toast.fire({
               icon: "error",
-              title: "Oops...",
-              text: err.response.data.msg,
-              footer: "Gracias y disculpe las molestias",
+              title: err.response.data.msg,
             });
             //escondo el formulario
             setShowForm(null);
@@ -111,12 +107,9 @@ export function handlerValidationFormIncome(
         .then(({ data }) => {
           console.log(data, "DATACUANDO SE CREA");
           if (data.meta.ok) {
-            Swal.fire({
-              position: "center",
+            Toast.fire({
               icon: "success",
-              title: "Your work has been saved",
-              showConfirmButton: false,
-              timer: 2000,
+              title: "Operación Exitosa",
             });
           }
           setIncomesDb(data.meta.ok);
@@ -126,11 +119,9 @@ export function handlerValidationFormIncome(
         .catch((err) => {
           console.log(err.response.data);
           if (err.response.data) {
-            Swal.fire({
+            Toast.fire({
               icon: "error",
-              title: "Oops...",
-              text: err.response.data.msg,
-              footer: "Gracias y disculpe las molestias",
+              title: err.response.data.msg,
             });
             //escondo el formulario
             setShowForm(null);

@@ -10,6 +10,9 @@ export const DataProvider = ({ children }) => {
   const [incomesDb, setIncomesDb] = useState(null);
   const [user, setUser] = useState(null);
   const [showFormExpense, setShowFormExpense] = useState(null);
+  const [expenses, setExpenses] = useState(null);
+  const [queryParameterDate, setQueryParameterDate] = useState(null);
+
   return (
     <DataContext.Provider
       value={{
@@ -27,6 +30,10 @@ export const DataProvider = ({ children }) => {
         user,
         showFormExpense,
         setShowFormExpense,
+        expenses,
+        setExpenses,
+        queryParameterDate,
+        setQueryParameterDate,
       }}
     >
       {children}

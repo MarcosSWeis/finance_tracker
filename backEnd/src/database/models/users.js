@@ -11,6 +11,9 @@ module.exports = (sequelize) => {
       User.hasOne(models.Incomes, {
         foreignKey: "user_id",
       });
+      User.hasOne(models.Expenses, {
+        foreignKey: "user_id",
+      });
     }
   }
   User.init(

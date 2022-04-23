@@ -15,9 +15,6 @@ module.exports = (sequelize, DataTypes) => {
       Incomes.belongsTo(models.Categories_income, {
         foreignKey: "category_inc_id",
       });
-      Incomes.hasMany(models.Expenses, {
-        foreignKey: "income_id",
-      });
     }
   }
   Incomes.init(

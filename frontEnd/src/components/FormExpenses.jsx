@@ -1,14 +1,58 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
+import $ from "jquery";
 import { controllerBudget } from "../services/request/budget";
+import handlerValidationFromExpenses from "../helpers/handler-validation-from-expenses";
+import { DataContext } from "../context/DataContext";
+
+const initialExpense = {
+  type_id: "",
+  amount: "",
+  category_exp_id: "",
+  description: "",
+};
 export default function FormExpenses() {
+  //esto solo es para setear los gastos, despues tiene que haber una función global que escuche a esta que se seteo un
+  //nuevo expense asi hace un pedido a la db con todo actualizado
+  const { setExpenses, setShowFormExpense } = useContext(DataContext);
   const [categoriesExpenses, setCategoriesExpenses] = useState([]);
   const [expensesTypes, setExpensesTypes] = useState([]);
+  const [newExpense, setNewExpense] = useState(initialExpense);
 
   function handlerChange(event) {
-    /* { [event.target.name]: event.target.value,} */
-
+    setNewExpense({
+      ...newExpense,
+      [event.target.name]: event.target.value,
+    });
     console.log(event.target.name, event.target.value);
+  }
+  function handlerSubmit(event) {
+    event.preventDefault();
+    const type_id = $("#type_id");
+    const errorExpenseType = $("#errorExpenseType");
+    const amount = $("#amount");
+    const errorAmount = $("#errorAmount");
+    const category_exp_id = $("#category_exp_id");
+    const errorCategories = $("#errorCategories");
+    const description = $("#description");
+    const errorDescription = $("#errorDescription");
+    const fieldsToValidate = {
+      type_id,
+      errorExpenseType,
+      amount,
+      errorAmount,
+      category_exp_id,
+      errorCategories,
+      description,
+      errorDescription,
+    };
+    console.log("despues de l prevent default");
+    handlerValidationFromExpenses(
+      fieldsToValidate,
+      newExpense,
+      setExpenses,
+      setShowFormExpense
+    );
   }
   useEffect(() => {
     controllerBudget
@@ -19,14 +63,13 @@ export default function FormExpenses() {
       .getExpenseTypes()
       .then(({ data }) => setExpensesTypes(data.data));
   }, []);
-  console.log(categoriesExpenses);
-  function handlerSubmit(event) {}
+
   return (
     <>
       {expensesTypes && categoriesExpenses ? (
         <div className="mx-auto pt-1 col-12 pl-0 mw-500px justify-content-around">
           <h2 className="mt-4 text-center text-danger">Agregar gasto</h2>
-          <form onSubmit={handlerSubmit} id="formIncomes">
+          <form onSubmit={handlerSubmit} id="formExpense">
             <div className="mb-3">
               <label htmlFor="type_id" className="form-label">
                 Tipo de gasto
@@ -35,7 +78,7 @@ export default function FormExpenses() {
                 <select
                   className="form-select"
                   name="type_id"
-                  id="expenseType"
+                  id="type_id"
                   onChange={handlerChange}
                 >
                   <option value={0}>Tipos de gastos</option>
@@ -67,14 +110,14 @@ export default function FormExpenses() {
             </div>
             <p className="text-danger" id="errorAmount"></p>
 
-            <label htmlFor="categories" className="d-block">
+            <label htmlFor="category_exp_id" className="d-block">
               Categorías
             </label>
             {categoriesExpenses ? (
               <select
                 className="form-select"
                 name="category_exp_id"
-                id="categories"
+                id="category_exp_id"
                 onChange={handlerChange}
               >
                 <option value={0}>Categorías</option>
@@ -144,7 +187,7 @@ function loader() {
           </label>
           <Skeleton />
         </div>
-        <Skeleton width={50} />
+        <Skeleton width={80} />
       </form>
     </div>
   );

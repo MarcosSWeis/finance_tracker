@@ -17,8 +17,8 @@ POST http://localhost:3001/users/login
 content-type: application/json
 
 {   
-    "email" : "marcos@dh.com",
-    "password": "Marcos97w"
+    "email" : "ebrouardx@noaa.gov",
+    "password": "12345678Mw"
 }
 ###
 //le tenemos que indicar cual es el esquema de autorizacion que utilizamos
