@@ -7,7 +7,7 @@ import ButtonsPages from "./ButtonsPages";
 import InputSetDate from "./QueryDateExpenses";
 import RowFrameExpenses from "./RowFrameExpenses";
 export default function FrameExpenses() {
-  const { queryParameterDate } = useContext(DataContext);
+  const { queryParameterDate, setQueryParameterDate } = useContext(DataContext);
   const [dataExpenses, setDataExpenses] = useState([]);
   //totalRowsBd me dice en la db cuantosdatos tiene para que yo cuando pagin , no me pase y se rompra todo
   const [totalRowsBd, setTotalRowsBd] = useState(null);
@@ -25,9 +25,28 @@ export default function FrameExpenses() {
   return (
     <div className="mt-130px ">
       <h3 className="pb-3 text-center">Gastos de este Mes</h3>
-      <div className="w-50">
-        <BtnSwitch setSwitchDates={setSwitchDates} switchDates={switchDates} />
-        {switchDates && <InputSetDate />}
+      <div className="d-flex">
+        <div className="w-50">
+          <BtnSwitch
+            setSwitchDates={setSwitchDates}
+            switchDates={switchDates}
+          />
+          {switchDates && <InputSetDate />}
+        </div>
+        <div className="pt-3">
+          <button
+            type="button"
+            class="btn btn-primary "
+            onClick={(event) => {
+              setQueryParameterDate({
+                initialDate: undefined,
+                endDate: undefined,
+              });
+            }}
+          >
+            Gastos del mes
+          </button>
+        </div>
       </div>
       <div className="mt-20">
         <table className="table  ">
