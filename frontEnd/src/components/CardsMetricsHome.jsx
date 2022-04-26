@@ -17,13 +17,12 @@ export default function CardsMetricsHome({ fixedIncome, category }) {
   }, []);
   useEffect(() => {
     controllerBudget.getAllExpenses().then(({ data }) => {
-      console.log(data, "data expenses metrixs");
       setDataExpenses(data.data);
     });
   }, [expenses]);
-  console.log(categories, "categorieas");
-  console.log(category, "category id");
-  console.log(dataExpenses, "dataExpenses");
+  //   console.log(categories, "categorieas");
+  //   console.log(category, "category id");
+  //   console.log(dataExpenses, "dataExpenses");
   let totalExpenses = 0;
   if (dataExpenses) {
     dataExpenses.map((expense) => {

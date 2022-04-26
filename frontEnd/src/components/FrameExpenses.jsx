@@ -21,7 +21,7 @@ export default function FrameExpenses() {
     });
     console.log("Me vulvo a renderizar");
   }, [page, queryParameterDate]);
-
+  console.log(queryParameterDate, "queryParameterDate");
   return (
     <div className="mt-130px ">
       <h3 className="pb-3 text-center">Gastos de este Mes</h3>

@@ -1,6 +1,7 @@
 import $ from "jquery";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { DataContext } from "../context/DataContext";
+import { validationFormQueryExpenseDate } from "../helpers/validation-form-query-expense-date";
 let years = [];
 for (let i = 2022; i <= 2040; i++) {
   years.push(i);
@@ -10,19 +11,80 @@ for (let i = 1; i <= 12; i++) {
   months.push(i);
 }
 let days = [];
-for (let i = 1; i <= 30; i++) {
+for (let i = 1; i <= 31; i++) {
   days.push(i);
 }
-
+const initialDataForm = {
+  initialYear: "",
+  initialMonths: "",
+  initialDays: "",
+  endYear: "",
+  endMonths: "",
+  endDays: "",
+};
 export default function InputSetDate() {
-  const { setQueryParameterDate } = useContext(DataContext);
+  const { queryParameterDate, setQueryParameterDate } = useContext(DataContext);
+  const [optionsQueryDate, setOptionsQueryDate] = useState(initialDataForm);
+  function handlerChanges(event) {
+    setOptionsQueryDate({
+      ...optionsQueryDate,
+      [event.target.name]: event.target.value,
+    });
+    console.log(event.target.name, event.target.value);
+  }
+
   function handlerSubmit(event) {
     event.preventDefault();
+    const initialYear = $("#initialYear");
+    const initialMonths = $("#initialMonths");
+    const initialDays = $("#initialDays");
+    const endYear = $("#endYear");
+    const endMonths = $("#endMonths");
+    const endDays = $("#endDays");
+    const errorInitialYear = $("#errorInitialYear");
+    const errorInitialMonths = $("#errorInitialMonths");
+    const errorInitialDays = $("#errorInitialDays");
+    const errorEndYear = $("#errorEndYear");
+    const errorEndMonths = $("#errorEndMonths");
+    const errorEndDays = $("#errorEndDays");
+    const ulErrors = $("#ulErrors");
+
+    const values = {
+      initialYear,
+      initialMonths,
+      initialDays,
+      endYear,
+      endMonths,
+      endDays,
+      errorInitialYear,
+      errorInitialMonths,
+      errorInitialDays,
+      errorEndYear,
+      errorEndMonths,
+      errorEndDays,
+      ulErrors,
+    };
+
+    validationFormQueryExpenseDate(
+      values,
+      optionsQueryDate,
+      setQueryParameterDate
+    );
   }
   return (
     /// en el css sacar el display flex asi queda en un fila
-    <div className=" pb-3 mt-5">
+    <div className=" pb-3 mt-5 ">
       <form action="" id="formSetDate" className="" onSubmit={handlerSubmit}>
+        <div className="ml-0  ">
+          <ul id="ulErrors" className="none p-4">
+            <li id="errorInitialYear" className="text-danger"></li>
+            <li id="errorInitialMonths" className="text-danger"></li>
+            <li id="errorInitialDays" className="text-danger"></li>
+            <li id="errorEndYear" className="text-danger"></li>
+            <li id="errorEndMonths" className="text-danger"></li>
+            <li id="errorEndDays" className="text-danger"></li>
+          </ul>
+        </div>
         <label className="text-start ml-2">Fecha inicial</label>
         <div className="d-flex  w-100 justify-content-start">
           <label htmlFor="initialYear" className="d-none">
@@ -34,6 +96,7 @@ export default function InputSetDate() {
             aria-label="Default select example"
             name="initialYear"
             id="initialYear"
+            onChange={handlerChanges}
           >
             <option value={0}>Año</option>
             {years.map((year) => (
@@ -49,6 +112,7 @@ export default function InputSetDate() {
             id="initialMonths"
             class="form-select  w-auto mx-2"
             aria-label="Default select example"
+            onChange={handlerChanges}
           >
             <option value={0}>Mes</option>
             {months.map((month) => (
@@ -64,6 +128,7 @@ export default function InputSetDate() {
             id="initialDays"
             class="form-select  w-auto mx-2"
             aria-label="Default select example"
+            onChange={handlerChanges}
           >
             <option value={0}>Dia</option>
             {days.map((day) => (
@@ -81,6 +146,7 @@ export default function InputSetDate() {
             aria-label="Default select example"
             name="endYear"
             id="endYear"
+            onChange={handlerChanges}
           >
             <option value={0}>Año</option>
             {years.map((year) => (
@@ -96,6 +162,7 @@ export default function InputSetDate() {
             id="endMonths"
             class="form-select w-auto mx-2"
             aria-label="Default select example"
+            onChange={handlerChanges}
           >
             <option value={0}>Mes</option>
             {months.map((month) => (
@@ -111,6 +178,7 @@ export default function InputSetDate() {
             id="endDays"
             class="form-select w-auto mx-2"
             aria-label="Default select example"
+            onChange={handlerChanges}
           >
             <option value={0}>Dia</option>
             {days.map((day) => (

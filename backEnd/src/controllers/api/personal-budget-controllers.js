@@ -310,10 +310,26 @@ module.exports = {
       //si no tendria que hacer un funcion por cada fecha, como la de abajo => getAllExpenses
       const page = query.page - 1;
       const limit = 10;
+
+      //   const dateNow = dayjs(new Date()).format("YYYY-MM-DD");
+      //   const firstDayMonthCurrent = dateNow.slice(0, 8) + "01";
+      //   const nextMonth = Number(dateNow.slice(6, 7)) + 1;
+      //   const finalDayMonthCurrent = dateNow.slice(0, 6) + nextMonth + "-01";
+
       const dateNow = dayjs(new Date()).format("YYYY-MM-DD");
-      const firstDayMonthCurrent = dateNow.slice(0, 8) + "01";
+      let firstDayMonthCurrent = dateNow.slice(0, 8) + "01";
       const nextMonth = Number(dateNow.slice(6, 7)) + 1;
-      const finalDayMonthCurrent = dateNow.slice(0, 6) + nextMonth + "-01";
+      let finalDayMonthCurrent = dateNow.slice(0, 6) + nextMonth + "-01";
+
+      if (
+        !(query.initialDate == "undefined") &&
+        !(query.endDate == "undefined")
+      ) {
+        firstDayMonthCurrent = query.initialDate;
+        finalDayMonthCurrent = query.endDate;
+      }
+      console.log(firstDayMonthCurrent, 222);
+      console.log(finalDayMonthCurrent, 222);
 
       const { count, rows } = await db.Expenses.findAndCountAll({
         where: {

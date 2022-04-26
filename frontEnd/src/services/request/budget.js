@@ -96,11 +96,11 @@ export const controllerBudget = {
     );
     return response;
   },
-  getExpenses: async (page) => {
+  getExpenses: async (page, { initialDate, endDate }) => {
     console.log(page, "page en setvice");
     const config = getConfigTokenLocalStorage();
     const response = await axios.get(
-      `http://localhost:3001/budget/expenses?page=${page}`,
+      `http://localhost:3001/budget/expenses?page=${page}&initialDate=${initialDate}&endDate=${endDate}`,
       config
     );
     return response;

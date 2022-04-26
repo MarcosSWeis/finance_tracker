@@ -15,7 +15,6 @@ export default function RowFrameExpenses({
 
   useEffect(() => {
     controllerBudget.getCategoriesExpenses().then(({ data }) => {
-      console.log(data.data, "categoryExpenses");
       setCategoryExpenses(data.data);
     });
     controllerBudget.getExpenseTypes().then(({ data }) => {
