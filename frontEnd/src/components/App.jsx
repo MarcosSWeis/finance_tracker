@@ -9,6 +9,9 @@ import NavBar from "./NavBar";
 import PrivateRoute from "./PrivateRoute";
 import { DataProvider } from "../context/DataContext";
 import FrameExpenses from "./FrameExpenses";
+import GraphicExpenses from "./GraphicLineExpenses";
+import GraphicBarChart from "./GraphicBarChart";
+import GraphicGradienteExpenses from "./GraphicGradienteExpenses";
 import "../css/signin.css";
 import "../css/loader.css";
 import "../css/carruselHome.css";
@@ -21,6 +24,7 @@ import "../css/handler-buttons-expenses.css";
 import "../css/btn-edit-rows-expenses.css";
 import "../css/btn-delete-rows-expenses.css";
 import "../css/btnSwitch.css";
+import "../css/checkbox.css";
 
 export default function App() {
   return (
@@ -55,7 +59,14 @@ export default function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/users" element={<Users />} />
+        <Route
+          path="/graphics"
+          element={
+            <PrivateRoute>
+              <GraphicGradienteExpenses />
+            </PrivateRoute>
+          }
+        />
         <Route path="*" element={<h2>error 404</h2>} />
       </Routes>
     </DataProvider>

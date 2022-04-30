@@ -97,18 +97,36 @@ export const controllerBudget = {
     return response;
   },
   getExpenses: async (page, { initialDate, endDate }) => {
-    console.log(page, "page en setvice");
-    const config = getConfigTokenLocalStorage();
-    const response = await axios.get(
-      `http://localhost:3001/budget/expenses?page=${page}&initialDate=${initialDate}&endDate=${endDate}`,
-      config
-    );
-    return response;
+    try {
+      console.log(page, "page en setvice");
+      const config = getConfigTokenLocalStorage();
+      const response = await axios.get(
+        `http://localhost:3001/budget/expenses?page=${page}&initialDate=${initialDate}&endDate=${endDate}`,
+        config
+      );
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
   },
   getAllExpenses: async () => {
     const config = getConfigTokenLocalStorage();
     const response = await axios.get(
       `http://localhost:3001/budget/all_expenses`,
+      config
+    );
+    return response;
+  },
+  getGraphicLineExpenses: async ({
+    initialDate,
+    endDate,
+    fixedExpenses,
+    flexibleExpenses,
+    savingExpenses,
+  }) => {
+    const config = getConfigTokenLocalStorage();
+    const response = await axios.get(
+      `http://localhost:3001/budget/expenses_line_graphic?initialDate=${initialDate}&endDate=${endDate}&fixedExpenses=${fixedExpenses}&flexibleExpenses=${flexibleExpenses}&savingExpenses=${savingExpenses}`,
       config
     );
     return response;

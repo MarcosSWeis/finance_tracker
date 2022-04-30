@@ -1,6 +1,5 @@
 import $ from "jquery";
 import { controllerBudget } from "../services/request/budget";
-import { getColorRandom } from "./getColorRandom";
 import { Toast } from "./sweetAlertSuccessAndErro";
 
 let errors = {};

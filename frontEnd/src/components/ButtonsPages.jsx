@@ -70,9 +70,3 @@ export default function ButtonsPages({ setPage, page, totalRowsBd }) {
     </div>
   );
 }
-//   <button type="button" className="btn btn-primary">
-//     Previous
-//   </button>
-//   <button type="button" className="btn btn-primary">
-//     Next
-//   </button>

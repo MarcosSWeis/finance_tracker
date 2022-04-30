@@ -42,12 +42,15 @@ export default function CardsMetricsHome({ fixedIncome, category }) {
                 <div className="card-icon card-icon-large">
                   <i className="fas fa-shopping-cart"></i>
                 </div>
-                <div className="mb-4">
-                  <h5 className="card-title mb-0">Gastos</h5>
+                <div className=" d-flex ">
+                  <h5 className="card-title ">Gastos totales</h5>
+                  <h5 className="text-right  mb-3 ml-auto ">
+                    $ {totalExpenses}
+                  </h5>
                 </div>
                 <div className="row align-items-center mb-2 d-flex">
                   <div className="col-8">
-                    <h2 className="d-flex align-items-center mb-0">{}</h2>
+                    <h5 className="d-flex align-items-center mb-0"></h5>
                   </div>
                   <div className="col-4 text-right">
                     <span>
@@ -56,7 +59,7 @@ export default function CardsMetricsHome({ fixedIncome, category }) {
                   </div>
                 </div>
                 <div
-                  className="progress mt-1 "
+                  className="progress mt-3 "
                   data-height="8"
                   style={{ height: "8px" }}
                 >
@@ -86,14 +89,14 @@ export default function CardsMetricsHome({ fixedIncome, category }) {
                   <h5 className="text-right  mb-3 ml-auto ">$ {fixedIncome}</h5>
                 </div>
                 <div className=" d-flex ">
-                  <h5 className="card-title ">Categoría</h5>
-                  <h5 className="text-right  mb-2 ml-auto ">
+                  <span className="card-title ">Categoría</span>
+                  <span className="text-right  mb-2 ml-auto ">
                     {categories
                       ? categories.map((categ) =>
                           categ.id == category ? categ.category : ""
                         )
                       : ""}
-                  </h5>
+                  </span>
                 </div>
                 <div className="row  mb-2 d-flex"></div>
                 <div
@@ -121,8 +124,9 @@ export default function CardsMetricsHome({ fixedIncome, category }) {
                 <div className="card-icon card-icon-large">
                   <i className="fas fa-shopping-cart"></i>
                 </div>
-                <div className="mb-4">
-                  <h5 className="card-title mb-0">Gastos</h5>
+                <div className=" d-flex ">
+                  <h5 className="card-title ">...</h5>
+                  <h5 className="text-right  mb-3 ml-auto ">$ {}</h5>
                 </div>
                 <div className="row align-items-center mb-2 d-flex">
                   <div className="col-8">
@@ -130,12 +134,12 @@ export default function CardsMetricsHome({ fixedIncome, category }) {
                   </div>
                   <div className="col-4 text-right">
                     <span>
-                      {2}% <i className="fa fa-arrow-up"></i>
+                      ... <i className="fa fa-arrow-up"></i>
                     </span>
                   </div>
                 </div>
                 <div
-                  className="progress mt-1 "
+                  className="progress mt-3 "
                   data-height="8"
                   style={{ height: "8px" }}
                 >

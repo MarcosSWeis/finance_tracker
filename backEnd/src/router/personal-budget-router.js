@@ -26,6 +26,12 @@ router.get(
 );
 
 router.get(
+  "/expenses_line_graphic",
+  userExtractor,
+  personalBudgetControllers.getLineGraphicExpenses
+);
+
+router.get(
   "/expense_type",
   userExtractor,
   personalBudgetControllers.getExpenseType

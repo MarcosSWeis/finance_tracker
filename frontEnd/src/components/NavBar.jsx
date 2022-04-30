@@ -64,7 +64,7 @@ export default function NavBar() {
               </NavLink>
             </li>
             <li className="nav-item px-1">
-              <NavLink to={"/algo2"} className="nav-link cta">
+              <NavLink to={"/graphics"} className="nav-link cta">
                 <span className="hover-underline-animation">Gráficos</span>
               </NavLink>
             </li>

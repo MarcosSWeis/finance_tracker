@@ -2,7 +2,7 @@ const db = require("../../database/models");
 const handlerErrors = require("../../middlewares/handlerErrors");
 const { transformDay } = require("../../../helpers/lib");
 const dayjs = require("dayjs");
-const { Sequelize } = require("../../database/models");
+const { Sequelize, sequelize } = require("../../database/models");
 const Op = Sequelize.Op;
 
 module.exports = {
@@ -308,14 +308,12 @@ module.exports = {
       console.log(id);
       /// la fecha tendria que venir por la query asi el usuario puede ir pidiendo las fechas que quiera
       //si no tendria que hacer un funcion por cada fecha, como la de abajo => getAllExpenses
-      const page = query.page - 1;
-      const limit = 10;
-
-      //   const dateNow = dayjs(new Date()).format("YYYY-MM-DD");
-      //   const firstDayMonthCurrent = dateNow.slice(0, 8) + "01";
-      //   const nextMonth = Number(dateNow.slice(6, 7)) + 1;
-      //   const finalDayMonthCurrent = dateNow.slice(0, 6) + nextMonth + "-01";
-
+      let limit = 10;
+      let page = query.page - 1;
+      if (page == "undefined") {
+        page = null;
+        limit = null;
+      }
       const dateNow = dayjs(new Date()).format("YYYY-MM-DD");
       let firstDayMonthCurrent = dateNow.slice(0, 8) + "01";
       const nextMonth = Number(dateNow.slice(6, 7)) + 1;
@@ -340,8 +338,8 @@ module.exports = {
         },
         order: [["createdAt", "ASC"]],
         raw: true,
-        offset: page * limit,
-        limit: limit,
+        offset: page * limit == 0 ? null : page * limit,
+        limit: limit == 0 ? null : limit,
       });
 
       let ok;
@@ -403,10 +401,124 @@ module.exports = {
           status: status,
           statusText: statusText,
           length: expenses.length,
-          url: "http://localhost:3001/budget/expenses",
+          url: "http://localhost:3001/budget/all_expenses",
         },
         data: expenses,
       };
+      expenses.length !== 0
+        ? res.status(200).json(response)
+        : res.status(500).json(response);
+    } catch (err) {
+      console.log(err);
+      handlerErrors(err, req, res, next);
+    }
+  },
+  getLineGraphicExpenses: async (req, res, next) => {
+    try {
+      const { userId: id, query } = req;
+      console.log(query);
+      console.log(id);
+      /// la fecha tendria que venir por la query asi el usuario puede ir pidiendo las fechas que quiera
+      //si no tendria que hacer un funcion por cada fecha, como la de abajo => getAllExpenses
+
+      const dateNow = dayjs(new Date()).format("YYYY-MM-DD");
+      let firstDayMonthCurrent = dateNow.slice(0, 8) + "01";
+      const nextMonth = Number(dateNow.slice(6, 7)) + 1;
+      let finalDayMonthCurrent = dateNow.slice(0, 6) + nextMonth + "-01";
+
+      if (
+        !(query.initialDate == "undefined") &&
+        !(query.endDate == "undefined")
+      ) {
+        firstDayMonthCurrent = query.initialDate;
+        finalDayMonthCurrent = query.endDate;
+      }
+      console.log(firstDayMonthCurrent, 222);
+      console.log(finalDayMonthCurrent, 222);
+      let where;
+      where = {
+        where: {
+          user_id: id,
+          createdAt: {
+            [Op.between]: [firstDayMonthCurrent, finalDayMonthCurrent],
+          },
+        },
+      };
+
+      if (query.fixedExpenses == "1") {
+        where = {
+          where: {
+            user_id: id,
+            createdAt: {
+              [Op.between]: [firstDayMonthCurrent, finalDayMonthCurrent],
+            },
+            type_id: 1,
+          },
+        };
+      }
+      if (query.flexibleExpenses == "2") {
+        where = {
+          where: {
+            user_id: id,
+            createdAt: {
+              [Op.between]: [firstDayMonthCurrent, finalDayMonthCurrent],
+            },
+            type_id: 2,
+          },
+        };
+      }
+      if (query.savingExpenses == "3") {
+        where = {
+          where: {
+            user_id: id,
+            createdAt: {
+              [Op.between]: [firstDayMonthCurrent, finalDayMonthCurrent],
+            },
+            type_id: 3,
+          },
+        };
+      }
+      const expenses = await db.Expenses.findAll({
+        attributes: [
+          "createdAt",
+          [Sequelize.fn("sum", sequelize.col("amount")), "totalForDay"],
+          [
+            Sequelize.fn("DATE_FORMAT", sequelize.col("createdAt"), "%d"),
+            "day",
+          ],
+        ],
+
+        ...where,
+        group: [
+          Sequelize.fn("DATE_FORMAT", sequelize.col("createdAt"), "%Y-%m-%d"),
+        ],
+        order: [["createdAt", "ASC"]],
+        raw: true,
+      });
+
+      let ok;
+      let status;
+      let statusText;
+      if (expenses.length !== 0) {
+        ok = true;
+        status = 201;
+        statusText = "OK";
+      } else {
+        ok = false;
+        status = 500;
+        statusText = "Error interno del servidor";
+      }
+      const response = {
+        meta: {
+          ok: ok,
+          status: status,
+          statusText: statusText,
+          total: expenses.length,
+          url: "http://localhost:3001/budget/expenses_line_graphic",
+        },
+        data: expenses,
+      };
+
       expenses.length !== 0
         ? res.status(200).json(response)
         : res.status(500).json(response);

@@ -186,9 +186,25 @@ export default function InputSetDate() {
             ))}
           </select>
         </div>
-        <button type="submit" class="btn btn-primary mt-2 ml-2 ">
-          Enviar
-        </button>
+        <div className="d-flex ">
+          <button type="submit" class="btn btn-primary mt-2 ml-2 ">
+            Enviar
+          </button>
+          <div className="mt-2 m-10">
+            <button
+              type="button"
+              class="btn btn-primary "
+              onClick={() => {
+                setQueryParameterDate({
+                  initialDate: undefined,
+                  endDate: undefined,
+                });
+              }}
+            >
+              Gastos del mes
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   );
