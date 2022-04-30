@@ -90,19 +90,17 @@ export default function FrameExpenses() {
             </tr>
           </thead>
 
-          {dataExpenses.length != 0 &&
-          expenseType.length != 0 &&
-          categoryExpenses.length != 0
+          {dataExpenses.length != 0
             ? dataExpenses.map((expense) => (
                 <RowFrameExpenses
                   key={expense.id}
-                  type_id={expense.type_id}
+                  type={expense["expenseType.type"]}
                   amount={expense.amount}
                   createdAt={expense.createdAt}
                   description={expense.description}
-                  category_exp_id={expense.category_exp_id}
-                  expenseType={expenseType}
-                  categoryExpenses={categoryExpenses}
+                  category={expense["categoryExpense.category"]}
+                  //  expenseType={expenseType}
+                  //   categoryExpenses={categoryExpenses}
                 />
               ))
             : countLoader.map(() => loader())}

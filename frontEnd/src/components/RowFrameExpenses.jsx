@@ -6,13 +6,11 @@ import $ from "jquery";
 import { UpdateModeEnum } from "chart.js";
 
 export default function RowFrameExpenses({
-  type_id,
   amount,
   createdAt,
   description,
-  category_exp_id,
-  expenseType,
-  categoryExpenses,
+  type,
+  category,
 }) {
   const [width, setWidth] = useState(null);
 
@@ -33,10 +31,7 @@ export default function RowFrameExpenses({
   return (
     <tbody>
       <tr>
-        <td className="align-middle p-3">
-          {expenseType.map((type) => (type.id == type_id ? type.type : ""))}
-        </td>
-
+        <td className="align-middle p-3">{type}</td>
         {!(width < 720) ? (
           <td className="align-middle p-0" id="RowDescription">
             {description}
@@ -48,15 +43,7 @@ export default function RowFrameExpenses({
         <td className="align-middle p-0 colorPrice ">
           <strong>$ {amount}</strong>
         </td>
-        {!(width < 720) ? (
-          <td className="align-middle p-0">
-            {categoryExpenses.map((category) =>
-              category.id == category_exp_id ? category.category : ""
-            )}
-          </td>
-        ) : (
-          ""
-        )}
+        {!(width < 720) ? <td className="align-middle p-0">{category}</td> : ""}
         <td className="align-middle p-0">{transformDate(createdAt)}</td>
         <td className="p-1  w-12px">
           <button type="button" className="btnEditRowExpense w-100 p-0 mb-1">

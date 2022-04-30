@@ -9,10 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Incomes.belongsTo(models.User, {
+        as: "user",
         foreignKey: "user_id",
       });
 
       Incomes.belongsTo(models.Categories_income, {
+        as: "categoryIncome",
         foreignKey: "category_inc_id",
       });
     }

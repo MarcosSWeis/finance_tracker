@@ -318,7 +318,7 @@ module.exports = {
       const month = date.getMonth() + 1;
       const year = date.getFullYear();
       let initialDate = `${year}-${month < 10 ? "0" + month : month}-01`;
-      let endDate = `${year}-${month < 10 ? "0" + month + 1 : month + 1}-01`;
+      let endDate = `${year}-${month < 10 ? "0" + (month + 1) : month + 1}-01`;
 
       if (
         !(query.initialDate == "undefined") &&
@@ -331,12 +331,25 @@ module.exports = {
       console.log(endDate, 222);
 
       const { count, rows } = await db.Expenses.findAndCountAll({
+        attributes: ["id", "amount", "description", "createdAt"],
         where: {
           user_id: id,
           createdAt: {
             [Op.between]: [initialDate, endDate],
           },
         },
+        include: [
+          {
+            model: db.Categories_expenses,
+            as: "categoryExpense",
+            attributes: ["category"],
+          },
+          {
+            model: db.Expense_type,
+            as: "expenseType",
+            attributes: ["type"],
+          },
+        ],
         order: [["createdAt", "ASC"]],
         raw: true,
         offset: page * limit == 0 ? null : page * limit,

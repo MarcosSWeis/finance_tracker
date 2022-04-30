@@ -9,9 +9,11 @@ module.exports = (sequelize) => {
      */
     static associate(models) {
       User.hasOne(models.Incomes, {
+        as: "income",
         foreignKey: "user_id",
       });
       User.hasOne(models.Expenses, {
+        as: "expense",
         foreignKey: "user_id",
       });
     }
