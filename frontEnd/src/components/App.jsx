@@ -1,7 +1,6 @@
 import React from "react";
 import Home from "./Home";
 import { Route, Routes } from "react-router-dom";
-import Users from "./User";
 import Anime from "./Anime";
 import Login from "./Login";
 import Register from "./Register";
@@ -9,9 +8,7 @@ import NavBar from "./NavBar";
 import PrivateRoute from "./PrivateRoute";
 import { DataProvider } from "../context/DataContext";
 import FrameExpenses from "./FrameExpenses";
-import GraphicExpenses from "./GraphicLineExpenses";
-import GraphicBarChart from "./GraphicBarChart";
-import GraphicGradienteExpenses from "./GraphicGradienteExpenses";
+import GraphicsExpenses from "./GraphicsExpenses";
 import "../css/signin.css";
 import "../css/loader.css";
 import "../css/carruselHome.css";
@@ -63,7 +60,7 @@ export default function App() {
           path="/graphics"
           element={
             <PrivateRoute>
-              <GraphicGradienteExpenses />
+              <GraphicsExpenses />
             </PrivateRoute>
           }
         />

@@ -11,6 +11,7 @@ import FormIncomes from "./FromIncomes";
 import HandlerButtonExpenses from "./HandlerButonExpenses";
 
 import HandlerButtonsIncomes from "./HandlerButtonsIncomes";
+import ListExpensesHome from "./ListExpensesHome";
 
 export default function Home() {
   const { showForm, incomesDb, setIncomesDb, showFormExpense } =
@@ -29,8 +30,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-100 mx-2 ">
-      <h2 className="text-center">Renderizando el Home</h2>
+    <div className="w-100 mx-2  mt-130px  ">
       {incomesDb ? (
         <div className="d-flex justify-content-center widthMetrics">
           <CardsMetricsHome
@@ -44,6 +44,7 @@ export default function Home() {
       <HandlerButtonsIncomes />
       {showForm && <FormIncomes setDataIncome={setDataIncome} />}
       {showFormExpense && <FormExpenses />}
+      <ListExpensesHome />
     </div>
   );
 }

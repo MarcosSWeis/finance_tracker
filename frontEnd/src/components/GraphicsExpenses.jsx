@@ -11,10 +11,8 @@ import {
 } from "chart.js";
 import $ from "jquery";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Line } from "react-chartjs-2"; // para graficos de lineas
 import Skeleton from "react-loading-skeleton";
 import { controllerBudget } from "../services/request/budget";
-import GraphicBarChart from "./GraphicBarChart";
 import GraphicLineExpenses from "./GraphicLineExpenses";
 import HorizontalBarGraphic from "./HorizontalBarGraphic";
 ChartJS.register(
@@ -28,7 +26,7 @@ ChartJS.register(
   Filler
 );
 
-export default function Graphics() {
+export default function GraphicsExpenses() {
   const [tickGraphicBar, setTickGraphicBar] = useState(null);
   const [totalExpenses, setTotalExpenses] = useState([]);
   const [fixedExpenses, setFixedExpenses] = useState([]);

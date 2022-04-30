@@ -314,26 +314,27 @@ module.exports = {
         page = null;
         limit = null;
       }
-      const dateNow = dayjs(new Date()).format("YYYY-MM-DD");
-      let firstDayMonthCurrent = dateNow.slice(0, 8) + "01";
-      const nextMonth = Number(dateNow.slice(6, 7)) + 1;
-      let finalDayMonthCurrent = dateNow.slice(0, 6) + nextMonth + "-01";
+      const date = new Date();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      let initialDate = `${year}-${month < 10 ? "0" + month : month}-01`;
+      let endDate = `${year}-${month < 10 ? "0" + month + 1 : month + 1}-01`;
 
       if (
         !(query.initialDate == "undefined") &&
         !(query.endDate == "undefined")
       ) {
-        firstDayMonthCurrent = query.initialDate;
-        finalDayMonthCurrent = query.endDate;
+        initialDate = query.initialDate;
+        endDate = query.endDate;
       }
-      console.log(firstDayMonthCurrent, 222);
-      console.log(finalDayMonthCurrent, 222);
+      console.log(initialDate, 222);
+      console.log(endDate, 222);
 
       const { count, rows } = await db.Expenses.findAndCountAll({
         where: {
           user_id: id,
           createdAt: {
-            [Op.between]: [firstDayMonthCurrent, finalDayMonthCurrent],
+            [Op.between]: [initialDate, endDate],
           },
         },
         order: [["createdAt", "ASC"]],
@@ -418,66 +419,37 @@ module.exports = {
       const { userId: id, query } = req;
       console.log(query);
       console.log(id);
-      /// la fecha tendria que venir por la query asi el usuario puede ir pidiendo las fechas que quiera
-      //si no tendria que hacer un funcion por cada fecha, como la de abajo => getAllExpenses
-
-      const dateNow = dayjs(new Date()).format("YYYY-MM-DD");
-      let firstDayMonthCurrent = dateNow.slice(0, 8) + "01";
-      const nextMonth = Number(dateNow.slice(6, 7)) + 1;
-      let finalDayMonthCurrent = dateNow.slice(0, 6) + nextMonth + "-01";
+      const date = new Date();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      let initialDate = `${year}-${month < 10 ? "0" + month : month}-01`;
+      let endDate = `${year}-${month < 10 ? "0" + month + 1 : month + 1}-01`;
 
       if (
         !(query.initialDate == "undefined") &&
         !(query.endDate == "undefined")
       ) {
-        firstDayMonthCurrent = query.initialDate;
-        finalDayMonthCurrent = query.endDate;
+        initialDate = query.initialDate;
+        endDate = query.endDate;
       }
-      console.log(firstDayMonthCurrent, 222);
-      console.log(finalDayMonthCurrent, 222);
-      let where;
-      where = {
-        where: {
-          user_id: id,
-          createdAt: {
-            [Op.between]: [firstDayMonthCurrent, finalDayMonthCurrent],
-          },
+      console.log(initialDate, 222);
+      console.log(endDate, 222);
+      let where = {
+        user_id: id,
+        createdAt: {
+          [Op.between]: [initialDate, endDate],
         },
       };
-
       if (query.fixedExpenses == "1") {
-        where = {
-          where: {
-            user_id: id,
-            createdAt: {
-              [Op.between]: [firstDayMonthCurrent, finalDayMonthCurrent],
-            },
-            type_id: 1,
-          },
-        };
+        where.type_id = 1;
       }
       if (query.flexibleExpenses == "2") {
-        where = {
-          where: {
-            user_id: id,
-            createdAt: {
-              [Op.between]: [firstDayMonthCurrent, finalDayMonthCurrent],
-            },
-            type_id: 2,
-          },
-        };
+        where.type_id = 2;
       }
       if (query.savingExpenses == "3") {
-        where = {
-          where: {
-            user_id: id,
-            createdAt: {
-              [Op.between]: [firstDayMonthCurrent, finalDayMonthCurrent],
-            },
-            type_id: 3,
-          },
-        };
+        where.type_id = 3;
       }
+      console.log(where);
       const expenses = await db.Expenses.findAll({
         attributes: [
           "createdAt",
@@ -487,8 +459,7 @@ module.exports = {
             "day",
           ],
         ],
-
-        ...where,
+        where: where,
         group: [
           Sequelize.fn("DATE_FORMAT", sequelize.col("createdAt"), "%Y-%m-%d"),
         ],
@@ -518,7 +489,7 @@ module.exports = {
         },
         data: expenses,
       };
-
+      //console.log(expenses);
       expenses.length !== 0
         ? res.status(200).json(response)
         : res.status(500).json(response);

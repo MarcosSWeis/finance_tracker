@@ -15,12 +15,13 @@ export default function RowFrameExpenses({
   categoryExpenses,
 }) {
   const [width, setWidth] = useState(null);
-  useMemo(() => {});
+
   //   window.addEventListener("resize", function () {
   //     console.log(window.innerWidth);
   //   });
   let windowsize;
   useEffect(() => {
+    console.log("me renderizo la primera vex");
     windowsize = $(window).width();
     setWidth(windowsize);
     $(window).resize(function () {
@@ -28,7 +29,7 @@ export default function RowFrameExpenses({
       setWidth(windowsize);
     });
   }, []);
-
+  console.log(width, "width");
   return (
     <tbody>
       <tr>

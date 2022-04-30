@@ -7,6 +7,7 @@ import BtnSwitch from "./SwitchDates";
 import ButtonsPages from "./ButtonsPages";
 import InputSetDate from "./QueryDateExpenses";
 import RowFrameExpenses from "./RowFrameExpenses";
+
 export default function FrameExpenses() {
   const { queryParameterDate, setQueryParameterDate } = useContext(DataContext);
   const [dataExpenses, setDataExpenses] = useState([]);
@@ -16,22 +17,30 @@ export default function FrameExpenses() {
   const [switchDates, setSwitchDates] = useState(null);
   const [expenseType, setExpenseType] = useState([]);
   const [categoryExpenses, setCategoryExpenses] = useState([]);
+  const [width, setWidth] = useState(null);
+
   let countLoader = [];
+  let windowsize;
   for (let i = 1; i <= 10; i++) {
     countLoader.push(i);
   }
   useEffect(() => {
+    console.log("me renderizo una vex");
     controllerBudget.getCategoriesExpenses().then(({ data }) => {
       setCategoryExpenses(data.data);
     });
     controllerBudget.getExpenseTypes().then(({ data }) => {
       setExpenseType(data.data);
     });
-  }, []);
-  useEffect(() => {
     controllerBudget.getExpenses(page, queryParameterDate).then(({ data }) => {
       setDataExpenses(data.data);
       setTotalRowsBd(data.meta.total);
+    });
+    windowsize = $(window).width();
+    setWidth(windowsize);
+    $(window).resize(function () {
+      windowsize = $(window).width();
+      setWidth(windowsize);
     });
   }, [page, queryParameterDate]);
 
@@ -55,7 +64,7 @@ export default function FrameExpenses() {
                 Tipo de gasto
               </th>
 
-              {!($(window).width() < 720) ? (
+              {!(width < 720) ? (
                 <th scope="col" className="px-0 w-12">
                   Descripción
                 </th>
@@ -65,7 +74,7 @@ export default function FrameExpenses() {
               <th scope="col" className="px-0 w-12">
                 Monto
               </th>
-              {!($(window).width() < 720) ? (
+              {!(width < 720) ? (
                 <th scope="col" className="px-0 w-12">
                   Categoría
                 </th>
