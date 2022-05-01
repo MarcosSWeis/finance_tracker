@@ -30,28 +30,28 @@ export default function ButtonsPages({ setPage, page, totalRowsBd }) {
   return (
     <div className="w-100 mt-5 ">
       <nav aria-label="...">
-        <ul class="pagination justify-content-center">
-          <li class={`page-item  ${page == 1 ? "disabled" : ""}`}>
+        <ul className="pagination justify-content-center">
+          <li className={`page-item  ${page == 1 ? "disabled" : ""}`}>
             <button
-              class="page-link"
+              className="page-link"
               tabindex="-1"
               onClick={handlerPreviousPage}
             >
               Previous
             </button>
           </li>
-          <li class="page-item active">
-            <button class="page-link" onClick={handlerOnePage}>
+          <li className="page-item active">
+            <button className="page-link" onClick={handlerOnePage}>
               1
             </button>
           </li>
-          <li class="page-item ">
-            <button class="page-link" onClick={handlerTwoPage}>
-              2 <span class="sr-only">(current)</span>
+          <li className="page-item ">
+            <button className="page-link" onClick={handlerTwoPage}>
+              2 <span className="sr-only">(current)</span>
             </button>
           </li>
-          <li class="page-item">
-            <button class="page-link" onClick={handlerThreePage}>
+          <li className="page-item">
+            <button className="page-link" onClick={handlerThreePage}>
               3
             </button>
           </li>
@@ -61,7 +61,7 @@ export default function ButtonsPages({ setPage, page, totalRowsBd }) {
               !(totalRowsBd > limit * page) ? "disabled" : ""
             }`}
           >
-            <button class="page-link" onClick={handlerNextPage}>
+            <button className="page-link" onClick={handlerNextPage}>
               Next
             </button>
           </li>

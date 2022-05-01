@@ -125,7 +125,7 @@ export default function CardsMetricsHome({ fixedIncome, category }) {
                   <i className="fas fa-shopping-cart"></i>
                 </div>
                 <div className=" d-flex ">
-                  <h5 className="card-title ">...</h5>
+                  <h5 className="card-title ">Ingreso neto</h5>
                   <h5 className="text-right  mb-3 ml-auto ">$ {}</h5>
                 </div>
                 <div className="row align-items-center mb-2 d-flex">

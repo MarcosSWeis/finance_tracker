@@ -92,7 +92,7 @@ export default function InputSetDate() {
           </label>
 
           <select
-            class="form-select  w-auto  mx-2 "
+            className="form-select  w-auto  mx-2 "
             aria-label="Default select example"
             name="initialYear"
             id="initialYear"
@@ -110,7 +110,7 @@ export default function InputSetDate() {
           <select
             name="initialMonths"
             id="initialMonths"
-            class="form-select  w-auto mx-2"
+            className="form-select  w-auto mx-2"
             aria-label="Default select example"
             onChange={handlerChanges}
           >
@@ -126,7 +126,7 @@ export default function InputSetDate() {
           <select
             name="initialDays"
             id="initialDays"
-            class="form-select  w-auto mx-2"
+            className="form-select  w-auto mx-2"
             aria-label="Default select example"
             onChange={handlerChanges}
           >
@@ -142,7 +142,7 @@ export default function InputSetDate() {
             Año
           </label>
           <select
-            class="form-select  w-auto mx-2  "
+            className="form-select  w-auto mx-2  "
             aria-label="Default select example"
             name="endYear"
             id="endYear"
@@ -160,7 +160,7 @@ export default function InputSetDate() {
           <select
             name="endMonths"
             id="endMonths"
-            class="form-select w-auto mx-2"
+            className="form-select w-auto mx-2"
             aria-label="Default select example"
             onChange={handlerChanges}
           >
@@ -176,7 +176,7 @@ export default function InputSetDate() {
           <select
             name="endDays"
             id="endDays"
-            class="form-select w-auto mx-2"
+            className="form-select w-auto mx-2"
             aria-label="Default select example"
             onChange={handlerChanges}
           >
@@ -187,13 +187,13 @@ export default function InputSetDate() {
           </select>
         </div>
         <div className="d-flex ">
-          <button type="submit" class="btn btn-primary mt-2 ml-2 ">
+          <button type="submit" className="btn btn-primary mt-2 ml-2 ">
             Enviar
           </button>
           <div className="mt-2 m-10">
             <button
               type="button"
-              class="btn btn-primary "
+              className="btn btn-primary "
               onClick={() => {
                 setQueryParameterDate({
                   initialDate: undefined,

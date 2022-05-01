@@ -308,29 +308,29 @@ module.exports = {
       console.log(id);
       /// la fecha tendria que venir por la query asi el usuario puede ir pidiendo las fechas que quiera
       //si no tendria que hacer un funcion por cada fecha, como la de abajo => getAllExpenses
-      let limit = 10;
-      let page = query.page - 1;
-      if (page == "undefined") {
-        page = null;
-        limit = null;
+      const limit = 10;
+      let page;
+      if (!(query.page !== "undefined") || !(query.page !== undefined)) {
+        page = query.page - 1;
       }
+      console.log(query.page, "query.page");
       const date = new Date();
       const month = date.getMonth() + 1;
       const year = date.getFullYear();
       let initialDate = `${year}-${month < 10 ? "0" + month : month}-01`;
       let endDate = `${year}-${month < 10 ? "0" + (month + 1) : month + 1}-01`;
 
+      //si viene sin fechas especificas le pongo las del mes actual
       if (
-        !(query.initialDate == "undefined") &&
-        !(query.endDate == "undefined")
+        !(query.initialDate == undefined || query.initialDate == "undefined") &&
+        !(query.endDate == undefined || query.endDate == "undefined")
       ) {
+        console.log("es igual que las fechas undefinded");
         initialDate = query.initialDate;
         endDate = query.endDate;
       }
-      console.log(initialDate, 222);
-      console.log(endDate, 222);
-
-      const { count, rows } = await db.Expenses.findAndCountAll({
+      // pedido para pa sección de gastos con paginado
+      const queryDb = {
         attributes: ["id", "amount", "description", "createdAt"],
         where: {
           user_id: id,
@@ -352,9 +352,24 @@ module.exports = {
         ],
         order: [["createdAt", "ASC"]],
         raw: true,
-        offset: page * limit == 0 ? null : page * limit,
-        limit: limit == 0 ? null : limit,
-      });
+        offset: page * limit,
+        limit: limit,
+      };
+      if (page == "undefined" || page == undefined) {
+        delete queryDb.offset;
+      }
+      // si los 3 vienen undefined es que viene el pedido del home
+      if (
+        query.page == "undefined" &&
+        query.initialDate == "undefined" &&
+        query.endDate == "undefined"
+      ) {
+        delete queryDb.where.createdAt;
+        queryDb.order = [["createdAt", "DESC"]];
+        delete queryDb.offset;
+      }
+      console.log(queryDb);
+      const { count, rows } = await db.Expenses.findAndCountAll({ ...queryDb });
 
       let ok;
       let status;
@@ -373,7 +388,7 @@ module.exports = {
           ok: ok,
           status: status,
           statusText: statusText,
-          total: count,
+          total: Object.keys(query).length == 0 ? rows.length : count,
           url: "http://localhost:3001/budget/expenses",
         },
         data: rows,
@@ -436,7 +451,7 @@ module.exports = {
       const month = date.getMonth() + 1;
       const year = date.getFullYear();
       let initialDate = `${year}-${month < 10 ? "0" + month : month}-01`;
-      let endDate = `${year}-${month < 10 ? "0" + month + 1 : month + 1}-01`;
+      let endDate = `${year}-${month < 10 ? "0" + (month + 1) : month + 1}-01`;
 
       if (
         !(query.initialDate == "undefined") &&

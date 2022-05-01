@@ -1,9 +1,9 @@
 export default function SwitchDates({ setSwitchDates, switchDates }) {
   return (
-    <div class=" pl-2 mb-5">
+    <div className=" pl-2 mb-5">
       <h4> Buscar por fechas</h4>
       <div
-        class="switch"
+        className="switch"
         onClick={(e) => {
           console.log(e);
           if (switchDates) {
@@ -18,7 +18,7 @@ export default function SwitchDates({ setSwitchDates, switchDates }) {
           role="switch"
           checked={switchDates ? "checked" : ""}
         />
-        <span class="slider"></span>
+        <span className="slider"></span>
       </div>
     </div>
   );

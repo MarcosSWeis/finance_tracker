@@ -1,13 +1,29 @@
 import {
   Chart as ChartJS,
+  ArcElement,
+  LineElement,
+  BarElement,
+  PointElement,
+  BarController,
+  BubbleController,
+  DoughnutController,
+  LineController,
+  PieController,
+  PolarAreaController,
+  RadarController,
+  ScatterController,
   CategoryScale,
   LinearScale,
-  PointElement,
-  BarElement, // para graficos de barra
+  LogarithmicScale,
+  RadialLinearScale,
+  TimeScale,
+  TimeSeriesScale,
+  Decimation,
+  Filler,
+  Legend,
   Title,
   Tooltip,
-  Legend,
-  Filler, // sirve para calcular el area bajo la curva , sin este componente no anda
+  SubTitle,
 } from "chart.js";
 import { useMemo } from "react";
 import { Bar } from "react-chartjs-2"; // para graficos de barras

@@ -1,30 +1,9 @@
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement, // para graficos de lineas
-  Title,
-  Tooltip,
-  Legend,
-  Filler, // sirve para calcular el area bajo la curva , sin este componente no anda
-} from "chart.js";
 import $ from "jquery";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { controllerBudget } from "../services/request/budget";
 import GraphicLineExpenses from "./GraphicLineExpenses";
 import HorizontalBarGraphic from "./HorizontalBarGraphic";
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement, // para graficos de lineas
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
 
 export default function GraphicsExpenses() {
   const [tickGraphicBar, setTickGraphicBar] = useState(null);

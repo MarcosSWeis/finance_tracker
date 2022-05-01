@@ -13,18 +13,14 @@ export default function RowFrameExpenses({
   category,
 }) {
   const [width, setWidth] = useState(null);
-
-  //   window.addEventListener("resize", function () {
-  //     console.log(window.innerWidth);
-  //   });
-  let windowsize;
+  let windowSize;
   useEffect(() => {
     console.log("me renderizo la primera vex");
-    windowsize = $(window).width();
-    setWidth(windowsize);
+    windowSize = $(window).width();
+    setWidth(windowSize);
     $(window).resize(function () {
-      windowsize = $(window).width();
-      setWidth(windowsize);
+      windowSize = $(window).width();
+      setWidth(windowSize);
     });
   }, []);
   console.log(width, "width");
@@ -49,7 +45,7 @@ export default function RowFrameExpenses({
           <button type="button" className="btnEditRowExpense w-100 p-0 mb-1">
             Editar
           </button>
-          <button type="button" class="btnDeleteRowExpense w-100 p-0">
+          <button type="button" className="btnDeleteRowExpense w-100 p-0">
             Eliminar
           </button>
         </td>
