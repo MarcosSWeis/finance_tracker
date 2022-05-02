@@ -37,6 +37,12 @@ router.get(
   personalBudgetControllers.getExpenseType
 );
 
+router.get(
+  "/top10_income_expenses",
+  userExtractor,
+  personalBudgetControllers.getTop10IncomeExpense
+);
+
 router.post(
   "/create_income",
   userExtractor,

@@ -1,39 +1,46 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Expenses extends Model {
+  class Income_expenses extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Expenses.belongsTo(models.User, {
+      Income_expenses.belongsTo(models.User, {
         as: "user",
         foreignKey: "user_id",
       });
-      Expenses.belongsTo(models.Categories_expenses, {
+      Income_expenses.belongsTo(models.Categories_expenses, {
         as: "categoryExpense",
         foreignKey: "category_exp_id",
       });
-      Expenses.belongsTo(models.Expense_type, {
+      Income_expenses.belongsTo(models.Expense_type, {
         as: "expenseType",
         foreignKey: "type_id",
       });
+      Income_expenses.belongsTo(models.Categories_income, {
+        as: "categoryIncome",
+        foreignKey: "category_inc_id",
+      });
     }
   }
-  Expenses.init(
+  Income_expenses.init(
     {
       user_id: DataTypes.INTEGER,
+      amountExpense: DataTypes.DOUBLE,
       type_id: DataTypes.INTEGER,
-      amount: DataTypes.DOUBLE,
       category_exp_id: DataTypes.INTEGER,
+      amountIncome: DataTypes.DOUBLE,
+      category_inc_id: DataTypes.INTEGER,
       description: DataTypes.STRING,
+      createdAt: DataTypes.DATE,
     },
     {
       sequelize,
-      modelName: "Expenses",
+      modelName: "Income_expenses",
     }
   );
-  return Expenses;
+  return Income_expenses;
 };

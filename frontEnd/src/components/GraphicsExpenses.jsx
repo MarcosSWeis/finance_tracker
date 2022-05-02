@@ -11,11 +11,11 @@ export default function GraphicsExpenses() {
   const [fixedExpenses, setFixedExpenses] = useState([]);
   const [flexibleExpenses, setFlexibleExpenses] = useState([]);
   const [savingExpenses, setSavingExpenses] = useState([]);
-  //   console.log(totalExpenses, "totalExpenses");
-  //   console.log(fixedExpenses, "fixedExpenses");
-  // console.log(flexibleExpenses, "flexibleExpenses");
-  //console.log(savingExpenses, "savingExpenses");
-  // console.log("me renderizo dos veces");
+  console.log(totalExpenses, "totalExpenses");
+  console.log(fixedExpenses, "fixedExpenses");
+  console.log(flexibleExpenses, "flexibleExpenses");
+  console.log(savingExpenses, "savingExpenses");
+  //console.log("me renderizo dos veces");
   const [
     labels,
     arrPositionTotalExpenses,
@@ -126,6 +126,11 @@ export default function GraphicsExpenses() {
         { data: dataFlexibleExpenses },
         { data: dataSavingExpenses },
       ]) => {
+        // console.log(dataTotalExpenses);
+        // console.log(dataFixedExpense);
+        // console.log(dataFlexibleExpenses);
+        // console.log(dataSavingExpenses);
+
         setTotalExpenses(dataTotalExpenses.data);
         setFixedExpenses(dataFixedExpense.data);
         setFlexibleExpenses(dataFlexibleExpenses.data);
@@ -137,10 +142,10 @@ export default function GraphicsExpenses() {
   function handlerGraphicBar() {
     !tickGraphicBar ? setTickGraphicBar(true) : setTickGraphicBar(null);
   }
-  console.log(arrPositionTotalExpenses, "arrPositionTotalExpenses");
-  console.log(arrPositionFixedExpenses, "arrPositionFixedExpenses");
-  console.log(arrPositionFlexibleExpenses, "arrPositionFlexibleExpenses");
-  console.log(arrPositionSavingExpenses, "arrPositionSavingExpenses");
+  //   console.log(arrPositionTotalExpenses, "arrPositionTotalExpenses");
+  //   console.log(arrPositionFixedExpenses, "arrPositionFixedExpenses");
+  //   console.log(arrPositionFlexibleExpenses, "arrPositionFlexibleExpenses");
+  //   console.log(arrPositionSavingExpenses, "arrPositionSavingExpenses");
   return (
     <div className="w-100 mx-auto  mt-130px">
       <div>

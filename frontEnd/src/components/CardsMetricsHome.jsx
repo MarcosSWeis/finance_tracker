@@ -8,7 +8,8 @@ export default function CardsMetricsHome({ fixedIncome, category }) {
   // entonces expenses pasa a true le dice que actualice a la funcincion getExpenses y renderiza con la data actualizada
   const { expenses } = useContext(DataContext);
   const [categories, setCategories] = useState([]);
-  const [dataExpenses, setDataExpenses] = useState([]);
+  const [dataTotalExpense, setDataTotalExpenses] = useState(0);
+  const [dataTotalIncomes, setDataTotalIncomes] = useState(0);
 
   useEffect(() => {
     controllerBudget.getCategoriesIncome().then(({ data }) => {
@@ -16,22 +17,29 @@ export default function CardsMetricsHome({ fixedIncome, category }) {
     });
   }, []);
   useEffect(() => {
-    controllerBudget.getAllExpenses().then(({ data }) => {
-      setDataExpenses(data.data);
+    controllerBudget
+      .getAllExpenses({ amountExpense: true })
+      .then(({ data }) => {
+        setDataTotalExpenses(data.data.totalExpenses);
+      });
+
+    controllerBudget.getAllExpenses({ amountIncome: true }).then(({ data }) => {
+      setDataTotalIncomes(data.data.totalIncomes);
     });
   }, [expenses]);
-  //   console.log(categories, "categorieas");
-  //   console.log(category, "category id");
-  //   console.log(dataExpenses, "dataExpenses");
-  let totalExpenses = 0;
-  if (dataExpenses) {
-    dataExpenses.map((expense) => {
-      totalExpenses += expense.amount;
-    });
-  }
-  console.log(totalExpenses, "totalExpenses");
 
-  const percentageIncome = ((totalExpenses * 100) / fixedIncome).toFixed(2);
+  console.log(dataTotalExpense, "dataTotalExpense");
+  console.log(dataTotalIncomes, "dataTotalIncomes");
+  console.log(fixedIncome, "fixedIncome");
+
+  //console.log(dataTotalExpense, "totalExpenses");
+
+  const percentageIncome = (
+    (dataTotalExpense * 100) /
+    (fixedIncome + dataTotalIncomes)
+  ).toFixed(2);
+  const ingresoNeto = fixedIncome + dataTotalIncomes - dataTotalExpense;
+  const totalIncome = fixedIncome + dataTotalIncomes;
   return (
     <div className="col-md-10 w-100 pl-0 ">
       <div className="row ">
@@ -45,7 +53,7 @@ export default function CardsMetricsHome({ fixedIncome, category }) {
                 <div className=" d-flex ">
                   <h5 className="card-title ">Gastos totales</h5>
                   <h5 className="text-right  mb-3 ml-auto ">
-                    $ {totalExpenses}
+                    $ {dataTotalExpense}
                   </h5>
                 </div>
                 <div className="row align-items-center mb-2 d-flex">
@@ -89,13 +97,9 @@ export default function CardsMetricsHome({ fixedIncome, category }) {
                   <h5 className="text-right  mb-3 ml-auto ">$ {fixedIncome}</h5>
                 </div>
                 <div className=" d-flex ">
-                  <span className="card-title ">Categoría</span>
+                  <span className="card-title ">Ingresos varios</span>
                   <span className="text-right  mb-2 ml-auto ">
-                    {categories
-                      ? categories.map((categ) =>
-                          categ.id == category ? categ.category : ""
-                        )
-                      : ""}
+                    $ {dataTotalIncomes}
                   </span>
                 </div>
                 <div className="row  mb-2 d-flex"></div>
@@ -125,21 +129,18 @@ export default function CardsMetricsHome({ fixedIncome, category }) {
                   <i className="fas fa-shopping-cart"></i>
                 </div>
                 <div className=" d-flex ">
-                  <h5 className="card-title ">Ingreso neto</h5>
-                  <h5 className="text-right  mb-3 ml-auto ">$ {}</h5>
+                  <h5 className="card-title ">Neto</h5>
+                  <h5 className="text-right  mb-3 ml-auto ">$ {ingresoNeto}</h5>
                 </div>
-                <div className="row align-items-center mb-2 d-flex">
-                  <div className="col-8">
-                    <h2 className="d-flex align-items-center mb-0">{}</h2>
-                  </div>
-                  <div className="col-4 text-right">
-                    <span>
-                      ... <i className="fa fa-arrow-up"></i>
-                    </span>
-                  </div>
+                <div className=" d-flex ">
+                  <span className="card-title ">Total ingresos</span>
+                  <span className="text-right  mb-2 ml-auto ">
+                    $ {totalIncome}
+                  </span>
                 </div>
+                <div className="row  mb-2 d-flex"></div>
                 <div
-                  className="progress mt-3 "
+                  className="mt-1 "
                   data-height="8"
                   style={{ height: "8px" }}
                 >
@@ -150,7 +151,6 @@ export default function CardsMetricsHome({ fixedIncome, category }) {
                     aria-valuenow="25"
                     aria-valuemin="0"
                     aria-valuemax="100"
-                    style={{ width: `2%` }}
                   ></div>
                 </div>
               </div>

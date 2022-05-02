@@ -30,8 +30,8 @@ export default function FormExpenses() {
     event.preventDefault();
     const type_id = $("#type_id");
     const errorExpenseType = $("#errorExpenseType");
-    const amount = $("#amount");
-    const errorAmount = $("#errorAmount");
+    const amountExpense = $("#amountExpense");
+    const errorAmount = $("#errorAmountExpense");
     const category_exp_id = $("#category_exp_id");
     const errorCategories = $("#errorCategories");
     const description = $("#description");
@@ -39,7 +39,7 @@ export default function FormExpenses() {
     const fieldsToValidate = {
       type_id,
       errorExpenseType,
-      amount,
+      amountExpense,
       errorAmount,
       category_exp_id,
       errorCategories,
@@ -95,20 +95,20 @@ export default function FormExpenses() {
             <p className="text-danger" id="errorExpenseType"></p>
 
             <div className="mb-3">
-              <label htmlFor="amount" className="form-label">
+              <label htmlFor="amountExpense" className="form-label">
                 Monto
               </label>
               <input
-                name="amount"
+                name="amountExpense"
                 type="number"
                 onChange={handlerChange}
                 className="form-control"
-                id="amount"
+                id="amountExpense"
                 placeholder="Monto"
                 /*  value={createIncome.varied_income} */
               />
             </div>
-            <p className="text-danger" id="errorAmount"></p>
+            <p className="text-danger" id="errorAmountExpense"></p>
 
             <label htmlFor="category_exp_id" className="d-block">
               Categorías

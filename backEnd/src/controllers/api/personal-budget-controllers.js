@@ -84,7 +84,7 @@ module.exports = {
     try {
       const { userId: id } = req;
 
-      const incomes = await db.Incomes.findAll({
+      const incomes = await db.Fixed_income.findAll({
         where: {
           user_id: id,
         },
@@ -139,7 +139,7 @@ module.exports = {
           ok: ok,
           status: status,
           statusText: statusText,
-          length: categories.length,
+          total: categories.length,
           url: "http://localhost:3001/budget/categories_income",
         },
         data: categories,
@@ -162,15 +162,18 @@ module.exports = {
       let ok;
       let status;
       let statusText;
+      let total;
 
       if (categoriesExpenses) {
         ok = true;
         status = 201;
         statusText = "OK";
+        total = categoriesExpenses.length;
       } else {
         ok = false;
         status = 500;
         statusText = "Error interno del servidor";
+        total = categoriesExpenses.length;
       }
       const response = {
         meta: {
@@ -195,21 +198,25 @@ module.exports = {
       let ok;
       let status;
       let statusText;
+      let total;
 
       if (expenseType) {
         ok = true;
         status = 201;
         statusText = "OK";
+        total = expenseType.length;
       } else {
         ok = false;
         status = 500;
         statusText = "Error interno del servidor";
+        total = expenseType.length;
       }
       const response = {
         meta: {
           ok: ok,
           status: status,
           statusText: statusText,
+          total: total,
           url: "http://localhost:3001/budget/expense_type",
         },
         data: expenseType,
@@ -223,13 +230,12 @@ module.exports = {
   updateIncome: async (req, res, next) => {
     try {
       const { userId: id, body } = req;
-      const updateIncome = await db.Incomes.findOne({
+      const updateIncome = await db.Fixed_income.findOne({
         where: {
           user_id: id,
         },
       });
       await updateIncome.set("fixed_income", body.fixed_income);
-      await updateIncome.set("varied_income", 0);
       await updateIncome.set("category_inc_id", body.category_inc_id);
       await updateIncome.set("description", body.description);
       await updateIncome.save();
@@ -268,14 +274,14 @@ module.exports = {
       const { userId: id, body } = req;
       console.log(id);
       console.log(body);
-      const newExpense = await db.Expenses.create({
+      const newIncomeExpenses = await db.Income_expenses.create({
         user_id: id,
         ...body,
       });
       let ok;
       let status;
       let statusText;
-      if (newExpense) {
+      if (newIncomeExpenses) {
         ok = true;
         status = 201;
         statusText = "OK";
@@ -291,9 +297,9 @@ module.exports = {
           statusText: statusText,
           url: "http://localhost:3001/budget/create_expense",
         },
-        data: newExpense,
+        data: newIncomeExpenses,
       };
-      newExpense
+      newIncomeExpenses
         ? res.status(200).json(response)
         : res.status(500).json(response);
     } catch (err) {
@@ -310,32 +316,38 @@ module.exports = {
       //si no tendria que hacer un funcion por cada fecha, como la de abajo => getAllExpenses
       const limit = 10;
       let page;
-      if (!(query.page !== "undefined") || !(query.page !== undefined)) {
-        page = query.page - 1;
-      }
+
       console.log(query.page, "query.page");
       const date = new Date();
       const month = date.getMonth() + 1;
       const year = date.getFullYear();
-      let initialDate = `${year}-${month < 10 ? "0" + month : month}-01`;
-      let endDate = `${year}-${month < 10 ? "0" + (month + 1) : month + 1}-01`;
+      let initialDate, endDate;
+      initialDate = `${year}-${month < 10 ? "0" + month : month}-01`;
+      endDate = `${year}-${month < 10 ? "0" + (month + 1) : month + 1}-01`;
 
       //si viene sin fechas especificas le pongo las del mes actual
       if (
         !(query.initialDate == undefined || query.initialDate == "undefined") &&
         !(query.endDate == undefined || query.endDate == "undefined")
       ) {
+        console.log(date.getMonth(), 78787878787);
         console.log("es igual que las fechas undefinded");
         initialDate = query.initialDate;
         endDate = query.endDate;
       }
+
+      console.log(initialDate, "initialDate");
+      console.log(endDate, "endDate");
       // pedido para pa sección de gastos con paginado
       const queryDb = {
-        attributes: ["id", "amount", "description", "createdAt"],
+        attributes: ["id", "amountExpense", "description", "createdAt"],
         where: {
           user_id: id,
           createdAt: {
             [Op.between]: [initialDate, endDate],
+          },
+          amountExpense: {
+            [Op.ne]: null,
           },
         },
         include: [
@@ -352,11 +364,14 @@ module.exports = {
         ],
         order: [["createdAt", "ASC"]],
         raw: true,
-        offset: page * limit,
         limit: limit,
       };
-      if (page == "undefined" || page == undefined) {
+
+      if (!(query.page !== "undefined") || !(query.page !== undefined)) {
         delete queryDb.offset;
+      } else {
+        page = query.page - 1;
+        queryDb.offset = page * limit;
       }
       // si los 3 vienen undefined es que viene el pedido del home
       if (
@@ -369,7 +384,11 @@ module.exports = {
         delete queryDb.offset;
       }
       console.log(queryDb);
-      const { count, rows } = await db.Expenses.findAndCountAll({ ...queryDb });
+      const { count, rows } = await db.Income_expenses.findAndCountAll({
+        ...queryDb,
+      });
+      console.log(rows);
+      console.log(count);
 
       let ok;
       let status;
@@ -380,22 +399,21 @@ module.exports = {
         statusText = "OK";
       } else {
         ok = false;
-        status = 500;
-        statusText = "Error interno del servidor";
+        status = 404;
+        statusText = "No se encontro nada para esa fecha";
       }
       const response = {
         meta: {
           ok: ok,
           status: status,
           statusText: statusText,
-          total: Object.keys(query).length == 0 ? rows.length : count,
-          url: "http://localhost:3001/budget/expenses",
+          total: count,
+          url: "http://localhost:3001/budget/income_expenses",
         },
         data: rows,
       };
-      rows.length !== 0
-        ? res.status(200).json(response)
-        : res.status(500).json(response);
+
+      res.status(200).json(response);
     } catch (err) {
       console.log(err);
       handlerErrors(err, req, res, next);
@@ -403,40 +421,52 @@ module.exports = {
   },
   getAllExpenses: async (req, res, next) => {
     try {
-      const { userId: id } = req;
+      const { userId: id, query } = req;
       console.log(id);
-
-      const expenses = await db.Expenses.findAll({
+      let col, alias;
+      console.log(query);
+      if (query.amountExpense == "true") {
+        col = "amountExpense";
+        alias = "totalExpenses";
+      }
+      if (query.amountIncome == "true") {
+        col = "amountIncome";
+        alias = "totalIncomes";
+      }
+      const totalExpensesORIncome = await db.Income_expenses.findOne({
+        attributes: [[Sequelize.fn("sum", Sequelize.col(col)), alias]],
         where: {
           user_id: id,
+          [col]: {
+            [Op.ne]: null,
+          },
         },
         raw: true,
       });
       let ok;
       let status;
       let statusText;
-      if (expenses.length !== 0) {
+      if (totalExpensesORIncome.length !== 0) {
         ok = true;
         status = 201;
         statusText = "OK";
       } else {
         ok = false;
-        status = 500;
-        statusText = "Error interno del servidor";
+        status = 404;
+        statusText = "No encontramos gastos";
       }
       const response = {
         meta: {
           ok: ok,
           status: status,
           statusText: statusText,
-          length: expenses.length,
+          // length: totalExpensesORIncome.length,
           url: "http://localhost:3001/budget/all_expenses",
         },
-        data: expenses,
+        data: totalExpensesORIncome,
       };
-      expenses.length !== 0
-        ? res.status(200).json(response)
-        : res.status(500).json(response);
+
+      res.status(200).json(response);
     } catch (err) {
       console.log(err);
       handlerErrors(err, req, res, next);
@@ -467,6 +497,9 @@ module.exports = {
         createdAt: {
           [Op.between]: [initialDate, endDate],
         },
+        amountExpense: {
+          [Op.ne]: null,
+        },
       };
       if (query.fixedExpenses == "1") {
         where.type_id = 1;
@@ -478,10 +511,10 @@ module.exports = {
         where.type_id = 3;
       }
       console.log(where);
-      const expenses = await db.Expenses.findAll({
+      const expenses = await db.Income_expenses.findAll({
         attributes: [
           "createdAt",
-          [Sequelize.fn("sum", sequelize.col("amount")), "totalForDay"],
+          [Sequelize.fn("sum", sequelize.col("amountExpense")), "totalForDay"],
           [
             Sequelize.fn("DATE_FORMAT", sequelize.col("createdAt"), "%d"),
             "day",
@@ -518,9 +551,86 @@ module.exports = {
         data: expenses,
       };
       //console.log(expenses);
-      expenses.length !== 0
-        ? res.status(200).json(response)
-        : res.status(500).json(response);
+
+      res.status(200).json(response);
+    } catch (err) {
+      console.log(err);
+      handlerErrors(err, req, res, next);
+    }
+  },
+  getTop10IncomeExpense: async (req, res, next) => {
+    try {
+      const { userId: id, query } = req;
+      console.log(query);
+      console.log(id);
+      /// la fecha tendria que venir por la query asi el usuario puede ir pidiendo las fechas que quiera
+      //si no tendria que hacer un funcion por cada fecha, como la de abajo => getAllExpenses
+      const limit = 10;
+
+      // pedido para pa sección de gastos con paginado
+      const queryDb = {
+        attributes: [
+          "id",
+          "amountExpense",
+          "description",
+          "createdAt",
+          "amountIncome",
+        ],
+        where: {
+          user_id: id,
+        },
+        include: [
+          {
+            model: db.Categories_expenses,
+            as: "categoryExpense",
+            attributes: ["category", "id"],
+          },
+          {
+            model: db.Categories_income,
+            as: "categoryIncome",
+            attributes: ["category", "id"],
+          },
+          {
+            model: db.Expense_type,
+            as: "expenseType",
+            attributes: ["type", "id"],
+          },
+        ],
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      };
+      console.log(queryDb);
+      const top10IncomeExpenses = await db.Income_expenses.findAll({
+        ...queryDb,
+      });
+
+      console.log(top10IncomeExpenses);
+
+      let ok, status, statusText, total;
+
+      if (top10IncomeExpenses) {
+        ok = true;
+        status = 201;
+        statusText = "OK";
+        total = top10IncomeExpenses.length;
+      } else {
+        ok = false;
+        status = 404;
+        statusText = "No se encontraron ingresos ni egresos";
+        total = 0;
+      }
+      const response = {
+        meta: {
+          ok: ok,
+          status: status,
+          statusText: statusText,
+          total: total,
+          url: "http://localhost:3001/budget/top10_income_expenses",
+        },
+        data: top10IncomeExpenses,
+      };
+
+      res.status(200).json(response);
     } catch (err) {
       console.log(err);
       handlerErrors(err, req, res, next);

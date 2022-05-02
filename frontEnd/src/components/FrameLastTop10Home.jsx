@@ -1,46 +1,43 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import $ from "jquery";
 import RowFrameExpenses from "./RowFrameExpenses";
 import Skeleton from "react-loading-skeleton";
 import { controllerBudget } from "../services/request/budget";
+import { DataContext } from "../context/DataContext";
 
-export default function ListExpensesHome() {
+export default function FrameLastTop10Home() {
   let countLoader = [];
   for (let i = 1; i <= 10; i++) {
     countLoader.push(i);
   }
-  const [top10LastExpenses, setTop10LastExpenses] = useState([]);
+  const { setExpenses, setShowFormExpense } = useContext(DataContext);
+  const [top10Last, setTop10Last] = useState([]);
   const [width, setWidth] = useState(null);
   let windowsize;
   useEffect(() => {
-    controllerBudget
-      .getExpenses(undefined, {
-        initialDate: "undefined",
-        endDate: "undefined",
-      })
-      .then(({ data }) => {
-        console.log(data);
-        setTop10LastExpenses(data.data);
-      });
+    controllerBudget.getTop10IncomeExpense().then(({ data }) => {
+      console.log(data);
+      setTop10Last(data.data);
+    });
 
     //responsive
     windowsize = $(window).width();
     setWidth(windowsize);
-    $(window).resize(function () {
-      windowsize = $(window).width();
-      setWidth(windowsize);
-    });
-  }, []);
+    // $(window).resize(function () {
+    //   windowsize = $(window).width();
+    //   setWidth(windowsize);
+    // });
+  }, [setExpenses]);
 
   return (
     <div className="mt-130px ">
-      <h3 className="pb-3 text-center">Últimos diez gastos</h3>
+      <h3 className="pb-3 text-center">Últimos movimientos</h3>
       <div className="mt-20">
         <table className="table  ">
           <thead className="thead-dark">
             <tr>
               <th scope="col" className="px-3 w-12">
-                Tipo de gasto
+                Tipo
               </th>
 
               {!(width < 720) ? (
@@ -68,15 +65,22 @@ export default function ListExpensesHome() {
               </th>
             </tr>
           </thead>
-          {top10LastExpenses.length != 0
-            ? top10LastExpenses.map((expense) => (
+          {top10Last.length != 0
+            ? top10Last.map((value) => (
                 <RowFrameExpenses
-                  key={expense.id}
-                  type={expense["expenseType.type"]}
-                  amount={expense.amount}
-                  createdAt={expense.createdAt}
-                  description={expense.description}
-                  category={expense["categoryExpense.category"]}
+                  key={value.id}
+                  id={value.id}
+                  typeExpense={value["expenseType.type"]}
+                  amountExpense={value.amountExpense}
+                  amountIncome={value.amountIncome}
+                  createdAt={value.createdAt}
+                  description={value.description}
+                  categoryExpense={value["categoryExpense.category"]}
+                  categoryIncome={value["categoryIncome.category"]}
+                  categoryExpenseId={value["categoryExpense.id"]}
+                  categoryIncomeId={value["categoryIncome.id"]}
+                  typeExpenseId={value["expenseType.id"]}
+
                   //  expenseType={expenseType}
                   //   categoryExpenses={categoryExpenses}
                 />

@@ -11,7 +11,7 @@ import FormIncomes from "./FromIncomes";
 import HandlerButtonExpenses from "./HandlerButonExpenses";
 
 import HandlerButtonsIncomes from "./HandlerButtonsIncomes";
-import ListExpensesHome from "./ListExpensesHome";
+import FrameLastTop10Home from "./FrameLastTop10Home";
 import RowFrameExpenses from "./RowFrameExpenses";
 
 export default function Home() {
@@ -45,7 +45,7 @@ export default function Home() {
       <HandlerButtonsIncomes />
       {showForm && <FormIncomes setDataIncome={setDataIncome} />}
       {showFormExpense && <FormExpenses />}
-      <ListExpensesHome />
+      <FrameLastTop10Home />
     </div>
   );
 }

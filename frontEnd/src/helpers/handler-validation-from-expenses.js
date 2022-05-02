@@ -7,8 +7,8 @@ export default function handlerValidationFromExpenses(
   {
     type_id,
     errorExpenseType,
-    amount,
-    errorAmount,
+    amountExpense,
+    errorAmountExpense,
     category_exp_id,
     errorCategories,
     description,
@@ -31,15 +31,15 @@ export default function handlerValidationFromExpenses(
     }
   }
 
-  if (newExpense.amount == "") {
-    errors.amount = "Debe completar el campo gasto";
-  } else if (isNaN(newExpense.amount)) {
-    errors.amount = "El valor debe ser un numero";
+  if (newExpense.amountExpense == "") {
+    errors.amountExpense = "Debe completar el campo gasto";
+  } else if (isNaN(newExpense.amountExpense)) {
+    errors.amountExpense = "El valor debe ser un numero";
   } else {
-    if (errors.amount) {
-      delete errors.amount;
-      $(amount).removeClass("is-invalid");
-      $(errorAmount).text("");
+    if (errors.amountExpense) {
+      delete errors.amountExpense;
+      $(amountExpense).removeClass("is-invalid");
+      $(errorAmountExpense).text("");
     }
   }
 
@@ -99,9 +99,9 @@ export default function handlerValidationFromExpenses(
       $(errorExpenseType).text(errors.type_id);
       $(type_id).addClass("is-invalid");
     }
-    if (errors.amount) {
-      $(errorAmount).text(errors.amount);
-      $(amount).addClass("is-invalid");
+    if (errors.amountExpense) {
+      $(errorAmountExpense).text(errors.amountExpense);
+      $(amountExpense).addClass("is-invalid");
     }
     if (errors.category_exp_id) {
       $(errorCategories).text(errors.category_exp_id);

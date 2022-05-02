@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("incomes", {
+    await queryInterface.createTable("income_expenses", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,10 +15,26 @@ module.exports = {
           key: "id",
         },
       },
-      fixed_income: {
+      amountExpense: {
         type: Sequelize.DOUBLE,
       },
-      varied_income: {
+      type_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "expense_types",
+          key: "id",
+        },
+        allowNull: true,
+      },
+      category_exp_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "categories_expenses",
+          key: "id",
+        },
+        allowNull: true,
+      },
+      amountIncome: {
         type: Sequelize.DOUBLE,
       },
       category_inc_id: {
@@ -27,9 +43,10 @@ module.exports = {
           model: "categories_incomes",
           key: "id",
         },
+        allowNull: true,
       },
       description: {
-        type: Sequelize.STRING(25),
+        type: Sequelize.STRING(100),
       },
       createdAt: {
         allowNull: false,
@@ -42,6 +59,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("incomes");
+    await queryInterface.dropTable("income_expenses");
   },
 };

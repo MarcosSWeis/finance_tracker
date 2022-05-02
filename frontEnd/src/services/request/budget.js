@@ -109,10 +109,10 @@ export const controllerBudget = {
       console.log(err);
     }
   },
-  getAllExpenses: async () => {
+  getAllExpenses: async ({ amountExpense, amountIncome }) => {
     const config = getConfigTokenLocalStorage();
     const response = await axios.get(
-      `http://localhost:3001/budget/all_expenses`,
+      `http://localhost:3001/budget/all_expenses?amountExpense=${amountExpense}&amountIncome=${amountIncome}`,
       config
     );
     return response;
@@ -127,6 +127,14 @@ export const controllerBudget = {
     const config = getConfigTokenLocalStorage();
     const response = await axios.get(
       `http://localhost:3001/budget/expenses_line_graphic?initialDate=${initialDate}&endDate=${endDate}&fixedExpenses=${fixedExpenses}&flexibleExpenses=${flexibleExpenses}&savingExpenses=${savingExpenses}`,
+      config
+    );
+    return response;
+  },
+  getTop10IncomeExpense: async () => {
+    const config = getConfigTokenLocalStorage();
+    const response = await axios.get(
+      `http://localhost:3001/budget/top10_income_expenses`,
       config
     );
     return response;
