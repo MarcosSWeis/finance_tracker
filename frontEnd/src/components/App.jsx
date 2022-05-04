@@ -22,6 +22,7 @@ import "../css/btn-edit-rows-expenses.css";
 import "../css/btn-delete-rows-expenses.css";
 import "../css/btnSwitch.css";
 import "../css/checkbox.css";
+import "../css/modal.css";
 
 export default function App() {
   return (

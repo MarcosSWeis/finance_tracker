@@ -99,13 +99,14 @@ export default function FrameExpenses() {
                   {dataExpenses.map((expense) => (
                     <RowFrameExpenses
                       key={expense.id}
-                      type={expense["expenseType.type"]}
-                      amount={expense.amountExpense}
+                      id={expense.id}
+                      typeExpense={expense["expenseType.type"]}
+                      amountExpense={expense.amountExpense}
                       createdAt={expense.createdAt}
                       description={expense.description}
-                      category={expense["categoryExpense.category"]}
-                      //  expenseType={expenseType}
-                      //   categoryExpenses={categoryExpenses}
+                      categoryExpense={expense["categoryExpense.category"]}
+                      categoryExpenseId={expense["categoryExpense.id"]}
+                      typeExpenseId={expense["expenseType.id"]}
                     />
                   ))}
                 </table>

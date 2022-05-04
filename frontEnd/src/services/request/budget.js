@@ -96,6 +96,16 @@ export const controllerBudget = {
     );
     return response;
   },
+
+  editIncomeExpense: async (newEdit) => {
+    const config = getConfigTokenLocalStorage();
+    const response = await axios.post(
+      "http://localhost:3001/budget/edit_income_expense",
+      newEdit,
+      config
+    );
+    return response;
+  },
   getExpenses: async (page, { initialDate, endDate }) => {
     try {
       console.log(page, "page en setvice");

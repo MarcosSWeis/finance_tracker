@@ -39,7 +39,7 @@ export default function HandlerButtonsIncomes() {
                 <div className="dot"></div>
               </a>
 
-              <p>Editar ingreso</p>
+              <p>Ingreso Fijo</p>
             </div>
             <div className="">
               <div
@@ -77,7 +77,7 @@ export default function HandlerButtonsIncomes() {
             >
               <div className="plus"></div>
             </a>
-            <p className="">Ingreso Fijo</p>
+            <p className="">Agregar ingreso</p>
           </div>
         )}
       </div>

@@ -4,13 +4,17 @@ import RowFrameExpenses from "./RowFrameExpenses";
 import Skeleton from "react-loading-skeleton";
 import { controllerBudget } from "../services/request/budget";
 import { DataContext } from "../context/DataContext";
+import Modal from "./Modal";
+import { useNewEdit } from "../hooks/useNewEdit";
 
 export default function FrameLastTop10Home() {
   let countLoader = [];
   for (let i = 1; i <= 10; i++) {
     countLoader.push(i);
   }
-  const { setExpenses, setShowFormExpense } = useContext(DataContext);
+  const { expenses, setShowFormExpense } = useContext(DataContext);
+  const { editIncExp } = useNewEdit(null);
+
   const [top10Last, setTop10Last] = useState([]);
   const [width, setWidth] = useState(null);
   let windowsize;
@@ -27,68 +31,70 @@ export default function FrameLastTop10Home() {
     //   windowsize = $(window).width();
     //   setWidth(windowsize);
     // });
-  }, [setExpenses]);
+  }, [expenses]);
 
   return (
-    <div className="mt-130px ">
-      <h3 className="pb-3 text-center">Últimos movimientos</h3>
-      <div className="mt-20">
-        <table className="table  ">
-          <thead className="thead-dark">
-            <tr>
-              <th scope="col" className="px-3 w-12">
-                Tipo
-              </th>
-
-              {!(width < 720) ? (
-                <th scope="col" className="px-0 w-12">
-                  Descripción
+    <>
+      <div className="mt-130px ">
+        <h3 className="pb-3 text-center">Últimos movimientos</h3>
+        <div className="mt-20">
+          <table className="table  ">
+            <thead className="thead-dark">
+              <tr>
+                <th scope="col" className="px-3 w-12">
+                  Tipo
                 </th>
-              ) : (
-                ""
-              )}
-              <th scope="col" className="px-0 w-12">
-                Monto
-              </th>
-              {!(width < 720) ? (
-                <th scope="col" className="px-0 w-12">
-                  Categoría
-                </th>
-              ) : (
-                ""
-              )}
-              <th scope="col" className="px-0 w-12">
-                Fecha de creación
-              </th>
-              <th scope="col" className="px-0 w-5 text-center">
-                Opciones
-              </th>
-            </tr>
-          </thead>
-          {top10Last.length != 0
-            ? top10Last.map((value) => (
-                <RowFrameExpenses
-                  key={value.id}
-                  id={value.id}
-                  typeExpense={value["expenseType.type"]}
-                  amountExpense={value.amountExpense}
-                  amountIncome={value.amountIncome}
-                  createdAt={value.createdAt}
-                  description={value.description}
-                  categoryExpense={value["categoryExpense.category"]}
-                  categoryIncome={value["categoryIncome.category"]}
-                  categoryExpenseId={value["categoryExpense.id"]}
-                  categoryIncomeId={value["categoryIncome.id"]}
-                  typeExpenseId={value["expenseType.id"]}
 
-                  //  expenseType={expenseType}
-                  //   categoryExpenses={categoryExpenses}
-                />
-              ))
-            : countLoader.map(() => loader())}
-        </table>
+                {!(width < 720) ? (
+                  <th scope="col" className="px-0 w-12">
+                    Descripción
+                  </th>
+                ) : (
+                  ""
+                )}
+                <th scope="col" className="px-0 w-12">
+                  Monto
+                </th>
+                {!(width < 720) ? (
+                  <th scope="col" className="px-0 w-12">
+                    Categoría
+                  </th>
+                ) : (
+                  ""
+                )}
+                <th scope="col" className="px-0 w-12">
+                  Fecha de creación
+                </th>
+                <th scope="col" className="px-0 w-5 text-center">
+                  Opciones
+                </th>
+              </tr>
+            </thead>
+            {top10Last.length != 0
+              ? top10Last.map((value) => (
+                  <RowFrameExpenses
+                    key={value.id}
+                    id={value.id}
+                    typeExpense={value["expenseType.type"]}
+                    amountExpense={value.amountExpense}
+                    amountIncome={value.amountIncome}
+                    createdAt={value.createdAt}
+                    description={value.description}
+                    categoryExpense={value["categoryExpense.category"]}
+                    categoryIncome={value["categoryIncome.category"]}
+                    categoryExpenseId={value["categoryExpense.id"]}
+                    typeExpenseId={value["expenseType.id"]}
+                    categoryIncomeId={value["categoryIncome.id"]}
+
+                    //  expenseType={expenseType}
+                    //   categoryExpenses={categoryExpenses}
+                  />
+                ))
+              : countLoader.map(() => loader())}
+          </table>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

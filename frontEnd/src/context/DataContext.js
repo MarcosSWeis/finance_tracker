@@ -11,6 +11,7 @@ export const DataProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [showFormExpense, setShowFormExpense] = useState(null);
   const [expenses, setExpenses] = useState(null);
+
   const [queryParameterDate, setQueryParameterDate] = useState({});
 
   return (

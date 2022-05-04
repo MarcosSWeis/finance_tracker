@@ -270,10 +270,8 @@ module.exports = {
   },
   createExpense: async (req, res, next) => {
     try {
-      console.log("createExpense");
       const { userId: id, body } = req;
-      console.log(id);
-      console.log(body);
+
       const newIncomeExpenses = await db.Income_expenses.create({
         user_id: id,
         ...body,
@@ -310,14 +308,14 @@ module.exports = {
   getExpenses: async (req, res, next) => {
     try {
       const { userId: id, query } = req;
-      console.log(query);
-      console.log(id);
+      //   console.log(query);
+      //   console.log(id);
       /// la fecha tendria que venir por la query asi el usuario puede ir pidiendo las fechas que quiera
       //si no tendria que hacer un funcion por cada fecha, como la de abajo => getAllExpenses
       const limit = 10;
       let page;
 
-      console.log(query.page, "query.page");
+      //  console.log(query.page, "query.page");
       const date = new Date();
       const month = date.getMonth() + 1;
       const year = date.getFullYear();
@@ -330,14 +328,14 @@ module.exports = {
         !(query.initialDate == undefined || query.initialDate == "undefined") &&
         !(query.endDate == undefined || query.endDate == "undefined")
       ) {
-        console.log(date.getMonth(), 78787878787);
-        console.log("es igual que las fechas undefinded");
+        // console.log(date.getMonth(), 78787878787);
+        // console.log("es igual que las fechas undefinded");
         initialDate = query.initialDate;
         endDate = query.endDate;
       }
 
-      console.log(initialDate, "initialDate");
-      console.log(endDate, "endDate");
+      //   console.log(initialDate, "initialDate");
+      //   console.log(endDate, "endDate");
       // pedido para pa sección de gastos con paginado
       const queryDb = {
         attributes: ["id", "amountExpense", "description", "createdAt"],
@@ -354,12 +352,12 @@ module.exports = {
           {
             model: db.Categories_expenses,
             as: "categoryExpense",
-            attributes: ["category"],
+            attributes: ["category", "id"],
           },
           {
             model: db.Expense_type,
             as: "expenseType",
-            attributes: ["type"],
+            attributes: ["type", "id"],
           },
         ],
         order: [["createdAt", "ASC"]],
@@ -383,12 +381,12 @@ module.exports = {
         queryDb.order = [["createdAt", "DESC"]];
         delete queryDb.offset;
       }
-      console.log(queryDb);
+      //  console.log(queryDb);
       const { count, rows } = await db.Income_expenses.findAndCountAll({
         ...queryDb,
       });
-      console.log(rows);
-      console.log(count);
+      //   console.log(rows);
+      //   console.log(count);
 
       let ok;
       let status;
@@ -424,7 +422,7 @@ module.exports = {
       const { userId: id, query } = req;
       console.log(id);
       let col, alias;
-      console.log(query);
+      //   console.log(query);
       if (query.amountExpense == "true") {
         col = "amountExpense";
         alias = "totalExpenses";
@@ -475,8 +473,8 @@ module.exports = {
   getLineGraphicExpenses: async (req, res, next) => {
     try {
       const { userId: id, query } = req;
-      console.log(query);
-      console.log(id);
+      //  console.log(query);
+      //  console.log(id);
       const date = new Date();
       const month = date.getMonth() + 1;
       const year = date.getFullYear();
@@ -490,8 +488,8 @@ module.exports = {
         initialDate = query.initialDate;
         endDate = query.endDate;
       }
-      console.log(initialDate, 222);
-      console.log(endDate, 222);
+      //   console.log(initialDate, 222);
+      //   console.log(endDate, 222);
       let where = {
         user_id: id,
         createdAt: {
@@ -510,7 +508,7 @@ module.exports = {
       if (query.savingExpenses == "3") {
         where.type_id = 3;
       }
-      console.log(where);
+      //  console.log(where);
       const expenses = await db.Income_expenses.findAll({
         attributes: [
           "createdAt",
@@ -561,8 +559,8 @@ module.exports = {
   getTop10IncomeExpense: async (req, res, next) => {
     try {
       const { userId: id, query } = req;
-      console.log(query);
-      console.log(id);
+      //   console.log(query);
+      //   console.log(id);
       /// la fecha tendria que venir por la query asi el usuario puede ir pidiendo las fechas que quiera
       //si no tendria que hacer un funcion por cada fecha, como la de abajo => getAllExpenses
       const limit = 10;
@@ -599,12 +597,12 @@ module.exports = {
         order: [["createdAt", "DESC"]],
         raw: true,
       };
-      console.log(queryDb);
+      //  console.log(queryDb);
       const top10IncomeExpenses = await db.Income_expenses.findAll({
         ...queryDb,
       });
 
-      console.log(top10IncomeExpenses);
+      //  console.log(top10IncomeExpenses);
 
       let ok, status, statusText, total;
 
@@ -628,6 +626,68 @@ module.exports = {
           url: "http://localhost:3001/budget/top10_income_expenses",
         },
         data: top10IncomeExpenses,
+      };
+
+      res.status(200).json(response);
+    } catch (err) {
+      console.log(err);
+      handlerErrors(err, req, res, next);
+    }
+  },
+  editIncomeExpense: async (req, res, next) => {
+    try {
+      const { body } = req;
+      console.log(body);
+      const parseDate = transformDay(body.createdAt);
+      console.log(parseDate);
+      const id = body.id;
+      delete body.id;
+      //   if (!body.amountIncome) {
+      //     delete body.amountIncome;
+      //     delete body.category_inc_id;
+      //   }
+      console.log(body);
+
+      const editIncExp = await db.Income_expenses.update(
+        {
+          ...body,
+        },
+        {
+          where: {
+            id: id,
+          },
+          raw: true,
+        }
+      );
+      //esto es si necesitaria los datos actulizados uso esta forma, como no lo necesito lo actualizo como update
+      //   if (body.amountIncome) {
+      //     await editIncExp.set("amountIncome", body.amountIncome);
+      //   }
+      //await editIncExp.save();
+
+      console.log(editIncExp);
+      let ok, status, statusText, total;
+
+      if (editIncExp[0] === 1) {
+        ok = true;
+        status = 201;
+        statusText = "OK";
+        total = 1;
+      } else {
+        ok = false;
+        status = 304;
+        statusText = "No modificado";
+        total = 0;
+      }
+      const response = {
+        meta: {
+          ok: ok,
+          status: status,
+          statusText: statusText,
+          total: total,
+          url: "http://localhost:3001/budget/top10_income_expenses",
+        },
+        data: editIncExp,
       };
 
       res.status(200).json(response);

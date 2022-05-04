@@ -23,6 +23,7 @@ module.exports = {
         references: {
           model: "expense_types",
           key: "id",
+          allowNull: true,
         },
         allowNull: true,
       },
@@ -31,6 +32,7 @@ module.exports = {
         references: {
           model: "categories_expenses",
           key: "id",
+          allowNull: true,
         },
         allowNull: true,
       },
@@ -42,6 +44,7 @@ module.exports = {
         references: {
           model: "categories_incomes",
           key: "id",
+          allowNull: true,
         },
         allowNull: true,
       },

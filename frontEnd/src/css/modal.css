@@ -1,0 +1,37 @@
+.modal {
+  position: fixed;
+  bottom: 50%;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  background-color: coral;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+}
+.modal.is-open {
+  display: flex;
+}
+
+.modal-container {
+  position: relative;
+  padding: 1rem;
+  width: 450px;
+  /*si el contenido es mas grande que eso , se genera una banda de scrol*/
+  overflow-y: auto;
+}
+
+.modal-close {
+  position: absolute;
+  bottom: 44px;
+  right: 45px;
+  padding: 0.4rem !important;
+}
+
+.formModal {
+  background-color: blanchedalmond;
+  padding: 20px;
+  width: 100%;
+}

@@ -18,7 +18,7 @@ export default function NavBar() {
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top p-2">
       <div className="container mw-100">
         <NavLink to={"/home"} className="navbar-brand w-346 ">
-          Start Bootstrap
+          Finanzas personales
         </NavLink>
 
         <button

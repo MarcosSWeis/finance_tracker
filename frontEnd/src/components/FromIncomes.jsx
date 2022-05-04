@@ -94,24 +94,7 @@ export default function FormIncomes({ setDataIncome }) {
                 value={createIncome.fixed_income}
               />
             </div>
-
             <p className="text-danger" id="errorFixed_income"></p>
-
-            {/* <div className="mb-3">
-          <label htmlFor="varied_income" className="form-label">
-            Ingreso variable
-          </label>
-          <input
-            name="varied_income"
-            type="number"
-            onChange={handlerChange}
-            className="form-control"
-            id="varied_income"
-            placeholder="Ingreso variable"
-            value={createIncome.varied_income}
-          />
-        </div>
-        <p className="text-danger" id="errorVaried_income"></p> */}
 
             <label htmlFor="categories" className="d-block">
               Categorías
