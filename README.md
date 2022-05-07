@@ -7,12 +7,12 @@ Tareas pendientes, no logradas por falta de tiempo
 4- Mejorar y optimizar los componentes 
 
 ## istrucciones
-*one terminal
+- one terminal
 
 1. cd backEnd
 2. npm start
 
-*two terminal
+- two terminal
 
 1. cd frontEnd
 2. npm start
