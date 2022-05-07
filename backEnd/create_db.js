@@ -17,3 +17,7 @@ connection.query(
     console.log(result);
   }
 );
+connection.end(function (err, result) {
+  console.log(err);
+  console.log(result);
+});
