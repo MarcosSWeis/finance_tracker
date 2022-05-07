@@ -734,4 +734,88 @@ module.exports = {
       handlerErrors(err, req, res, next);
     }
   },
+  deleteIncomeExpenses: async (req, res, next) => {
+    const { userId: id, body } = req;
+    console.log(id);
+    console.log(body.expenseIncome_id);
+    const objNull = {
+      user_id: null,
+      amountExpense: null,
+      type_id: null,
+      category_exp_id: null,
+      amountIncome: null,
+      category_inc_id: null,
+      description: null,
+      createdAt: null,
+      updatedAt: null,
+    };
+    try {
+      //   const deleteIncomeExpense = await db.Income_expenses.update(
+      //     {
+      //       ...objNull,
+      //     },
+      //     {
+      //       where: {
+      //         id: 501,
+      //       },
+      //     }
+      //   );
+      const deleteIncomeExpense = await db.Income_expenses.findOne({
+        where: {
+          id: body.expenseIncome_id,
+        },
+      });
+      await deleteIncomeExpense.set("user_id", objNull.user_id);
+      await deleteIncomeExpense.set("amountExpense", objNull.amountExpense);
+      await deleteIncomeExpense.set("type_id", objNull.type_id);
+      await deleteIncomeExpense.set("category_exp_id", objNull.category_exp_id);
+      await deleteIncomeExpense.set("amountIncome", objNull.amountIncome);
+      await deleteIncomeExpense.set("category_inc_id", objNull.category_inc_id);
+      await deleteIncomeExpense.set("description", objNull.description);
+      await deleteIncomeExpense.set("createdAt", objNull.createdAt);
+      await deleteIncomeExpense.set("updatedAt", objNull.updatedAt);
+      await deleteIncomeExpense.save();
+      await db.Income_expenses.destroy({
+        where: {
+          id: body.expenseIncome_id,
+        },
+      });
+
+      const searchDelete = await db.Income_expenses.findOne({
+        where: {
+          id: body.expenseIncome_id,
+        },
+      });
+
+      let ok, status, statusText, totalDelete;
+
+      if (!searchDelete) {
+        ok = true;
+        status = 201;
+        statusText = "OK";
+        totalDelete = 1;
+      } else {
+        ok = false;
+        status = 304;
+        statusText = "No eliminado";
+        totalDelete = 0;
+      }
+      const response = {
+        meta: {
+          ok: ok,
+          status: status,
+          statusText: statusText,
+          totalDelete: totalDelete,
+          url: "http://localhost:3001/budget/delete_income_expense",
+        },
+        data: deleteIncomeExpense,
+      };
+      !searchDelete
+        ? res.status(200).json(response)
+        : res.status(500).json(response);
+    } catch (err) {
+      console.log(err);
+      handlerErrors(err, req, res, next);
+    }
+  },
 };

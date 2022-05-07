@@ -4,6 +4,7 @@ import $ from "jquery";
 import Modal from "./Modal";
 import AlertEditModal from "./AlertEditModal";
 import { useModal } from "../hooks/useModal";
+import ButtonRowDelete from "./ButtonRowDelete";
 
 export default function RowFrameExpenses({
   amountExpense,
@@ -81,9 +82,7 @@ export default function RowFrameExpenses({
             >
               Editar
             </button>
-            <button type="button" className="btnDeleteRowExpense w-100 p-0">
-              Eliminar
-            </button>
+            <ButtonRowDelete id={id} />
           </td>
         </tr>
       </tbody>

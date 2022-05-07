@@ -10,7 +10,7 @@ module.exports = {
         ? -1 * (24 - (Number(date.slice(11, 13)) + 5)) + date.slice(13)
         : Number(date.slice(11, 13)) + 5 + date.slice(13)
     }`;
-    console.log(currentDate, 121212);
+
     return currentDate;
   },
 };

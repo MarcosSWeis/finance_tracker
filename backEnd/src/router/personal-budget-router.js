@@ -48,6 +48,11 @@ router.post(
   userExtractor,
   personalBudgetControllers.createFixedIncome
 );
+router.post(
+  "/delete_income_expense",
+  userExtractor,
+  personalBudgetControllers.deleteIncomeExpenses
+);
 
 router.post(
   "/create_var_income",

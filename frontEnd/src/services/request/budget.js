@@ -115,6 +115,16 @@ export const controllerBudget = {
     );
     return response;
   },
+
+  deleteIncomeExpenses: async (id) => {
+    const config = getConfigTokenLocalStorage();
+    const response = await axios.post(
+      "http://localhost:3001/budget/delete_income_expense",
+      id,
+      config
+    );
+    return response;
+  },
   getExpenses: async (page, { initialDate, endDate }) => {
     try {
       console.log(page, "page en setvice");
