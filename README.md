@@ -10,10 +10,10 @@ Tareas pendientes, no logradas por falta de tiempo
 
 ### Terminal one
 
-- 1. cd backEnd
-- 2. npm start 
+- 1.   cd backEnd
+- 2.   npm start 
 
 ### Terminal two
 
-- 1. cd frontEnd
-- 2. npm start
+- 1.   cd frontEnd
+- 2.   npm start
