@@ -8,12 +8,12 @@ Tareas pendientes, no logradas por falta de tiempo
 
 ## istrucciones
 
-### one terminal -blue
+### Terminal one
 
 - 1. cd backEnd
-- 2. npm start -red
+- 2. npm start 
 
-### two terminal
+### Terminal two
 
 - 1. cd frontEnd
 - 2. npm start
