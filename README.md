@@ -7,12 +7,12 @@ Tareas pendientes, no logradas por falta de tiempo
 4- Mejorar y optimizar los componentes 
 
 ## istrucciones
-```diff
+
 ### one terminal -blue
 
 - ![#f03c15] 1. cd backEnd
 2. npm start -red
-```
+
 - two terminal
 
 1. cd frontEnd
