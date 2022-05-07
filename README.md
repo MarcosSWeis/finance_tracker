@@ -6,7 +6,7 @@ Tareas pendientes, no logradas por falta de tiempo
 3-Grafico en forma de torta 
 4- Mejorar y optimizar los componentes 
 
-##istrucciones
+## istrucciones
 *one terminal
 
 1. cd backEnd
