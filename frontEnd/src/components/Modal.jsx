@@ -1,3 +1,4 @@
+import React from "react";
 export default function Modal({ children, isOpen, closeModal }) {
   return (
     <div className={`modal ${isOpen ? "is-open" : ""}`}>

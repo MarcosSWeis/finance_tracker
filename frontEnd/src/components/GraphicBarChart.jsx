@@ -1,3 +1,4 @@
+import React, { useMemo } from "react";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -25,7 +26,6 @@ import {
   Tooltip,
   SubTitle,
 } from "chart.js";
-import { useMemo } from "react";
 import { Bar } from "react-chartjs-2"; // para graficos de barras
 ChartJS.register(
   CategoryScale,

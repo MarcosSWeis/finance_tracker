@@ -1,3 +1,4 @@
+import React from "react";
 export default function ButtonsPages({ setPage, page, totalRowsBd }) {
   const limit = 10;
   const selectNumberPage = [1, 2, 2];

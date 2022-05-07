@@ -1,3 +1,4 @@
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -26,7 +27,6 @@ import {
   SubTitle,
 } from "chart.js";
 import $ from "jquery";
-import { useEffect, useMemo, useState } from "react";
 ChartJS.register(
   ArcElement,
   LineElement,

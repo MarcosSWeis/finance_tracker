@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Route, Routes, Outlet } from "react-router-dom";
 import { DataContext } from "../context/DataContext";

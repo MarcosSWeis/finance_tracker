@@ -1,3 +1,4 @@
+import React from "react";
 export default function SwitchDates({ setSwitchDates, switchDates }) {
   return (
     <div className=" pl-2 mb-5">

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { DataContext } from "../context/DataContext";
 
 export const useModal = (initialValue = false) => {
@@ -12,11 +12,6 @@ export const useModal = (initialValue = false) => {
       setExpenses(null);
     } else {
       setExpenses(true);
-    }
-    if (incomesDb) {
-      setIncomesDb(null);
-    } else {
-      setIncomesDb(true);
     }
   };
   return { isOpen, openModal, closeModal };

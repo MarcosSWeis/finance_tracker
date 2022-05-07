@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import $ from "jquery";
 import { DataContext } from "../context/DataContext";

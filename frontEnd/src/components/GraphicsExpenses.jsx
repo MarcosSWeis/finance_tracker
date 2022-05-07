@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { controllerBudget } from "../services/request/budget";
 import GraphicLineExpenses from "./GraphicLineExpenses";
