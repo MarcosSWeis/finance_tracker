@@ -10,7 +10,7 @@ Tareas pendientes, no logradas por falta de tiempo
 ```diff
 ### one terminal -blue
 
-- text in red
+- text in red 1. cd backEnd
 2. npm start -red
 ```
 - two terminal
