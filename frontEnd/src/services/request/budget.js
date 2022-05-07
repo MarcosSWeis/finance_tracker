@@ -106,6 +106,15 @@ export const controllerBudget = {
     );
     return response;
   },
+  createVarIncome: async (newVarIncome) => {
+    const config = getConfigTokenLocalStorage();
+    const response = await axios.post(
+      "http://localhost:3001/budget/create_var_income",
+      newVarIncome,
+      config
+    );
+    return response;
+  },
   getExpenses: async (page, { initialDate, endDate }) => {
     try {
       console.log(page, "page en setvice");

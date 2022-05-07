@@ -80,6 +80,44 @@ module.exports = {
       handlerErrors(err, req, res, next);
     }
   },
+  createVarIncome: async (req, res, next) => {
+    const { userId: id, body } = req;
+    try {
+      const newVarIncome = await db.Income_expenses.create({
+        ...body,
+        user_id: id,
+      });
+
+      let ok;
+      let status;
+      let statusText;
+
+      if (newVarIncome) {
+        ok = true;
+        status = 201;
+        statusText = "Created";
+      } else {
+        ok = false;
+        status = 500;
+        statusText = "Error interno del servidor";
+      }
+      const response = {
+        meta: {
+          ok: ok,
+          status: status,
+          statusText: statusText,
+          url: "",
+        },
+        data: newVarIncome,
+      };
+      newVarIncome
+        ? res.status(201).json(response)
+        : res.status(500).json(response);
+    } catch (err) {
+      console.log(err);
+      handlerErrors(err, req, res, next);
+    }
+  },
   getIncomes: async (req, res, next) => {
     try {
       const { userId: id } = req;

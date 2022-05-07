@@ -13,9 +13,10 @@ import HandlerButtonExpenses from "./HandlerButonExpenses";
 import HandlerButtonsIncomes from "./HandlerButtonsIncomes";
 import FrameLastTop10Home from "./FrameLastTop10Home";
 import RowFrameExpenses from "./RowFrameExpenses";
+import FormVarIncomes from "./FormVarIncomes";
 
 export default function Home() {
-  const { showForm, incomesDb, setIncomesDb, showFormExpense } =
+  const { showForm, incomesDb, setIncomesDb, showFormExpense, showVarIncome } =
     useContext(DataContext);
   const [dataIncome, setDataIncome] = useState({});
 
@@ -37,6 +38,7 @@ export default function Home() {
           <CardsMetricsHome
             fixedIncome={dataIncome.fixed_income}
             category={dataIncome.category_inc_id}
+            incomesDb={incomesDb}
           />
         </div>
       ) : (
@@ -45,6 +47,7 @@ export default function Home() {
       <HandlerButtonsIncomes />
       {showForm && <FormIncomes setDataIncome={setDataIncome} />}
       {showFormExpense && <FormExpenses />}
+      {showVarIncome && <FormVarIncomes />}
       <FrameLastTop10Home />
     </div>
   );

@@ -95,6 +95,8 @@ export default function validationFormEditIncExp(
     }
   }
   console.log(errors);
+  console.log(newEdit, "newEdit");
+
   if (Object.keys(errors).length === 0) {
     try {
       console.log("no hay errores");

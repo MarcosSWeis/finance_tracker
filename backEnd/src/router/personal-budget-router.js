@@ -50,6 +50,12 @@ router.post(
 );
 
 router.post(
+  "/create_var_income",
+  userExtractor,
+  personalBudgetControllers.createVarIncome
+);
+
+router.post(
   "/edit_income_expense",
   userExtractor,
   personalBudgetControllers.editIncomeExpense

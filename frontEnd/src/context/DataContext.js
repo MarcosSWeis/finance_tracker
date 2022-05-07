@@ -11,6 +11,7 @@ export const DataProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [showFormExpense, setShowFormExpense] = useState(null);
   const [expenses, setExpenses] = useState(null);
+  const [showVarIncome, setShowVarIncome] = useState(null);
 
   const [queryParameterDate, setQueryParameterDate] = useState({});
 
@@ -35,6 +36,8 @@ export const DataProvider = ({ children }) => {
         setExpenses,
         queryParameterDate,
         setQueryParameterDate,
+        showVarIncome,
+        setShowVarIncome,
       }}
     >
       {children}

@@ -25,7 +25,6 @@ export default function FrameExpenses() {
     countLoader.push(i);
   }
   useEffect(() => {
-    console.log("me renderizo una vex");
     // controllerBudget.getCategoriesExpenses().then(({ data }) => {
     //   setCategoryExpenses(data.data);
     // });
@@ -118,7 +117,9 @@ export default function FrameExpenses() {
               />
             </>
           ) : (
-            <h3 className="text-center text-success ">No posee gastos</h3>
+            <h3 className="text-center text-success ">
+              No posee gastos este mes
+            </h3>
           )}
         </>
       ) : (

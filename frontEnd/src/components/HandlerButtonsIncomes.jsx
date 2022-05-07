@@ -8,6 +8,8 @@ export default function HandlerButtonsIncomes() {
     showForm,
     setShowFormExpense,
     showFormExpense,
+    showVarIncome,
+    setShowVarIncome,
   } = useContext(DataContext);
 
   function clickRotate() {
@@ -34,6 +36,9 @@ export default function HandlerButtonsIncomes() {
                   } else {
                     setShowForm(null);
                   }
+                  if (showVarIncome) {
+                    setShowVarIncome(null);
+                  }
                 }}
               >
                 <div className="dot"></div>
@@ -54,6 +59,10 @@ export default function HandlerButtonsIncomes() {
                   } else {
                     setShowFormExpense(null);
                   }
+
+                  if (showVarIncome) {
+                    setShowVarIncome(null);
+                  }
                 }}
               >
                 <img
@@ -63,6 +72,32 @@ export default function HandlerButtonsIncomes() {
               </div>
 
               <p>Agregar gasto</p>
+            </div>
+            <div className="">
+              <div
+                className="fab-button bg-info"
+                onClick={() => {
+                  if (showForm) {
+                    setShowForm(null);
+                  }
+                  if (showFormExpense) {
+                    setShowFormExpense(null);
+                  }
+
+                  if (!showVarIncome) {
+                    setShowVarIncome(true);
+                  } else {
+                    setShowVarIncome(null);
+                  }
+                }}
+              >
+                <img
+                  className="w-35px mt-13px "
+                  src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png"
+                />
+              </div>
+
+              <p>Agregar ingreso</p>
             </div>
           </div>
         ) : (

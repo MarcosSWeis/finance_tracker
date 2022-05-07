@@ -3,10 +3,14 @@ import { useNavigate, Link } from "react-router-dom";
 import { DataContext } from "../context/DataContext";
 import { ExpensesContext } from "../context/ExpensesContext";
 import { controllerBudget } from "../services/request/budget";
-export default function CardsMetricsHome({ fixedIncome, category }) {
+export default function CardsMetricsHome({
+  fixedIncome,
+  category,
+  dataIncome,
+}) {
   //set setExpenses esta en fromexpense y le seata tru si le setearon una nueva expense
   // entonces expenses pasa a true le dice que actualice a la funcincion getExpenses y renderiza con la data actualizada
-  const { expenses } = useContext(DataContext);
+  const { expenses, incomesDb } = useContext(DataContext);
   const [categories, setCategories] = useState([]);
   const [dataTotalExpense, setDataTotalExpenses] = useState(0);
   const [dataTotalIncomes, setDataTotalIncomes] = useState(0);
@@ -26,20 +30,20 @@ export default function CardsMetricsHome({ fixedIncome, category }) {
     controllerBudget.getAllExpenses({ amountIncome: true }).then(({ data }) => {
       setDataTotalIncomes(data.data.totalIncomes);
     });
-  }, [expenses]);
+  }, [expenses, incomesDb]);
 
   console.log(dataTotalExpense, "dataTotalExpense");
   console.log(dataTotalIncomes, "dataTotalIncomes");
-  console.log(fixedIncome, "fixedIncome");
+  console.log(Number(fixedIncome), "fixedIncome");
 
   //console.log(dataTotalExpense, "totalExpenses");
 
   const percentageIncome = (
     (dataTotalExpense * 100) /
-    (fixedIncome + dataTotalIncomes)
+    (Number(fixedIncome) + dataTotalIncomes)
   ).toFixed(2);
-  const ingresoNeto = fixedIncome + dataTotalIncomes - dataTotalExpense;
-  const totalIncome = fixedIncome + dataTotalIncomes;
+  const ingresoNeto = Number(fixedIncome) + dataTotalIncomes - dataTotalExpense;
+  const totalIncome = Number(fixedIncome) + dataTotalIncomes;
   return (
     <div className="col-md-10 w-100 pl-0 ">
       <div className="row ">
