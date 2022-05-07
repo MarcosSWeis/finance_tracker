@@ -9,8 +9,8 @@ Tareas pendientes, no logradas por falta de tiempo
 ## istrucciones
 - one terminal
 
-1. cd backEnd
-2. npm start
+⋅⋅⋅ cd backEnd
+⋅⋅* npm start
 
 - two terminal
 
