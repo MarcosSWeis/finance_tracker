@@ -1,13 +1,13 @@
 # challeng_full_stack
-Tareas pendientes, no logradas por falta de tiempo
+Tareas pendientes, no logradas por falta de tiempo.
 
-- Validaciones del backEnd con express-validator
-- Encryptar passwords con bcrypjs
-- Profile del usuario, para poder editar su perfil
-- Grafico en forma de torta 
-- Mejorar y optimizar los componentes 
+- Validaciones del backEnd con express-validator.
+- Encryptar passwords con bcrypjs.
+- Profile del usuario, para poder editar su perfil.
+- Grafico en forma de torta.
+- Mejorar y optimizar los componentes.
 
-## istrucciones
+## Instrucciones
 
 ### Terminal one
 
