@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node create_db.js [ctrl+c] && nodemon -e js src/app.js"
+    "createDB": "node create_db.js && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "start": "nodemon -e js src/app.js"
   },
   "keywords": [],
   "author": "",
