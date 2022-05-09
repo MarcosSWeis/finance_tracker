@@ -11,8 +11,9 @@ Tareas pendientes, no logradas por falta de tiempo.
 
 ### Terminal one
 
- - 1. cd backEnd
-- 2. npm start 
+- 1. cd backEnd
+- 2. npm run createDB
+- 3.  npm start
 
 ### Terminal two
 
