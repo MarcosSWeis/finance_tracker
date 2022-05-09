@@ -366,15 +366,10 @@ module.exports = {
         !(query.initialDate == undefined || query.initialDate == "undefined") &&
         !(query.endDate == undefined || query.endDate == "undefined")
       ) {
-        // console.log(date.getMonth(), 78787878787);
-        // console.log("es igual que las fechas undefinded");
         initialDate = query.initialDate;
         endDate = query.endDate;
       }
 
-      //   console.log(initialDate, "initialDate");
-      //   console.log(endDate, "endDate");
-      // pedido para pa sección de gastos con paginado
       const queryDb = {
         attributes: ["id", "amountExpense", "description", "createdAt"],
         where: {
@@ -419,12 +414,10 @@ module.exports = {
         queryDb.order = [["createdAt", "DESC"]];
         delete queryDb.offset;
       }
-      //  console.log(queryDb);
+
       const { count, rows } = await db.Income_expenses.findAndCountAll({
         ...queryDb,
       });
-      //   console.log(rows);
-      //   console.log(count);
 
       let ok;
       let status;
@@ -496,7 +489,6 @@ module.exports = {
           ok: ok,
           status: status,
           statusText: statusText,
-          // length: totalExpensesORIncome.length,
           url: "http://localhost:3001/budget/all_expenses",
         },
         data: totalExpensesORIncome,
@@ -526,8 +518,7 @@ module.exports = {
         initialDate = query.initialDate;
         endDate = query.endDate;
       }
-      //   console.log(initialDate, 222);
-      //   console.log(endDate, 222);
+
       let where = {
         user_id: id,
         createdAt: {
@@ -546,7 +537,7 @@ module.exports = {
       if (query.savingExpenses == "3") {
         where.type_id = 3;
       }
-      //  console.log(where);
+
       const expenses = await db.Income_expenses.findAll({
         attributes: [
           "createdAt",
@@ -586,7 +577,6 @@ module.exports = {
         },
         data: expenses,
       };
-      //console.log(expenses);
 
       res.status(200).json(response);
     } catch (err) {
@@ -597,10 +587,6 @@ module.exports = {
   getTop10IncomeExpense: async (req, res, next) => {
     try {
       const { userId: id, query } = req;
-      //   console.log(query);
-      //   console.log(id);
-      /// la fecha tendria que venir por la query asi el usuario puede ir pidiendo las fechas que quiera
-      //si no tendria que hacer un funcion por cada fecha, como la de abajo => getAllExpenses
       const limit = 10;
 
       // pedido para pa sección de gastos con paginado
@@ -635,12 +621,10 @@ module.exports = {
         order: [["createdAt", "DESC"]],
         raw: true,
       };
-      //  console.log(queryDb);
+
       const top10IncomeExpenses = await db.Income_expenses.findAll({
         ...queryDb,
       });
-
-      //  console.log(top10IncomeExpenses);
 
       let ok, status, statusText, total;
 
@@ -675,7 +659,7 @@ module.exports = {
   editIncomeExpense: async (req, res, next) => {
     try {
       const { body } = req;
-      console.log(body);
+
       const parseDate = transformDay(body.createdAt);
       console.log(parseDate);
       const id = body.id;
@@ -684,7 +668,6 @@ module.exports = {
       //     delete body.amountIncome;
       //     delete body.category_inc_id;
       //   }
-      console.log(body);
 
       const editIncExp = await db.Income_expenses.update(
         {
