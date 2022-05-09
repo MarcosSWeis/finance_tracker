@@ -12,10 +12,10 @@ Tareas pendientes, no logradas por falta de tiempo.
 ### Terminal one
 
 - 1. cd backEnd
-- 2. npm run createDB
-- 3.  npm start
+- 2. npm run createDB  (este comando debe ejecutarlo la primera vez que inicializa el proyecto en su pc)
+- 3.  npm start   (este comando lo ejecutarlo cada vez que decea encender la aplicación)
 
 ### Terminal two
 
  - 1. cd frontEnd
- - 2. npm start
+ - 2. npm start (este comando lo ejecutarlo cada vez que decea encender la aplicación)
