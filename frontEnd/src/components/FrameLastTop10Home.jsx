@@ -15,7 +15,7 @@ export default function FrameLastTop10Home() {
   const { expenses, setShowFormExpense } = useContext(DataContext);
   const { editIncExp } = useNewEdit(null);
 
-  const [top10Last, setTop10Last] = useState([]);
+  const [top10Last, setTop10Last] = useState(null);
   const [width, setWidth] = useState(null);
   let windowsize;
   useEffect(() => {
@@ -33,6 +33,11 @@ export default function FrameLastTop10Home() {
     // });
   }, [expenses]);
 
+  if (top10Last) {
+    if (top10Last.length == 0) {
+      return <h3 className="text-center mt-5">No posee registros, ingrese nuevos</h3>;
+    }
+  }
   return (
     <>
       <div className="mt-130px ">
@@ -70,7 +75,7 @@ export default function FrameLastTop10Home() {
                 </th>
               </tr>
             </thead>
-            {top10Last.length != 0
+            {top10Last && top10Last.length != 0
               ? top10Last.map((value) => (
                   <RowFrameExpenses
                     key={value.id}

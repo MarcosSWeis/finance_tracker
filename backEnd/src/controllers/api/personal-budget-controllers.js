@@ -110,9 +110,7 @@ module.exports = {
         },
         data: newVarIncome,
       };
-      newVarIncome
-        ? res.status(201).json(response)
-        : res.status(500).json(response);
+      newVarIncome ? res.status(201).json(response) : res.status(500).json(response);
     } catch (err) {
       console.log(err);
       handlerErrors(err, req, res, next);
@@ -183,9 +181,7 @@ module.exports = {
         data: categories,
       };
 
-      categories
-        ? res.status(200).json(response)
-        : res.status(500).json(response);
+      categories ? res.status(200).json(response) : res.status(500).json(response);
     } catch (err) {
       console.log(err);
       handlerErrors(err, req, res, next);
@@ -298,9 +294,7 @@ module.exports = {
         },
         data: updateIncome,
       };
-      updateIncome
-        ? res.status(200).json(response)
-        : res.status(304).json(response);
+      updateIncome ? res.status(200).json(response) : res.status(304).json(response);
     } catch (err) {
       console.log(err);
       handlerErrors(err, req, res, next);
@@ -335,9 +329,7 @@ module.exports = {
         },
         data: newIncomeExpenses,
       };
-      newIncomeExpenses
-        ? res.status(200).json(response)
-        : res.status(500).json(response);
+      newIncomeExpenses ? res.status(200).json(response) : res.status(500).json(response);
     } catch (err) {
       console.log(err);
       handlerErrors(err, req, res, next);
@@ -362,10 +354,7 @@ module.exports = {
       endDate = `${year}-${month < 10 ? "0" + (month + 1) : month + 1}-01`;
 
       //si viene sin fechas especificas le pongo las del mes actual
-      if (
-        !(query.initialDate == undefined || query.initialDate == "undefined") &&
-        !(query.endDate == undefined || query.endDate == "undefined")
-      ) {
+      if (!(query.initialDate == undefined || query.initialDate == "undefined") && !(query.endDate == undefined || query.endDate == "undefined")) {
         initialDate = query.initialDate;
         endDate = query.endDate;
       }
@@ -405,11 +394,7 @@ module.exports = {
         queryDb.offset = page * limit;
       }
       // si los 3 vienen undefined es que viene el pedido del home
-      if (
-        query.page == "undefined" &&
-        query.initialDate == "undefined" &&
-        query.endDate == "undefined"
-      ) {
+      if (query.page == "undefined" && query.initialDate == "undefined" && query.endDate == "undefined") {
         delete queryDb.where.createdAt;
         queryDb.order = [["createdAt", "DESC"]];
         delete queryDb.offset;
@@ -511,10 +496,7 @@ module.exports = {
       let initialDate = `${year}-${month < 10 ? "0" + month : month}-01`;
       let endDate = `${year}-${month < 10 ? "0" + (month + 1) : month + 1}-01`;
 
-      if (
-        !(query.initialDate == "undefined") &&
-        !(query.endDate == "undefined")
-      ) {
+      if (!(query.initialDate == "undefined") && !(query.endDate == "undefined")) {
         initialDate = query.initialDate;
         endDate = query.endDate;
       }
@@ -542,15 +524,10 @@ module.exports = {
         attributes: [
           "createdAt",
           [Sequelize.fn("sum", sequelize.col("amountExpense")), "totalForDay"],
-          [
-            Sequelize.fn("DATE_FORMAT", sequelize.col("createdAt"), "%d"),
-            "day",
-          ],
+          [Sequelize.fn("DATE_FORMAT", sequelize.col("createdAt"), "%d"), "day"],
         ],
         where: where,
-        group: [
-          Sequelize.fn("DATE_FORMAT", sequelize.col("createdAt"), "%Y-%m-%d"),
-        ],
+        group: [Sequelize.fn("DATE_FORMAT", sequelize.col("createdAt"), "%Y-%m-%d")],
         order: [["createdAt", "ASC"]],
         raw: true,
       });
@@ -591,13 +568,7 @@ module.exports = {
 
       // pedido para pa sección de gastos con paginado
       const queryDb = {
-        attributes: [
-          "id",
-          "amountExpense",
-          "description",
-          "createdAt",
-          "amountIncome",
-        ],
+        attributes: ["id", "amountExpense", "description", "createdAt", "amountIncome"],
         where: {
           user_id: id,
         },
@@ -649,7 +620,7 @@ module.exports = {
         },
         data: top10IncomeExpenses,
       };
-
+      console.log(top10IncomeExpenses);
       res.status(200).json(response);
     } catch (err) {
       console.log(err);
@@ -793,9 +764,7 @@ module.exports = {
         },
         data: deleteIncomeExpense,
       };
-      !searchDelete
-        ? res.status(200).json(response)
-        : res.status(500).json(response);
+      !searchDelete ? res.status(200).json(response) : res.status(500).json(response);
     } catch (err) {
       console.log(err);
       handlerErrors(err, req, res, next);
