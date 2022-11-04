@@ -1,5 +1,6 @@
 const db = require("../../database/models");
 const jwt = require("jsonwebtoken");
+
 module.exports = {
   list: async (req, res) => {
     const users = await db.User.findAll();
@@ -9,13 +10,7 @@ module.exports = {
     try {
       const body = req.body;
       const file = req.file; //si req.file viene undefined es porque no subieron foro , ahi le asigno la default.png
-      //hay que hacer lo de bcryp
-      //el login lo hacemos con query pasrams y hacer lo del token
-      console.log(file, 555555555555);
-      //const password = req.body.password;
-      console.log(body, 121121212);
       let avatar;
-
       if (!file) {
         avatar = "default.png";
       } else {
@@ -29,68 +24,54 @@ module.exports = {
         admin: 0,
       });
 
-      res.json({
+      res.status(200).json({
         status: true,
       });
     } catch (error) {
+      res.status(500).json({
+        status: false,
+      });
       console.log(error);
     }
   },
   login: async (req, res) => {
     const body = req.body;
-    console.log(body);
-
     //validacion con express-validator
+    if (!body.email && !body.password) {
+      return res.status(500).json("email and password properties are required");
+    }
     const user = await db.User.findOne({
       where: {
         email: body.email,
       },
     });
-    let ok;
-    let status;
-    let statusText;
-    if (user) {
-      ok = true;
-      status = 200;
-      statusText = "OK";
-    } else {
-      ok = false;
-      status = 401;
-      statusText = "Unauthorized";
+
+    if (!user) {
+      return res.status(401).json("Unauthorized");
     }
 
+    if (user.password.trim() !== body.password.trim()) {
+      return res.status(401).json("Unauthorized");
+    }
+
+    const userForToken = {
+      id: user.id,
+      nickName: user.nickName,
+    };
+    console.log(process.env.JWT_SECRET);
+    const token = jwt.sign(userForToken, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_TIME_EXPIRY,
+    });
     const response = {
-      meta: {
-        ok: ok,
-        status: status,
-        statusText: statusText,
-        url: "http://localhost:3001/users/login",
-      },
       data: {
-        accessToken: null,
-        username: null,
-        avatar: null,
+        accessToken: token,
+        username: user.nickName,
+        avatar: user.avatar,
       },
     };
-
-    if (user && user.password == body.password) {
-      const userForToken = {
-        id: user.id,
-        nickName: user.nickName,
-      };
-      //cuando el usuario ingrese a su cuenta y todo ande bien validaciones etc
-      const token = jwt.sign(userForToken, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_TIME_EXPIRY,
-      });
-      response.data.accessToken = token;
-      response.data.username = user.nickName;
-      response.data.avatar = user.avatar;
-      console.log(response);
-      res.status(200).json(response);
-    } else {
-      res.status(401).json(response);
-    }
+    return res.status(200).json(response);
   },
+
   post: (req, res) => {
     res.status(401).json({ msg: "Post fue creado" });
   },
